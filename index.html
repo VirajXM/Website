@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Africa Trade Global - Premium FMCG Distribution</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Prevent scrolling when modal is open */
+        body.scroll-locked {
+            overflow: hidden;
+        }
+        
+        /* Gradient backgrounds */
+        .gradient-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+        
+        .gradient-accent {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        }
+        
+        /* Card hover effects */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Metric counter animation */
+        @keyframes countup {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .metric-card {
+            animation: countup 0.6s ease forwards;
+        }
+
+        /* Accordion styles */
+        .accordion-btn {
+            transition: all 0.3s ease;
+        }
+
+        .accordion-btn:hover {
+            background-color: #f1f5f9;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .accordion-content.active {
+            max-height: 700px;
+        }
+        
+        /* Language button active state */
+        .lang-btn.active {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        /* Age verification modal */
+        .age-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+
+        .age-modal-overlay.hidden {
+            display: none;
+        }
+
+        .age-modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Product container with side-by-side layout */
+        .product-detail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        @media (max-width: 640px) {
+            .product-detail-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Product image styling */
+        .product-image {
+            width: 100%;
+            height: 280px;
+            object-fit: contain;
+            background-color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 0;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased selection:bg-blue-600 selection:text-white">
+
+    <!-- AGE VERIFICATION MODAL -->
+    <div id="ageModal" class="age-modal-overlay">
+        <div class="age-modal-content">
+            <div class="mb-6">
+                <i class="fas fa-exclamation-triangle text-yellow-500 text-5xl mb-4"></i>
+                <h2 class="text-2xl font-black text-slate-900 mb-2" data-i18n="age-title">Age Verification</h2>
+                <p class="text-slate-600 mb-4" data-i18n="age-message">You must be 21 years or older to access this site. This site contains content related to alcohol products.</p>
+            </div>
+            
+            <div class="space-y-3">
+                <button onclick="confirmAge()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg transition duration-300" data-i18n="age-confirm">
+                    I am 21 or Older
+                </button>
+                <button onclick="denyAge()" class="w-full bg-slate-300 hover:bg-slate-400 text-slate-900 font-bold py-3 rounded-lg transition duration-300" data-i18n="age-deny">
+                    I am Under 21
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. NAVIGATION BAR -->
+    <nav class="sticky top-0 z-50 flex justify-between items-center px-6 md:px-12 py-5 bg-white shadow-md border-b border-slate-200">
+        <div class="text-xl font-extrabold tracking-tight text-blue-900 md:text-2xl flex items-center gap-2">
+            <i class="fas fa-globe text-blue-600"></i>
+            <span data-i18n="brand">AFRICATRADE</span>
+        </div>
+        <div class="hidden md:flex space-x-8 font-semibold text-sm text-slate-600">
+            <a href="#about" class="hover:text-blue-900 transition duration-300" data-i18n="nav-about">About Us</a>
+            <a href="#catalog" class="hover:text-blue-900 transition duration-300" data-i18n="nav-catalog">Bulk Catalog</a>
+            <a href="#compliance" class="hover:text-blue-900 transition duration-300" data-i18n="nav-compliance">Compliance</a>
+        </div>
+        <div class="flex items-center gap-2">
+            <button onclick="setLanguage('en')" class="lang-btn px-3 py-1 rounded hover:bg-slate-100 active">
+                🇬🇧 EN
+            </button>
+            <button onclick="setLanguage('fr')" class="lang-btn px-3 py-1 rounded hover:bg-slate-100">
+                🇫🇷 FR
+            </button>
+        </div>
+        <div>
+            <a href="#contact" class="gradient-accent text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-lg transition shadow-lg hover:shadow-xl hover:scale-105 duration-300" data-i18n="nav-contact">
+                Contact Our Sales Team
+            </a>
+        </div>
+    </nav>
+
+    <!-- 2. HERO BANNER -->
+    <header class="gradient-hero text-white py-24 md:py-48 overflow-hidden relative">
+        <!-- Animated background pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-cyan-500 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="relative max-w-5xl mx-auto text-center px-6">
+            <span class="inline-block bg-blue-500/20 text-blue-300 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-blue-400/50 backdrop-blur-sm">
+                <i class="fas fa-check-circle mr-2"></i><span data-i18n="hero-badge">Container-Scale Wholesale Only</span>
+            </span>
+            <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-tight mb-8 text-white drop-shadow-lg" data-i18n="hero-title">
+                Premium FMCG Spirits & Liquor Distribution Across Africa
+            </h1>
+            <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-12 font-normal leading-relaxed" data-i18n="hero-subtitle">
+                Supplying major African ports with high-volume, reliable container shipments of premium international spirits and beverage brands.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-5">
+                <a href="#catalog" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-lg font-bold text-sm tracking-wide shadow-xl hover:shadow-2xl transition duration-300 uppercase">
+                    <i class="fas fa-bottle"></i> <span data-i18n="hero-btn1">View Our Brands</span>
+                </a>
+                <a href="#about" class="border-2 border-slate-400 hover:bg-slate-800 hover:border-slate-300 text-white px-8 py-4 rounded-lg font-bold text-sm tracking-wide transition duration-300 uppercase">
+                    <i class="fas fa-warehouse"></i> <span data-i18n="hero-btn2">Our Infrastructure</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. TRUST & SCALE METRICS -->
+    <section class="bg-white py-16 border-b border-slate-200">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="metric-card text-center">
+                <div class="flex justify-center mb-4">
+                    <div class="gradient-accent w-14 h-14 rounded-full flex items-center justify-center text-white text-xl">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                </div>
+                <p class="text-3xl md:text-4xl font-black text-blue-900 mb-2">6 <span data-i18n="metrics-brands">Brands</span></p>
+                <p class="text-xs uppercase tracking-wider text-slate-500 font-semibold" data-i18n="metrics-brands-desc">Premium Selection</p>
+            </div>
+            
+            <div class="metric-card text-center">
+                <div class="flex justify-center mb-4">
+                    <div class="gradient-accent w-14 h-14 rounded-full flex items-center justify-center text-white text-xl">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                </div>
+                <p class="text-3xl md:text-4xl font-black text-blue-900 mb-2">20ft/40ft</p>
+                <p class="text-xs uppercase tracking-wider text-slate-500 font-semibold" data-i18n="metrics-containers">Standard Containers</p>
+            </div>
+            
+            <div class="metric-card text-center">
+                <div class="flex justify-center mb-4">
+                    <div class="gradient-accent w-14 h-14 rounded-full flex items-center justify-center text-white text-xl">
+                        <i class="fas fa-snowflake"></i>
+                    </div>
+                </div>
+                <p class="text-3xl md:text-4xl font-black text-blue-900 mb-2" data-i18n="metrics-coldchain">Cold Chain</p>
+                <p class="text-xs uppercase tracking-wider text-slate-500 font-semibold" data-i18n="metrics-reefer">Reefer Operations</p>
+            </div>
+            
+            <div class="metric-card text-center">
+                <div class="flex justify-center mb-4">
+                    <div class="gradient-accent w-14 h-14 rounded-full flex items-center justify-center text-white text-xl">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                </div>
+                <p class="text-3xl md:text-4xl font-black text-blue-900 mb-2">100%</p>
+                <p class="text-xs uppercase tracking-wider text-slate-500 font-semibold" data-i18n="metrics-compliance">Import Compliance</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. ABOUT & INFRASTRUCTURE SECTION -->
+    <section id="about" class="py-20 max-w-6xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3 flex items-center gap-2">
+                    <span class="w-8 h-0.5 bg-blue-600"></span>
+                    <span data-i18n="about-label">Corporate Capacity</span>
+                </h2>
+                <h3 class="text-4xl font-black text-slate-900 leading-tight mb-6" data-i18n="about-title">Unbroken supply lines to Africa's largest trading markets</h3>
+                <p class="text-slate-600 mb-5 leading-relaxed text-lg" data-i18n="about-para1">
+                    Just like global broad-line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperature control, and on-time delivery.
+                </p>
+                <p class="text-slate-600 leading-relaxed text-lg mb-8" data-i18n="about-para2">
+                    Whether routing inventory to major commercial capitals or regional hubs, our network ensures your wholesale allocations arrive on time, securely packed, and compliant with all local regulations.
+                </p>
+                
+                <!-- Feature list -->
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 rounded-full gradient-accent flex items-center justify-center text-white text-xs">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span class="text-slate-700 font-medium" data-i18n="feature-supply">End-to-end supply chain management</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 rounded-full gradient-accent flex items-center justify-center text-white text-xs">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span class="text-slate-700 font-medium" data-i18n="feature-temp">24/7 temperature & condition monitoring</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 rounded-full gradient-accent flex items-center justify-center text-white text-xs">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <span class="text-slate-700 font-medium" data-i18n="feature-customs">Certified customs & compliance expertise</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="rounded-2xl overflow-hidden shadow-2xl h-80 md:h-96">
+                <!-- Warehouse image - Direct Unsplash CDN URL -->
+                <img src="images/Warehouse.jpeg" alt="Warehouse Operations" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. PRODUCT CATALOG - BEVERAGES -->
+    <section id="catalog" class="bg-gradient-to-b from-slate-100 to-slate-50 py-20 border-y border-slate-200">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
+                    <span class="w-8 h-0.5 bg-blue-600"></span>
+                    <span data-i18n="catalog-label">Our Portfolio</span>
+                    <span class="w-8 h-0.5 bg-blue-600"></span>
+                </h2>
+                <h3 class="text-4xl font-black text-slate-900 mb-4" data-i18n="catalog-title">Premium Spirits & Beverages</h3>
+                <p class="text-slate-600 text-lg" data-i18n="catalog-desc">We specialize exclusively in tier-one international spirits and premium beverages available in wholesale container volumes.</p>
+            </div>
+            
+            <!-- Single Product Card with Expandable Menu -->
+            <div class="card-hover bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+                <div class="h-64 overflow-hidden bg-slate-200 relative">
+                    <!-- Beverage drinks image - Local product photo -->
+                    <img src="images/Beverages.JPG" alt="Premium Beverages" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 gradient-accent text-white px-4 py-2 rounded-full text-xs font-bold uppercase">
+                        <i class="fas fa-bottle mr-2"></i><span data-i18n="catalog-exclusive">Exclusive Selection</span>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <h4 class="font-extrabold text-2xl text-slate-900 mb-2" data-i18n="catalog-product">Premium Spirits & Liquors</h4>
+                    <p class="text-slate-600 text-sm mb-8 leading-relaxed" data-i18n="catalog-product-desc">Curated selection of international premium spirits and beverages, carefully sourced for African wholesale distribution.</p>
+                    
+                    <!-- Accordion Menu -->
+                    <div class="space-y-2">
+                        <!-- Roulette Whiskey -->
+                        <div class="border border-slate-200 rounded-lg overflow-hidden">
+                            <button class="accordion-btn w-full p-4 bg-slate-50 hover:bg-slate-100 flex items-center justify-between text-left font-semibold text-slate-900 transition" onclick="toggleAccordion(this)">
+                                <span class="flex items-center gap-3">
+                                    <i class="fas fa-dice text-blue-600"></i> 
+                                    Roulette
+                                </span>
+                                <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                            </button>
+                            <div class="accordion-content bg-white">
+                                <div class="p-4 border-t border-slate-200">
+                                    <div class="product-detail-container">
+                                        <img src="images/Roulette.jpg" alt="Roulette Whiskey" class="product-image">
+                                        <div class="product-info">
+                                            <p class="text-slate-600 font-medium mb-2"><strong data-i18n="catalog-category">Category:</strong> <span data-i18n="whiskey">Whiskey</span></p>
+                                            <p class="text-slate-600 text-sm" data-i18n="roulette-desc">Premium whiskey offering exceptional quality and taste profile. Available in wholesale quantities.</p>
+                                            <div class="mt-4 pt-4 border-t border-slate-200">
+                                                <span class="text-blue-600 font-bold text-sm" data-i18n="moq-40">MOQ: 1 × 40ft Container</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dennis Whiskey -->
+                        <div class="border border-slate-200 rounded-lg overflow-hidden">
+                            <button class="accordion-btn w-full p-4 bg-slate-50 hover:bg-slate-100 flex items-center justify-between text-left font-semibold text-slate-900 transition" onclick="toggleAccordion(this)">
+                                <span class="flex items-center gap-3">
+                                    <i class="fas fa-award text-blue-600"></i>
+                                    Dennis
+                                </span>
+                                <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                            </button>
+                            <div class="accordion-content bg-white">
+                                <div class="p-4 border-t border-slate-200">
+                                    <div class="product-detail-container">
+                                        <img src="images/Dennis.jpg" alt="Dennis Whiskey" class="product-image">
+                                        <div class="product-info">
+                                            <p class="text-slate-600 font-medium mb-2"><strong data-i18n="catalog-category">Category:</strong> <span data-i18n="whiskey">Whiskey</span></p>
+                                            <p class="text-slate-600 text-sm" data-i18n="dennis-desc">Distinguished whiskey brand with smooth finish and complex flavor notes. Perfect for master distributor networks.</p>
+                                            <div class="mt-4 pt-4 border-t border-slate-200">
+                                                <span class="text-blue-600 font-bold text-sm" data-i18n="moq-40">MOQ: 1 × 40ft Container</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Goana's Wine -->
+                        <div class="border border-slate-200 rounded-lg overflow-hidden">
+                            <button class="accordion-btn w-full p-4 bg-slate-50 hover:bg-slate-100 flex items-center justify-between text-left font-semibold text-slate-900 transition" onclick="toggleAccordion(this)">
+                                <span class="flex items-center gap-3">
+                                    <i class="fas fa-wine-glass text-blue-600"></i>
+                                    Goana's
+                                </span>
+                                <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                            </button>
+                            <div class="accordion-content bg-white">
+                                <div class="p-4 border-t border-slate-200">
+                                    <div class="product-detail-container">
+                                        <img src="images/Goanas.jpg" alt="Goana's Wine" class="product-image">
+                                        <div class="product-info">
+                                            <p class="text-slate-600 font-medium mb-2"><strong data-i18n="catalog-category">Category:</strong> <span data-i18n="wine">Wine</span></p>
+                                            <p class="text-slate-600 text-sm" data-i18n="goana-desc">Fine quality wine selection with excellent aging potential. Sourced from premium vineyards for wholesale distribution.</p>
+                                            <div class="mt-4 pt-4 border-t border-slate-200">
+                                                <span class="text-blue-600 font-bold text-sm" data-i18n="moq-20">MOQ: 2 × 20ft Containers</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mont Castle Whiskey -->
+                        <div class="border border-slate-200 rounded-lg overflow-hidden">
+                            <button class="accordion-btn w-full p-4 bg-slate-50 hover:bg-slate-100 flex items-center justify-between text-left font-semibold text-slate-900 transition" onclick="toggleAccordion(this)">
+                                <span class="flex items-center gap-3">
+                                    <i class="fas fa-chess-rook text-blue-600"></i>
+                                    Mont Castle
+                                </span>
+                                <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                            </button>
+                            <div class="accordion-content bg-white">
+                                <div class="p-4 border-t border-slate-200">
+                                    <div class="product-detail-container">
+                                        <img src="images/MontCastle.jpg" alt="Mont Castle Whiskey" class="product-image">
+                                        <div class="product-info">
+                                            <p class="text-slate-600 font-medium mb-2"><strong data-i18n="catalog-category">Category:</strong> <span data-i18n="whiskey">Whiskey</span></p>
+                                            <p class="text-slate-600 text-sm" data-i18n="montcastle-desc">Ultra-premium whiskey with bold character and refined palate. Ideal for high-end retail and wholesale channels.</p>
+                                            <div class="mt-4 pt-4 border-t border-slate-200">
+                                                <span class="text-blue-600 font-bold text-sm" data-i18n="moq-40">MOQ: 1 × 40ft Container</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Aristocrat Whiskey & Rum -->
+                        <div class="border border-slate-200 rounded-lg overflow-hidden">
+                            <button class="accordion-btn w-full p-4 bg-slate-50 hover:bg-slate-100 flex items-center justify-between text-left font-semibold text-slate-900 transition" onclick="toggleAccordion(this)">
+                                <span class="flex items-center gap-3">
+                                    <i class="fas fa-crown text-blue-600"></i>
+                                    Aristocrat
+                                </span>
+                                <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                            </button>
+                            <div class="accordion-content bg-white">
+                                <div class="p-4 border-t border-slate-200">
+                                    <div class="product-detail-container">
+                                        <img src="images/Aristocrat.jpg" alt="Aristocrat Whiskey & Rum" class="product-image">
+                                        <div class="product-info">
+                                            <p class="text-slate-600 font-medium mb-2"><strong data-i18n="catalog-category">Category:</strong> <span data-i18n="whiskey-rum">Whiskey & Rum</span></p>
+                                            <p class="text-slate-600 text-sm" data-i18n="aristocrat-desc">Prestigious brand offering both premium whiskey and rum selections. Known for consistent quality across product lines and high market demand.</p>
+                                            <div class="mt-4 pt-4 border-t border-slate-200">
+                                                <span class="text-blue-600 font-bold text-sm" data-i18n="moq-40">MOQ: 1 × 40ft Container</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- IceX Vodka -->
+                        <div class="border border-slate-200 rounded-lg overflow-hidden">
+                            <button class="accordion-btn w-full p-4 bg-slate-50 hover:bg-slate-100 flex items-center justify-between text-left font-semibold text-slate-900 transition" onclick="toggleAccordion(this)">
+                                <span class="flex items-center gap-3">
+                                    <i class="fas fa-snowflake text-blue-600"></i>
+                                    IceX
+                                </span>
+                                <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                            </button>
+                            <div class="accordion-content bg-white">
+                                <div class="p-4 border-t border-slate-200">
+                                    <div class="product-detail-container">
+                                        <img src="images/IceX.jpg" alt="IceX Vodka" class="product-image">
+                                        <div class="product-info">
+                                            <p class="text-slate-600 font-medium mb-2"><strong data-i18n="catalog-category">Category:</strong> <span data-i18n="vodka">Vodka</span></p>
+                                            <p class="text-slate-600 text-sm" data-i18n="icex-desc">Premium vodka with crystal-clear taste and pure distillation process. Versatile spirit for wholesale and retail markets across Africa.</p>
+                                            <div class="mt-4 pt-4 border-t border-slate-200">
+                                                <span class="text-blue-600 font-bold text-sm" data-i18n="moq-40">MOQ: 1 × 40ft Container</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Call to Action -->
+                    <div class="mt-8 pt-6 border-t border-slate-200">
+                        <a href="#contact" class="w-full inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-4 rounded-lg font-bold text-sm uppercase tracking-wider transition shadow-lg hover:shadow-xl duration-300" data-i18n="catalog-cta">
+                            <i class="fas fa-envelope"></i>Request Quote for Any Brand
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. COMPLIANCE SECTION -->
+    <section id="compliance" class="bg-white py-20 border-b border-slate-200">
+        <div class="max-w-4xl mx-auto text-center px-6">
+            <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
+                <span class="w-8 h-0.5 bg-blue-600"></span>
+                <span data-i18n="compliance-label">Regulatory Alignment</span>
+                <span class="w-8 h-0.5 bg-blue-600"></span>
+            </h2>
+            <h3 class="text-4xl font-black text-slate-900 mb-6" data-i18n="compliance-title">Fully Licensed Global Freight Integration</h3>
+            <p class="text-slate-600 leading-relaxed text-lg max-w-3xl mx-auto mb-10" data-i18n="compliance-desc">
+                We strictly operate under comprehensive local trade authorizations and international trade provisions. All spirits and beverages undergo careful quality vetting, compliance certification, and regulatory pre-clearance.
+            </p>
+            
+            <!-- Compliance checklist -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-200">
+                    <div class="text-3xl mb-3 text-blue-600">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-900 mb-2" data-i18n="compliance-iso-title">ISO & Safety Certified</h4>
+                    <p class="text-slate-600 text-sm" data-i18n="compliance-iso-desc">Full compliance with ISO standards and international beverage safety regulations.</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-200">
+                    <div class="text-3xl mb-3 text-blue-600">
+                        <i class="fas fa-passport"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-900 mb-2" data-i18n="compliance-customs-title">Customs Verified</h4>
+                    <p class="text-slate-600 text-sm" data-i18n="compliance-customs-desc">Pre-cleared with port authorities across major African trading hubs.</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-200">
+                    <div class="text-3xl mb-3 text-blue-600">
+                        <i class="fas fa-check-double"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-900 mb-2" data-i18n="compliance-quality-title">Quality Assured</h4>
+                    <p class="text-slate-600 text-sm" data-i18n="compliance-quality-desc">Third-party inspections and temperature-controlled logistics guarantee product integrity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+<section id="contact" class="py-20 gradient-hero text-white">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+
+        <h2 class="text-4xl font-black mb-4" data-i18n="contact-title">
+            Contact Us
+        </h2>
+
+        <p class="text-slate-300 text-lg mb-12" data-i18n="contact-subtitle">
+            For wholesale inquiries, pricing, or partnership opportunities,
+            please reach out using the details below.
+        </p>
+
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-10 border border-white/20">
+
+            <div class="space-y-8">
+
+                <div>
+                    <i class="fas fa-envelope text-blue-400 text-2xl mb-2"></i>
+                    <h3 class="font-bold uppercase tracking-wider text-sm mb-1" data-i18n="contact-email-label">
+                        Email
+                    </h3>
+                    <p class="text-lg">
+                        info@africatradeglobal.com
+                    </p>
+                </div>
+
+                <div>
+                    <i class="fas fa-phone text-blue-400 text-2xl mb-2"></i>
+                    <h3 class="font-bold uppercase tracking-wider text-sm mb-1" data-i18n="contact-phone-label">
+                        Phone
+                    </h3>
+                    <p class="text-lg">
+                        +27 (0) 31 123 4567
+                    </p>
+                </div>
+
+                <div>
+                    <i class="fas fa-map-marker-alt text-blue-400 text-2xl mb-2"></i>
+                    <h3 class="font-bold uppercase tracking-wider text-sm mb-1" data-i18n="contact-service-label">
+                        Service Area
+                    </h3>
+                    <p class="text-lg" data-i18n="contact-service">
+                        Africa-wide Import & Distribution
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+    <!-- 8. CORPORATE FOOTER -->
+    <footer class="bg-slate-950 text-slate-500 py-12 border-t border-slate-900">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h4 class="text-white font-bold mb-4" data-i18n="footer-brand">Africa Trade Global</h4>
+                    <p class="text-sm text-slate-400" data-i18n="footer-desc">Premier spirits and beverage bulk distribution across Africa's major ports and trading corridors.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4" data-i18n="footer-links-title">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#about" class="text-slate-400 hover:text-white transition" data-i18n="footer-link-about">About Us</a></li>
+                        <li><a href="#catalog" class="text-slate-400 hover:text-white transition" data-i18n="footer-link-brands">Our Brands</a></li>
+                        <li><a href="#contact" class="text-slate-400 hover:text-white transition" data-i18n="footer-link-contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4" data-i18n="footer-contact-title">Contact Info</h4>
+                    <p class="text-sm text-slate-400">
+                        <i class="fas fa-envelope mr-2"></i>info@africatradeglobal.com<br>
+                        <i class="fas fa-phone mr-2"></i>+27 (0) 31 123 4567
+                    </p>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-8 text-center">
+                <p class="text-xs font-medium" data-i18n="footer-copyright">&copy; 2026 Africa Trade Global. All rights reserved. Premium Spirits & Beverage Distribution & Logistics Network.</p>
+                <p class="text-xs text-slate-600 mt-2"><span data-i18n="footer-images">Images sourced from local assets and</span> <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" class="hover:text-slate-400">Unsplash</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Translation dictionary
+        const translations = {
+            en: {
+                "age-title": "Age Verification",
+                "age-message": "You must be 21 years or older to access this site. This site contains content related to alcohol products.",
+                "age-confirm": "I am 21 or Older",
+                "age-deny": "I am Under 21",
+                "brand": "AFRICA TRADE",
+                "nav-about": "About Us",
+                "nav-catalog": "Bulk Catalog",
+                "nav-compliance": "Compliance",
+                "nav-contact": "Contact Our Sales Team",
+                "hero-badge": "Container-Scale Wholesale Only",
+                "hero-title": "Premium FMCG Spirits & Liquor Distribution Across Africa",
+                "hero-subtitle": "Supplying major African ports with high-volume, reliable container shipments of premium international spirits and beverage brands.",
+                "hero-btn1": "View Our Brands",
+                "hero-btn2": "Our Infrastructure",
+                "metrics-brands": "Brands",
+                "metrics-brands-desc": "Premium Selection",
+                "metrics-containers": "Standard Containers",
+                "metrics-coldchain": "Cold Chain",
+                "metrics-reefer": "Reefer Operations",
+                "metrics-compliance": "Import Compliance",
+                "about-label": "Corporate Capacity",
+                "about-title": "Unbroken supply lines to Africa's largest trading markets",
+                "about-para1": "Just like global broad-line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperature control, and on-time delivery.",
+                "about-para2": "Whether routing inventory to major commercial capitals or regional hubs, our network ensures your wholesale allocations arrive on time, securely packed, and compliant with all local regulations.",
+                "feature-supply": "End-to-end supply chain management",
+                "feature-temp": "24/7 temperature & condition monitoring",
+                "feature-customs": "Certified customs & compliance expertise",
+                "catalog-label": "Our Portfolio",
+                "catalog-title": "Premium Spirits & Beverages",
+                "catalog-desc": "We specialize exclusively in tier-one international spirits and premium beverages available in wholesale container volumes.",
+                "catalog-exclusive": "Exclusive Selection",
+                "catalog-product": "Premium Spirits & Liquors",
+                "catalog-product-desc": "Curated selection of international premium spirits and beverages, carefully sourced for African wholesale distribution.",
+                "catalog-category": "Category:",
+                "whiskey": "Whiskey",
+                "whiskey-rum": "Whiskey & Rum",
+                "wine": "Wine",
+                "vodka": "Vodka",
+                "roulette-desc": "Premium whiskey offering exceptional quality and taste profile. Available in wholesale quantities.",
+                "dennis-desc": "Distinguished whiskey brand with smooth finish and complex flavor notes. Perfect for master distributor networks.",
+                "goana-desc": "Fine quality wine selection with excellent aging potential. Sourced from premium vineyards for wholesale distribution.",
+                "montcastle-desc": "Ultra-premium whiskey with bold character and refined palate. Ideal for high-end retail and wholesale channels.",
+                "aristocrat-desc": "Prestigious brand offering both premium whiskey and rum selections. Known for consistent quality across product lines and high market demand.",
+                "icex-desc": "Premium vodka with crystal-clear taste and pure distillation process. Versatile spirit for wholesale and retail markets across Africa.",
+                "moq-40": "MOQ: 1 × 40ft Container",
+                "moq-20": "MOQ: 2 × 20ft Containers",
+                "catalog-cta": "Request Quote for Any Brand",
+                "compliance-label": "Regulatory Alignment",
+                "compliance-title": "Fully Licensed Global Freight Integration",
+                "compliance-desc": "We strictly operate under comprehensive local trade authorizations and international trade provisions. All spirits and beverages undergo careful quality vetting, compliance certification, and regulatory pre-clearance.",
+                "compliance-iso-title": "ISO & Safety Certified",
+                "compliance-iso-desc": "Full compliance with ISO standards and international beverage safety regulations.",
+                "compliance-customs-title": "Customs Verified",
+                "compliance-customs-desc": "Pre-cleared with port authorities across major African trading hubs.",
+                "compliance-quality-title": "Quality Assured",
+                "compliance-quality-desc": "Third-party inspections and temperature-controlled logistics guarantee product integrity.",
+                "contact-title": "Contact Us",
+                "contact-subtitle": "For wholesale inquiries, pricing, or partnership opportunities, please reach out using the details below.",
+                "contact-email-label": "Email",
+                "contact-phone-label": "Phone",
+                "contact-service-label": "Service Area",
+                "contact-service": "Africa-wide Import & Distribution",
+                "footer-brand": "Africa Trade Global",
+                "footer-desc": "Premier spirits and beverage bulk distribution across Africa's major ports and trading corridors.",
+                "footer-links-title": "Quick Links",
+                "footer-link-about": "About Us",
+                "footer-link-brands": "Our Brands",
+                "footer-link-contact": "Contact",
+                "footer-contact-title": "Contact Info",
+                "footer-copyright": "© 2026 Africa Trade Global. All rights reserved. Premium Spirits & Beverage Distribution & Logistics Network.",
+                "footer-images": "Images sourced from local assets and"
+            },
+            fr: {
+                "age-title": "Vérification de l'Âge",
+                "age-message": "Vous devez avoir 21 ans ou plus pour accéder à ce site. Ce site contient du contenu lié aux produits alcoolisés.",
+                "age-confirm": "J'ai 21 ans ou plus",
+                "age-deny": "J'ai moins de 21 ans",
+                "brand": "AFRICA TRADE",
+                "nav-about": "À propos",
+                "nav-catalog": "Catalogue en gros",
+                "nav-compliance": "Conformité",
+                "nav-contact": "Contacter Notre Équipe Commerciale",
+                "hero-badge": "Vente en Gros par Conteneur Uniquement",
+                "hero-title": "Distribution Premium de Spiritueux et Alcools FMCG en Afrique",
+                "hero-subtitle": "Approvisionnement des principaux ports africains avec des expéditions fiables de conteneurs de spiritueux internationaux premium et de marques de boissons.",
+                "hero-btn1": "Voir Nos Marques",
+                "hero-btn2": "Notre Infrastructure",
+                "metrics-brands": "Marques",
+                "metrics-brands-desc": "Sélection Premium",
+                "metrics-containers": "Conteneurs Standard",
+                "metrics-coldchain": "Chaîne Froide",
+                "metrics-reefer": "Opérations de Réfrigération",
+                "metrics-compliance": "Conformité à l'Importation",
+                "about-label": "Capacité Corporative",
+                "about-title": "Lignes d'approvisionnement ininterrompues vers les plus grands marchés commerciaux d'Afrique",
+                "about-para1": "Comme les distributeurs mondiaux, nous contrôlons le transport, l'alignement douanier et l'acheminement des conteneurs de la source à la livraison. Nous accordons la priorité à la sécurité des produits, au contrôle strict de la température et à la livraison à temps.",
+                "about-para2": "Qu'il s'agisse d'acheminer les stocks vers les grandes capitales commerciales ou les centres régionaux, notre réseau garantit que vos allocations en gros arrivent à temps, bien emballées et conformes à tous les réglementations locales.",
+                "feature-supply": "Gestion de la chaîne d'approvisionnement de bout en bout",
+                "feature-temp": "Surveillance de la température et de l'état 24h/24 et 7j/7",
+                "feature-customs": "Expertise douanière et de conformité certifiée",
+                "catalog-label": "Notre Portefeuille",
+                "catalog-title": "Spiritueux et Boissons Premium",
+                "catalog-desc": "Nous nous spécialisons exclusivement dans les spiritueux internationaux de premier ordre et les boissons premium disponibles en volumes de conteneurs en gros.",
+                "catalog-exclusive": "Sélection Exclusive",
+                "catalog-product": "Spiritueux et Alcools Premium",
+                "catalog-product-desc": "Sélection curatée de spiritueux internationaux premium et de boissons, soigneusement approvisionnés pour la distribution en gros en Afrique.",
+                "catalog-category": "Catégorie:",
+                "whiskey": "Whisky",
+                "whiskey-rum": "Whisky et Rhum",
+                "wine": "Vin",
+                "vodka": "Vodka",
+                "roulette-desc": "Whisky premium offrant une qualité et un profil de saveur exceptionnels. Disponible en quantités de gros.",
+                "dennis-desc": "Marque de whisky distinguée avec une finition douce et des notes de saveur complexes. Parfait pour les réseaux de distributeurs maîtres.",
+                "goana-desc": "Sélection de vins de qualité fine avec un potentiel de vieillissement excellent. Provenant de vignobles premium pour la distribution en gros.",
+                "montcastle-desc": "Whisky ultra-premium avec un caractère audacieux et un palais raffiné. Idéal pour les canaux de vente au détail et en gros haut de gamme.",
+                "aristocrat-desc": "Marque prestigieuse offrant des sélections premium de whisky et de rhum. Connue pour la cohérence de la qualité sur toutes les lignes de produits et la demande élevée du marché.",
+                "icex-desc": "Vodka premium avec un goût cristallin et un processus de distillation pur. Spiritueux polyvalent pour les marchés de gros et de détail en Afrique.",
+                "moq-40": "Quantité minimale de commande: 1 × Conteneur 40 pieds",
+                "moq-20": "Quantité minimale de commande: 2 × Conteneurs 20 pieds",
+                "catalog-cta": "Demander un Devis pour N'importe Quelle Marque",
+                "compliance-label": "Alignement Réglementaire",
+                "compliance-title": "Intégration Mondiale du Fret Entièrement Autorisée",
+                "compliance-desc": "Nous opérons strictement en vertu d'autorisations commerciales locales complètes et de dispositions commerciales internationales. Tous les spiritueux et boissons subissent un examen minutieux de la qualité, une certification de conformité et un pré-dédouanement réglementaire.",
+                "compliance-iso-title": "Certifiée ISO et Sécurité",
+                "compliance-iso-desc": "Conformité complète avec les normes ISO et les réglementations internationales de sécurité des boissons.",
+                "compliance-customs-title": "Vérifiée par les Douanes",
+                "compliance-customs-desc": "Pré-dédouanée auprès des autorités portuaires dans les principaux centres commerciaux africains.",
+                "compliance-quality-title": "Qualité Assurée",
+                "compliance-quality-desc": "Les inspections par tiers et la logistique à température contrôlée garantissent l'intégrité des produits.",
+                "contact-title": "Nous Contacter",
+                "contact-subtitle": "Pour les demandes de gros, les tarifs ou les opportunités de partenariat, veuillez nous contacter en utilisant les détails ci-dessous.",
+                "contact-email-label": "Email",
+                "contact-phone-label": "Téléphone",
+                "contact-service-label": "Zone de Service",
+                "contact-service": "Import et Distribution Panafricains",
+                "footer-brand": "Africa Trade Global",
+                "footer-desc": "Distribution en gros de spiritueux et de boissons premium dans les principaux ports et corridors commerciaux d'Afrique.",
+                "footer-links-title": "Liens Rapides",
+                "footer-link-about": "À Propos",
+                "footer-link-brands": "Nos Marques",
+                "footer-link-contact": "Contact",
+                "footer-contact-title": "Informations de Contact",
+                "footer-copyright": "© 2026 Africa Trade Global. Tous droits réservés. Réseau de Distribution et Logistique de Spiritueux et Boissons Premium.",
+                "footer-images": "Images provenant d'actifs locaux et"
+            }
+        };
+
+        // Current language
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        // Age verification
+        function confirmAge() {
+            localStorage.setItem('ageVerified', 'true');
+            document.getElementById('ageModal').classList.add('hidden');
+            document.body.classList.remove('scroll-locked');
+        }
+
+        function denyAge() {
+            window.location.href = 'https://www.google.com';
+        }
+
+        // Check age on page load
+        function checkAgeVerification() {
+            const ageVerified = localStorage.getItem('ageVerified');
+            if (!ageVerified) {
+                document.getElementById('ageModal').classList.remove('hidden');
+                document.body.classList.add('scroll-locked');
+            } else {
+                document.getElementById('ageModal').classList.add('hidden');
+                document.body.classList.remove('scroll-locked');
+            }
+        }
+
+        // Set language function
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+            updatePageLanguage();
+            updateLanguageButtons();
+        }
+
+        // Update page language
+        function updatePageLanguage() {
+            document.documentElement.lang = currentLanguage;
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLanguage][key]) {
+                    el.textContent = translations[currentLanguage][key];
+                }
+            });
+        }
+
+        // Update language button states
+        function updateLanguageButtons() {
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.getAttribute('onclick').includes(`'${currentLanguage}'`)) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Toggle accordion
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i.fa-chevron-down');
+            
+            // Close all other accordions
+            document.querySelectorAll('.accordion-content').forEach(item => {
+                if (item !== content) {
+                    item.classList.remove('active');
+                    item.previousElementSibling.querySelector('i.fa-chevron-down').style.transform = 'rotate(0deg)';
+                }
+            });
+            
+            // Toggle current accordion
+            content.classList.toggle('active');
+            icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAgeVerification();
+            updatePageLanguage();
+            updateLanguageButtons();
+        });
+    </script>
+
+</body>
+</html>
