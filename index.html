@@ -299,6 +299,11 @@
         @media (max-width: 640px) {
             .hero-feathers-svg { opacity: 0.1; }
         }
+
+        /* Gold separators between major blocks (subtle) */
+        header, section, footer {
+            border-top: 2px solid rgba(212, 175, 55, 0.08);
+        }
     </style>
 </head>
 <body class="bg-black text-gold antialiased selection:bg-gold selection:text-black">
@@ -350,8 +355,8 @@
 
     <!-- 2. HERO BANNER WITH INTERACTIVE MAP -->
     <header class="hero-section text-white py-16 md:py-24 overflow-hidden relative bg-[#0a0a0a]">
-        <!-- Inline decorative peacock-feathers SVG (subtle, low-contrast) -->
-        <svg class="hero-feathers-svg absolute inset-0 w-full h-full min-h-full block" viewBox="0 0 1600 800" preserveAspectRatio="xMidYMid slice" xmlns="http://w3.org" aria-hidden="true" focusable="false">
+        <!-- Inline decorative peacock-feathers SVG (subtle, low-contrast). Fixed namespace so it renders -->
+        <svg class="hero-feathers-svg absolute inset-0 w-full h-full min-h-full block" viewBox="0 0 1600 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
             <defs>
                 <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
                     <stop offset="0" stop-color="#0b3d3a" stop-opacity="0.9"/>
@@ -370,8 +375,8 @@
             <!-- A few stylized feather arcs -->
             <g filter="url(#soft)" transform="translate(0,20)">
                 <g transform="translate(-120,0) scale(1.1)" opacity="0.95">
-                    <path d="M1200 600 C 1100 420, 900 300, 700 260 C 500 220, 350 260, 220 400 C 140 480, 140 580, 200 640 C 340 760, 700 780, 980 720 C 1160 680, 1250 640, 1200 600 Z" fill="url(#g1)" opacity="0.12"/>
-                    <path d="M1100 620 C 1000 470, 820 350, 650 320 C 480 290, 330 340, 220 450 C 170 500, 170 560, 220 600 C 340 700, 650 740, 900 700 C 1040 680, 1140 660, 1100 620 Z" fill="url(#fg)" opacity="0.12"/>
+                    <path d="M1200 600 C 1100 420, 900 300, 700 260 C 500 220, 350 260, 220 400 C 140 480, 140 580, 200 640 C 340 760, 700 780, 980 720 C 1160 680, 1250 640, 1200 600 Z" fill="url(#g1)"opacity="0.12"/>
+                    <path d="M1100 620 C 1000 470, 820 350, 650 320 C 480 290, 330 340, 220 450 C 170 500, 170 560, 220 600 C 340 700, 650 740, 900 700 C 1040 680, 1140 660, 1100 620 Z" fill="url(#fg)"opacity="0.12"/>
                 </g>
 
                 <!-- Repeating feather eye motifs -->
@@ -968,8 +973,8 @@ function checkAgeVerification() {
 }
 
         // ==========================================
-// FIXED TRANSLATION ENGINE & CORE FUNCTIONS
-// ==========================================
+        // FIXED TRANSLATION ENGINE & CORE FUNCTIONS
+        // ==========================================
 
 function applyTranslations() {
     const lang = localStorage.getItem('language') || 'en';
@@ -998,7 +1003,7 @@ function updateLanguageButtons() {
     const currentLang = localStorage.getItem('language') || 'en';
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.remove('active');
-        if (btn.dataset.lang === currentLang) {
+if (btn.dataset.lang === currentLang) {
             btn.classList.add('active');
         }
     });
