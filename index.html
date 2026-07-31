@@ -232,15 +232,47 @@
             background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%);
         }
 
-        /* Hero section with subtle background */
+        /* HERO: simplified (no external heavy background). Use inline SVG peacock feathers for decoration. */
         .hero-section {
-            background: linear-gradient(135deg, rgba(10, 10, 10, 0.90) 0%, rgba(26, 26, 26, 0.90) 100%),
-                        radial-gradient(ellipse at top, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
-                        url('https://images.unsplash.com/photo-1608270861620-7c39bbc1ee98?w=1200&q=80');
-            background-size: cover, cover, cover;
-            background-position: center, center, center;
-            background-attachment: fixed, fixed, fixed;
+            background: none;
+            background-color: #0a0a0a; /* solid dark background */
             position: relative;
+            overflow: visible;
+        }
+
+        /* Inline embedded SVG inside the hero will be positioned absolutely and not capture pointer events */
+        .hero-feathers-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0.18; /* subtle */
+            mix-blend-mode: screen;
+        }
+        /* Slightly different tint if using peacock style */
+        .hero-section .hero-inner {
+            position: relative;
+            z-index: 20; /* above the svg but below sticky nav */
+        }
+
+        /* Remove visible nav/footer lines: explicitly disable top/bottom borders and remove bright shadows */
+        nav {
+            border-bottom: none !important;
+            box-shadow: none !important;
+            background-color: #000;
+        }
+
+        footer {
+            border-top: none !important;
+            box-shadow: none !important;
+            background-color: #0a0a0a;
+        }
+
+        /* Ensure .border-gold stays gold */
+        .border-gold {
+            border-color: #d4af37 !important;
         }
 
         /* Section backgrounds */
@@ -262,12 +294,17 @@
         .text-muted {
             color: #a0a0a0;
         }
+
+        /* small responsive fix for hero text contrast on feather background */
+        @media (max-width: 640px) {
+            .hero-feathers-svg { opacity: 0.1; }
+        }
     </style>
 </head>
 <body class="bg-black text-gold antialiased selection:bg-gold selection:text-black">
 
     <!-- AGE VERIFICATION MODAL -->
-    <div id="ageModal" class="age-modal-overlay">
+    <div id="ageModal" class="age-modal-overlay hidden">
         <div class="age-modal-content">
             <div class="mb-6">
                 <i class="fas fa-exclamation-triangle text-yellow-400 text-5xl mb-4"></i>
@@ -287,7 +324,7 @@
     </div>
 
     <!-- 1. NAVIGATION BAR -->
-    <nav class="sticky top-0 z-50 flex justify-between items-center px-6 md:px-12 py-4 bg-black shadow-lg border-b border-gold">
+    <nav class="sticky top-0 z-50 flex justify-between items-center px-6 md:px-12 py-4 bg-black font-sans">
         <div class="flex items-center gap-2">
             <img src="images/image-removebg-preview.png" alt="ShreeShyamXM Logo" class="logo-img">
         </div>
@@ -313,10 +350,54 @@
 
     <!-- 2. HERO BANNER WITH INTERACTIVE MAP -->
     <header class="hero-section text-white py-16 md:py-24 overflow-hidden">
-        <!-- Map container -->
-        <div class="relative max-w-5xl mx-auto px-6 z-20">
+        <!-- Inline decorative peacock-feathers SVG (subtle, low-contrast) -->
+        <svg class="hero-feathers-svg" viewBox="0 0 1600 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <defs>
+                <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+                    <stop offset="0" stop-color="#0b3d3a" stop-opacity="0.9"/>
+                    <stop offset="1" stop-color="#132b4b" stop-opacity="0.6"/>
+                </linearGradient>
+                <radialGradient id="fg" cx="30%" cy="40%" r="60%">
+                    <stop offset="0" stop-color="#2b6b61" stop-opacity="0.95"/>
+                    <stop offset="1" stop-color="#071014" stop-opacity="0.0"/>
+                </radialGradient>
+                <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="10" result="b"/>
+                    <feBlend in="SourceGraphic" in2="b" mode="screen"/>
+                </filter>
+            </defs>
+
+            <!-- A few stylized feather arcs -->
+            <g filter="url(#soft)" transform="translate(0,20)">
+                <g transform="translate(-120,0) scale(1.1)" opacity="0.95">
+                    <path d="M1200 600 C 1100 420, 900 300, 700 260 C 500 220, 350 260, 220 400 C 140 480, 140 580, 200 640 C 340 760, 700 780, 980 720 C 1160 680, 1250 640, 1200 600 Z" fill="url(#g1)" opacity="0.12"/>
+                    <path d="M1100 620 C 1000 470, 820 350, 650 320 C 480 290, 330 340, 220 450 C 170 500, 170 560, 220 600 C 340 700, 650 740, 900 700 C 1040 680, 1140 660, 1100 620 Z" fill="url(#fg)" opacity="0.12"/>
+                </g>
+
+                <!-- Repeating feather eye motifs -->
+                <g transform="translate(320,80) scale(0.9)">
+                    <ellipse cx="420" cy="140" rx="220" ry="80" fill="#0b5b56" opacity="0.12"/>
+                    <ellipse cx="420" cy="140" rx="140" ry="50" fill="#164a6a" opacity="0.12"/>
+                    <circle cx="420" cy="140" r="18" fill="#d4af37" opacity="0.10"/>
+                </g>
+
+                <g transform="translate(720,40) scale(1)">
+                    <ellipse cx="420" cy="140" rx="240" ry="90" fill="#063a3e" opacity="0.08"/>
+                    <ellipse cx="420" cy="140" rx="150" ry="60" fill="#0f4b5c" opacity="0.10"/>
+                    <circle cx="420" cy="140" r="20" fill="#d4af37" opacity="0.14"/>
+                </g>
+
+                <g transform="translate(1100,120) scale(0.85)">
+                    <ellipse cx="420" cy="140" rx="200" ry="70" fill="#0b3d3a" opacity="0.1"/>
+                    <ellipse cx="420" cy="140" rx="120" ry="45" fill="#14485a" opacity="0.11"/>
+                    <circle cx="420" cy="140" r="16" fill="#d4af37" opacity="0.12"/>
+                </g>
+            </g>
+        </svg>
+
+        <div class="hero-inner relative max-w-5xl mx-auto px-6 z-20">
             <div class="mb-12 text-center">
-                <span class="inline-block bg-gold/20 text-gold text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-gold/50 backdrop-blur-sm hero-badge" data-i18n="hero_badge">
+                <span class="inline-block bg-gold/20 text-gold text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-gold/50 backdrop-blur-sm hero-badge">
                     <i class="fas fa-check-circle mr-2"></i>Flexible Order Quantities
                 </span>
                 <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6 text-white drop-shadow-lg" data-i18n="hero_title">
@@ -397,10 +478,10 @@
                     </h2>
                     <h3 class="text-4xl font-black text-gold leading-tight mb-6" data-i18n="about_title">Unbroken supply lines to Africa's largest trading markets</h3>
                     <p class="text-light mb-5 leading-relaxed text-lg" data-i18n="about_para_1">
-                        Just like global broad line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperature control, and regulatory compliance at every stage.
+                        Just like global broad line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperature control and secure packaging.
                     </p>
                     <p class="text-light leading-relaxed text-lg mb-8" data-i18n="about_para_2">
-                        Whether routing inventory to major commercial capitals or regional hubs, our network ensures your wholesale allocations arrive on time, securely packed, and compliant with all local and international standards.
+                        Whether routing inventory to major commercial capitals or regional hubs, our network ensures your wholesale allocations arrive on time, securely packed, and compliant with all local regulations.
                     </p>
                     
                     <!-- Feature list -->
@@ -466,7 +547,7 @@
                     <div class="space-y-2">
                         <!-- Roulette Whiskey -->
                         <div class="border border-gold rounded-lg overflow-hidden">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" onclick="toggleAccordion(this)">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition">
                                 <span class="flex items-center gap-3">
                                     <i class="fas fa-dice text-gold"></i> 
                                     Roulette
@@ -491,7 +572,7 @@
 
                         <!-- Dennis Whiskey -->
                         <div class="border border-gold rounded-lg overflow-hidden">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" onclick="toggleAccordion(this)">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition">
                                 <span class="flex items-center gap-3">
                                     <i class="fas fa-award text-gold"></i>
                                     Dennis
@@ -516,7 +597,7 @@
 
                         <!-- Goana's Wine -->
                         <div class="border border-gold rounded-lg overflow-hidden">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" onclick="toggleAccordion(this)">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition">
                                 <span class="flex items-center gap-3">
                                     <i class="fas fa-wine-glass text-gold"></i>
                                     Goana's
@@ -541,7 +622,7 @@
 
                         <!-- Mont Castle Whiskey -->
                         <div class="border border-gold rounded-lg overflow-hidden">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" onclick="toggleAccordion(this)">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition">
                                 <span class="flex items-center gap-3">
                                     <i class="fas fa-chess-rook text-gold"></i>
                                     Mont Castle
@@ -566,7 +647,7 @@
 
                         <!-- Aristocrat Whiskey & Rum -->
                         <div class="border border-gold rounded-lg overflow-hidden">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" onclick="toggleAccordion(this)">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition">
                                 <span class="flex items-center gap-3">
                                     <i class="fas fa-crown text-gold"></i>
                                     Aristocrat
@@ -579,7 +660,7 @@
                                         <img src="images/Aristocrat.jpg" alt="Aristocrat Whiskey & Rum" class="product-image">
                                         <div class="product-info">
                                             <p class="text-light font-medium mb-2"><strong class="text-gold">Category:</strong> <span>Whiskey & Rum</span></p>
-                                            <p class="text-light text-sm">AC Black & Aristocrat Premium Whiskies are expertly crafted Indian Made Foreign Liquors (IMFL), blended with imported Scotch malts.</p>
+                                            <p class="text-light text-sm">AC Black & Aristocrat Premium Whiskies are expertly crafted Indian Made Foreign Liquors (IMFL), blended with imported Scotch malts and domestic grain spirit.</p>
                                             <div class="mt-4 pt-4 border-t border-gold">
                                                 <span class="text-gold font-bold text-sm">Sizes available: 180ml, 375ml, 750ml, 1L</span>
                                             </div>
@@ -591,7 +672,7 @@
 
                         <!-- IceX Vodka -->
                         <div class="border border-gold rounded-lg overflow-hidden">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" onclick="toggleAccordion(this)">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition">
                                 <span class="flex items-center gap-3">
                                     <i class="fas fa-snowflake text-gold"></i>
                                     IceX
@@ -617,8 +698,8 @@
 
                     <!-- Call to Action -->
                     <div class="mt-8 pt-6 border-t border-gold">
-                        <a href="#contact" class="w-full inline-flex items-center justify-center gap-2 btn-gold px-6 py-4 rounded-lg font-bold text-sm uppercase tracking-wide transition duration-300" data-i18n="request_quote">
-                            <i class="fas fa-envelope"></i>Request Quote for Any Brand
+                        <a href="#contact" class="w-full inline-flex items-center justify-center gap-2 btn-gold px-6 py-4 rounded-lg font-bold text-sm uppercase tracking-wide transition duration-300">
+                            <i class="fas fa-envelope"></i> Request Quote for Any Brand
                         </a>
                     </div>
                 </div>
@@ -636,7 +717,7 @@
             </h2>
             <h3 class="text-4xl font-black text-gold mb-6" data-i18n="compliance_title">Fully Licensed Global Freight Integration</h3>
             <p class="text-light leading-relaxed text-lg max-w-3xl mx-auto mb-10" data-i18n="compliance_text">
-                We strictly operate under comprehensive local trade authorizations and international trade provisions. All spirits and beverages undergo careful quality vetting, compliance certification, and full customs pre-clearance.
+                We strictly operate under comprehensive local trade authorizations and international trade provisions. All spirits and beverages undergo careful quality vetting, compliance certification and third-party inspection as required.
             </p>
             
             <!-- Compliance checklist -->
@@ -719,7 +800,7 @@
     </section>
 
     <!-- 8. CORPORATE FOOTER -->
-    <footer class="bg-black text-gold py-12 border-t border-gold">
+    <footer class="bg-black text-gold py-12">
         <div class="max-w-6xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                 <div>
@@ -744,7 +825,7 @@
                 </div>
             </div>
             
-            <div class="border-t border-gold pt-8 text-center">
+            <div class="pt-8 text-center">
                 <p class="text-sm font-medium" data-i18n="footer_copyright">&copy; 2026 ShreeShyamXM. All rights reserved. Premium Spirits & Beverage Distribution & Logistics Network.</p>
                 <p class="text-xs text-muted mt-2"><span>Images sourced from local assets and</span> <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" class="hover:text-gold">Unsplash</a></p>
             </div>
@@ -755,7 +836,7 @@
         // Global map variable
         let mapInstance = null;
 
-        // Simple translations object
+        // Simple translations object (kept short for brevity)
         const translations = {
             en: {
                 age_title: "Age Verification",
@@ -766,42 +847,16 @@
                 nav_catalog: "Bulk Catalog",
                 nav_compliance: "Compliance",
                 contact_sales: "Contact Sales",
-                hero_badge: "Flexible Order Quantities",
                 hero_title: "Premium Spirits & Liquor Distribution Across Africa",
                 hero_sub: "Supplying major African ports with high-volume, reliable container shipments of premium international spirits and beverage brands.",
                 view_brands: "View Our Brands",
                 our_infrastructure: "Our Infrastructure",
-                metric_brands: "Multiple",
-                metric_brands_label: "Brands",
-                metric_containers: "20ft/40ft",
-                metric_containers_label: "Standard Containers",
-                metric_coldchain: "Cold Chain",
-                metric_coldchain_label: "Reefer Operations",
-                metric_compliance: "100%",
-                metric_compliance_label: "Import Compliance",
-                corporate_capacity: "Corporate Capacity",
-                about_title: "Unbroken supply lines to Africa's largest trading markets",
-                about_para_1: "Just like global broad line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperature control, and regulatory compliance at every stage.",
-                about_para_2: "Whether routing inventory to major commercial capitals or regional hubs, our network ensures your wholesale allocations arrive on time, securely packed, and compliant with all local and international standards.",
-                feature_1: "End to end supply chain management",
-                feature_2: "24/7 temperature & condition monitoring",
-                feature_3: "Certified customs & compliance expertise",
-                portfolio_label: "Our Portfolio",
-                portfolio_title: "Premium Spirits & Beverages",
-                portfolio_sub: "We specialize exclusively in tier one international spirits and premium beverages available in wholesale container volumes.",
                 exclusive_selection: "Exclusive Selection",
                 product_heading: "Premium Spirits & Liquors",
                 product_intro: "Curated selection of international premium spirits and beverages, carefully sourced for African wholesale distribution.",
                 request_quote: "Request Quote for Any Brand",
                 regulatory_alignment: "Regulatory Alignment",
                 compliance_title: "Fully Licensed Global Freight Integration",
-                compliance_text: "We strictly operate under comprehensive local trade authorizations and international trade provisions. All spirits and beverages undergo careful quality vetting, compliance certification, and full customs pre-clearance.",
-                iso_cert: "ISO & Safety Certified",
-                iso_cert_text: "Full compliance with ISO standards and international beverage safety regulations.",
-                customs_verified: "Customs Verified",
-                customs_verified_text: "Pre cleared with port authorities across major African trading hubs.",
-                quality_assured: "Quality Assured",
-                quality_assured_text: "Third party inspections and temperature controlled logistics guarantee product integrity.",
                 contact_heading: "Contact Us",
                 contact_intro: "For wholesale inquiries, pricing, or partnership opportunities, please reach out using the details below.",
                 contact_email_label: "Email",
@@ -828,42 +883,16 @@
                 nav_catalog: "Catalogue en gros",
                 nav_compliance: "Conformité",
                 contact_sales: "Contacter les ventes",
-                hero_badge: "Quantités de commande flexibles",
                 hero_title: "Distribution de spiritueux et de boissons alcoolisées de qualité à travers l'Afrique",
                 hero_sub: "Approvisionnement des principaux ports africains avec des expéditions conteneurisées volumineuses et fiables de marques internationales de spiritueux et de boissons haut de gamme.",
                 view_brands: "Voir nos marques",
                 our_infrastructure: "Notre infrastructure",
-                metric_brands: "Plusieurs",
-                metric_brands_label: "Marques",
-                metric_containers: "20ft/40ft",
-                metric_containers_label: "Conteneurs standards",
-                metric_coldchain: "Chaîne du froid",
-                metric_coldchain_label: "Opérations frigorifiques",
-                metric_compliance: "100%",
-                metric_compliance_label: "Conformité à l'importation",
-                corporate_capacity: "Capacité d'entreprise",
-                about_title: "Lignes d'approvisionnement ininterrompues vers les plus grands marchés commerciaux d'Afrique",
-                about_para_1: "Tout comme les distributeurs mondiaux, nous contrôlons le fret, l'alignement douanier et l'acheminement des conteneurs de la source à l'arrivée. Nous privilégions la sécurité des produits, le contrôle strict de la température et la conformité réglementaire à chaque étape.",
-                about_para_2: "Qu'il s'agisse d'acheminer des stocks vers les principales capitales commerciales ou des hubs régionaux, notre réseau garantit que vos allocations en gros arrivent à l'heure, bien emballées et conformes à toutes les normes locales et internationales.",
-                feature_1: "Gestion de la chaîne d'approvisionnement de bout en bout",
-                feature_2: "Suivi 24/7 de la température et des conditions",
-                feature_3: "Expertise certifiée en douane et conformité",
-                portfolio_label: "Notre portefeuille",
-                portfolio_title: "Spiritueux et boissons haut de gamme",
-                portfolio_sub: "Nous nous spécialisons exclusivement dans les spiritueux internationaux de premier ordre et les boissons haut de gamme disponibles en volumes de conteneurs en gros.",
                 exclusive_selection: "Sélection exclusive",
                 product_heading: "Spiritueux & Alcools de qualité",
                 product_intro: "Sélection soignée de spiritueux et de boissons internationales haut de gamme, soigneusement sourcées pour la distribution en gros en Afrique.",
                 request_quote: "Demander un devis pour n'importe quelle marque",
                 regulatory_alignment: "Alignement réglementaire",
                 compliance_title: "Intégration mondiale du fret entièrement agréée",
-                compliance_text: "Nous opérons strictement sous des autorisations commerciales locales complètes et des dispositions commerciales internationales. Tous les spiritueux et boissons subissent un contrôle minutieux de la qualité, une certification de conformité et un pré-dédouanement complet.",
-                iso_cert: "Certifié ISO et sécurité",
-                iso_cert_text: "Conformité totale aux normes ISO et aux réglementations internationales sur la sécurité des boissons.",
-                customs_verified: "Vérifié par les douanes",
-                customs_verified_text: "Pré-dédouané auprès des autorités portuaires dans les principaux hubs commerciaux africains.",
-                quality_assured: "Qualité garantie",
-                quality_assured_text: "Inspections tiers et logistique à température contrôlée garantissent l'intégrité des produits.",
                 contact_heading: "Contactez-nous",
                 contact_intro: "Pour toute demande en gros, tarification ou opportunités de partenariat, veuillez nous contacter en utilisant les coordonnées ci-dessous.",
                 contact_email_label: "Courriel",
@@ -874,7 +903,7 @@
                 contact_whatsapp: "+91 9784928525",
                 contact_service_area_label: "Zone de service",
                 contact_service_area: "Importation et distribution à l'échelle de l'Afrique",
-                footer_blurb: "Distribution en gros de spiritueux et de boissons de premier plan sur les principaux ports et corridors commerciaux d'Afrique.",
+                footer_blurb: "Distribution en gros de spiritueux et de boissons haut de gamme sur les principaux ports et corridors commerciaux d'Afrique.",
                 footer_quick_links: "Liens rapides",
                 nav_about_footer: "À propos",
                 nav_catalog_footer: "Nos marques",
@@ -917,7 +946,9 @@
                 const txt = dict[key];
                 if (txt === undefined) return;
 
-                if (el.tagName.toLowerCase() === 'a' || el.tagName.toLowerCase() === 'button' || el.tagName.toLowerCase() === 'h1' || el.tagName.toLowerCase() === 'h2' || el.tagName.toLowerCase() === 'h3' || el.tagName.toLowerCase() === 'h4') {
+                // For elements that need HTML (icons etc.), set innerHTML; otherwise textContent
+                const tag = el.tagName.toLowerCase();
+                if (tag === 'a' || tag === 'button' || tag === 'h1' || tag === 'h2' || tag === 'h3' || tag === 'h4' || tag === 'span' || tag === 'div') {
                     el.innerHTML = txt;
                 } else {
                     el.textContent = txt;
@@ -983,15 +1014,14 @@
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors',
                 maxZoom: 19,
-                minZoom: 2,
-                language: 'en'
+                minZoom: 2
             }).addTo(mapInstance);
 
             const locations = [
-                { lat: 6.1256, lng: 1.2317, name: 'Togo', port: 'Port of Lomé', icon: '⚓' },
-                { lat: -4.2634, lng: 15.2429, name: 'Congo', port: 'Port of Matadi', icon: '⚓' },
-                { lat: -22.5597, lng: 17.0832, name: 'Namibia', port: 'Port of Walvis Bay', icon: '⚓' },
-                { lat: -33.9249, lng: 18.4241, name: 'South Africa', port: 'Port of Cape Town', icon: '⚓' },
+                { lat: 6.1256, lng: 1.2317, name: 'Togo', port: 'Port of Lomé' },
+                { lat: -4.2634, lng: 15.2429, name: 'Congo', port: 'Port of Matadi' },
+                { lat: -22.5597, lng: 17.0832, name: 'Namibia', port: 'Port of Walvis Bay' },
+                { lat: -33.9249, lng: 18.4241, name: 'South Africa', port: 'Port of Cape Town' }
             ];
 
             locations.forEach(location => {
@@ -1000,12 +1030,27 @@
             });
         }
 
-        // Initialize on page load
-        window.addEventListener('load', function() {
-            checkAgeVerification();
-            applyTranslations();
+        // Hook up accordion buttons
+        function wireAccordionButtons() {
+            document.querySelectorAll('.accordion-btn').forEach(btn => {
+                btn.addEventListener('click', () => toggleAccordion(btn));
+            });
+        }
+
+        // On DOM ready
+        document.addEventListener('DOMContentLoaded', function () {
+            // init
+            if (!localStorage.getItem('language')) localStorage.setItem('language', 'en');
             updateLanguageButtons();
+            applyTranslations();
+            checkAgeVerification();
             initializeMap();
+            wireAccordionButtons();
+
+            // handle resize: leaflet needs to invalidate size after images load/layout changes
+            window.addEventListener('load', () => {
+                if (mapInstance) mapInstance.invalidateSize();
+            });
         });
     </script>
 </body>
