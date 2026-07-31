@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShreeShyamXM - Premium FMCG Distribution</title>
+    <title>ShreeShyamXM - Premium Spirits & Liquor Distribution</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet Map -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
     <style>
         /* Smooth scrolling */
         html {
@@ -19,13 +22,17 @@
             overflow: hidden;
         }
         
-        /* Gradient backgrounds */
+        /* Black and gold theme gradients */
         .gradient-hero {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
         }
         
         .gradient-accent {
-            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%);
+        }
+
+        .gradient-accent-dark {
+            background: linear-gradient(135deg, #8b7500 0%, #6b5d00 100%);
         }
         
         /* Card hover effects */
@@ -35,7 +42,7 @@
         
         .card-hover:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 25px -5px rgba(212, 175, 55, 0.2);
         }
         
         /* Metric counter animation */
@@ -75,8 +82,9 @@
         
         /* Language button active state */
         .lang-btn.active {
-            background-color: #2563eb;
-            color: white;
+            background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%);
+            color: #0a0a0a;
+            font-weight: bold;
         }
 
         /* Age verification modal */
@@ -106,7 +114,7 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
-        /* Product container with side-by-side layout */
+        /* Product container with side by side layout */
         .product-detail-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -135,15 +143,53 @@
             flex: 1;
         }
 
-        /* Logo styling */
+        /* Logo styling - enlarged */
         .logo-img {
-            height: 60px;
+            height: 100px;
             width: auto;
             object-fit: contain;
         }
+
+        /* Map styling */
+        #distributionMap {
+            height: 500px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Gold accent text */
+        .text-gold {
+            color: #d4af37;
+        }
+
+        .bg-gold {
+            background-color: #d4af37;
+        }
+
+        /* Hero badge styling */
+        .hero-badge {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: rgba(212, 175, 55, 0.5);
+            color: #d4af37;
+        }
+
+        /* Contact buttons */
+        .btn-gold {
+            background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%);
+            color: #0a0a0a;
+        }
+
+        .btn-gold:hover {
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Gold metric circle */
+        .metric-gold-circle {
+            background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%);
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased selection:bg-blue-600 selection:text-white">
+<body class="bg-slate-50 text-slate-900 antialiased selection:bg-gold selection:text-black">
 
     <!-- AGE VERIFICATION MODAL -->
     <div id="ageModal" class="age-modal-overlay">
@@ -155,7 +201,7 @@
             </div>
             
             <div class="space-y-3">
-                <button onclick="confirmAge()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg transition duration-300" data-i18n="age-confirm">
+                <button onclick="confirmAge()" class="w-full gradient-accent text-black font-bold py-3 rounded-lg transition duration-300" data-i18n="age-confirm">
                     I am 21 or Older
                 </button>
                 <button onclick="denyAge()" class="w-full bg-slate-300 hover:bg-slate-400 text-slate-900 font-bold py-3 rounded-lg transition duration-300" data-i18n="age-deny">
@@ -166,17 +212,16 @@
     </div>
 
     <!-- 1. NAVIGATION BAR -->
-    <nav class="sticky top-0 z-50 flex justify-between items-center px-6 md:px-12 py-5 bg-white shadow-md border-b border-slate-200">
-        <div class="flex items-center gap-3">
-            <img src="images/Logo.png" alt="ShreeShyamXM Logo" class="logo-img">
-            <span class="text-xl font-extrabold tracking-tight text-blue-900 md:text-2xl" data-i18n="brand">ShreeShyamXM</span>
-        </div>
-        <div class="hidden md:flex space-x-8 font-semibold text-sm text-slate-600">
-            <a href="#about" class="hover:text-blue-900 transition duration-300" data-i18n="nav-about">About Us</a>
-            <a href="#catalog" class="hover:text-blue-900 transition duration-300" data-i18n="nav-catalog">Bulk Catalog</a>
-            <a href="#compliance" class="hover:text-blue-900 transition duration-300" data-i18n="nav-compliance">Compliance</a>
-        </div>
+    <nav class="sticky top-0 z-50 flex justify-between items-center px-6 md:px-12 py-4 bg-white shadow-md border-b-2 border-gold">
         <div class="flex items-center gap-2">
+            <img src="images/Logo.png" alt="ShreeShyamXM Logo" class="logo-img">
+        </div>
+        <div class="hidden md:flex space-x-8 font-semibold text-sm text-slate-700">
+            <a href="#about" class="hover:text-gold transition duration-300" data-i18n="nav-about">About Us</a>
+            <a href="#catalog" class="hover:text-gold transition duration-300" data-i18n="nav-catalog">Bulk Catalog</a>
+            <a href="#compliance" class="hover:text-gold transition duration-300" data-i18n="nav-compliance">Compliance</a>
+        </div>
+        <div class="flex items-center gap-3">
             <button onclick="setLanguage('en')" class="lang-btn px-3 py-1 rounded hover:bg-slate-100 active">
                 🇬🇧 EN
             </button>
@@ -185,36 +230,36 @@
             </button>
         </div>
         <div>
-            <a href="#contact" class="gradient-accent text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-lg transition shadow-lg hover:shadow-xl hover:scale-105 duration-300" data-i18n="nav-contact">
-                Contact Our Sales Team
+            <a href="#contact" class="btn-gold font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-lg transition shadow-lg hover:shadow-xl hover:scale-105 duration-300" data-i18n="nav-contact">
+                Contact Sales
             </a>
         </div>
     </nav>
 
-    <!-- 2. HERO BANNER -->
-    <header class="gradient-hero text-white py-24 md:py-48 overflow-hidden relative">
-        <!-- Animated background pattern -->
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-0 left-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-0 right-0 w-96 h-96 bg-cyan-500 rounded-full blur-3xl"></div>
-        </div>
+    <!-- 2. HERO BANNER WITH INTERACTIVE MAP -->
+    <header class="gradient-hero text-white py-16 md:py-24 overflow-hidden relative">
+        <!-- Map container as background -->
+        <div id="distributionMap" class="absolute inset-0 z-0"></div>
         
-        <div class="relative max-w-5xl mx-auto text-center px-6">
-            <span class="inline-block bg-blue-500/20 text-blue-300 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-blue-400/50 backdrop-blur-sm">
+        <!-- Overlay for readability -->
+        <div class="absolute inset-0 bg-black/40 z-10"></div>
+        
+        <div class="relative max-w-5xl mx-auto text-center px-6 z-20">
+            <span class="inline-block bg-gold/20 text-gold text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-gold/50 backdrop-blur-sm hero-badge">
                 <i class="fas fa-check-circle mr-2"></i><span data-i18n="hero-badge">Flexible Order Quantities</span>
             </span>
-            <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-tight mb-8 text-white drop-shadow-lg" data-i18n="hero-title">
-                Premium FMCG Spirits & Liquor Distribution Across Africa
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6 text-white drop-shadow-lg" data-i18n="hero-title">
+                Premium Spirits & Liquor Distribution Across Africa
             </h1>
-            <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-12 font-normal leading-relaxed" data-i18n="hero-subtitle">
+            <p class="text-base md:text-lg text-slate-200 max-w-2xl mx-auto mb-10 font-normal leading-relaxed" data-i18n="hero-subtitle">
                 Supplying major African ports with high-volume, reliable container shipments of premium international spirits and beverage brands.
             </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-5">
-                <a href="#catalog" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-lg font-bold text-sm tracking-wide shadow-xl hover:shadow-2xl transition duration-300 uppercase" data-i18n="hero-btn1">
-                    <i class="fas fa-bottle"></i> <span data-i18n="hero-btn1">View Our Brands</span>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#catalog" class="btn-gold px-8 py-4 rounded-lg font-bold text-sm tracking-wide shadow-xl hover:shadow-2xl transition duration-300 uppercase" data-i18n="hero-btn1">
+                    <i class="fas fa-bottle"></i> View Our Brands
                 </a>
-                <a href="#about" class="border-2 border-slate-400 hover:bg-slate-800 hover:border-slate-300 text-white px-8 py-4 rounded-lg font-bold text-sm tracking-wide transition duration-300 uppercase" data-i18n="hero-btn2">
-                    <i class="fas fa-warehouse"></i> <span data-i18n="hero-btn2">Our Infrastructure</span>
+                <a href="#about" class="border-2 border-gold hover:bg-gold/20 text-white px-8 py-4 rounded-lg font-bold text-sm tracking-wide transition duration-300 uppercase" data-i18n="hero-btn2">
+                    <i class="fas fa-warehouse"></i> Our Infrastructure
                 </a>
             </div>
         </div>
@@ -225,42 +270,42 @@
         <div class="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
             <div class="metric-card text-center">
                 <div class="flex justify-center mb-4">
-                    <div class="gradient-accent w-14 h-14 rounded-full flex items-center justify-center text-white text-xl">
+                    <div class="metric-gold-circle w-14 h-14 rounded-full flex items-center justify-center text-black text-xl">
                         <i class="fas fa-tags"></i>
                     </div>
                 </div>
-                <p class="text-3xl md:text-4xl font-black text-blue-900 mb-2">6 <span data-i18n="metrics-brands">Brands</span></p>
-                <p class="text-xs uppercase tracking-wider text-slate-500 font-semibold" data-i18n="metrics-brands-desc">Premium Selection</p>
+                <p class="text-3xl md:text-4xl font-black text-slate-900 mb-2"><span data-i18n="metrics-count">Multiple</span></p>
+                <p class="text-xs uppercase tracking-wider text-slate-600 font-semibold" data-i18n="metrics-brands">Brands</p>
             </div>
             
             <div class="metric-card text-center">
                 <div class="flex justify-center mb-4">
-                    <div class="gradient-accent w-14 h-14 rounded-full flex items-center justify-center text-white text-xl">
+                    <div class="metric-gold-circle w-14 h-14 rounded-full flex items-center justify-center text-black text-xl">
                         <i class="fas fa-layer-group"></i>
                     </div>
                 </div>
-                <p class="text-3xl md:text-4xl font-black text-blue-900 mb-2">20ft/40ft</p>
-                <p class="text-xs uppercase tracking-wider text-slate-500 font-semibold" data-i18n="metrics-containers">Standard Containers</p>
+                <p class="text-3xl md:text-4xl font-black text-slate-900 mb-2">20ft/40ft</p>
+                <p class="text-xs uppercase tracking-wider text-slate-600 font-semibold" data-i18n="metrics-containers">Standard Containers</p>
             </div>
             
             <div class="metric-card text-center">
                 <div class="flex justify-center mb-4">
-                    <div class="gradient-accent w-14 h-14 rounded-full flex items-center justify-center text-white text-xl">
+                    <div class="metric-gold-circle w-14 h-14 rounded-full flex items-center justify-center text-black text-xl">
                         <i class="fas fa-snowflake"></i>
                     </div>
                 </div>
-                <p class="text-3xl md:text-4xl font-black text-blue-900 mb-2" data-i18n="metrics-coldchain">Cold Chain</p>
-                <p class="text-xs uppercase tracking-wider text-slate-500 font-semibold" data-i18n="metrics-reefer">Reefer Operations</p>
+                <p class="text-3xl md:text-4xl font-black text-slate-900 mb-2" data-i18n="metrics-coldchain">Cold Chain</p>
+                <p class="text-xs uppercase tracking-wider text-slate-600 font-semibold" data-i18n="metrics-reefer">Reefer Operations</p>
             </div>
             
             <div class="metric-card text-center">
                 <div class="flex justify-center mb-4">
-                    <div class="gradient-accent w-14 h-14 rounded-full flex items-center justify-center text-white text-xl">
+                    <div class="metric-gold-circle w-14 h-14 rounded-full flex items-center justify-center text-black text-xl">
                         <i class="fas fa-shield-alt"></i>
                     </div>
                 </div>
-                <p class="text-3xl md:text-4xl font-black text-blue-900 mb-2">100%</p>
-                <p class="text-xs uppercase tracking-wider text-slate-500 font-semibold" data-i18n="metrics-compliance">Import Compliance</p>
+                <p class="text-3xl md:text-4xl font-black text-slate-900 mb-2">100%</p>
+                <p class="text-xs uppercase tracking-wider text-slate-600 font-semibold" data-i18n="metrics-compliance">Import Compliance</p>
             </div>
         </div>
     </section>
@@ -269,13 +314,13 @@
     <section id="about" class="py-20 max-w-6xl mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-                <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3 flex items-center gap-2">
-                    <span class="w-8 h-0.5 bg-blue-600"></span>
+                <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center gap-2">
+                    <span class="w-8 h-0.5 bg-gold"></span>
                     <span data-i18n="about-label">Corporate Capacity</span>
                 </h2>
                 <h3 class="text-4xl font-black text-slate-900 leading-tight mb-6" data-i18n="about-title">Unbroken supply lines to Africa's largest trading markets</h3>
                 <p class="text-slate-600 mb-5 leading-relaxed text-lg" data-i18n="about-para1">
-                    Just like global broad-line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperature control, and regulatory compliance across every shipment.
+                    Just like global broad line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperature control, and regulatory compliance across every shipment.
                 </p>
                 <p class="text-slate-600 leading-relaxed text-lg mb-8" data-i18n="about-para2">
                     Whether routing inventory to major commercial capitals or regional hubs, our network ensures your wholesale allocations arrive on time, securely packed, and compliant with all local import requirements.
@@ -284,19 +329,19 @@
                 <!-- Feature list -->
                 <div class="space-y-3">
                     <div class="flex items-center gap-3">
-                        <div class="w-5 h-5 rounded-full gradient-accent flex items-center justify-center text-white text-xs">
+                        <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
                             <i class="fas fa-check"></i>
                         </div>
-                        <span class="text-slate-700 font-medium" data-i18n="feature-supply">End-to-end supply chain management</span>
+                        <span class="text-slate-700 font-medium" data-i18n="feature-supply">End to end supply chain management</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <div class="w-5 h-5 rounded-full gradient-accent flex items-center justify-center text-white text-xs">
+                        <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
                             <i class="fas fa-check"></i>
                         </div>
                         <span class="text-slate-700 font-medium" data-i18n="feature-temp">24/7 temperature & condition monitoring</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <div class="w-5 h-5 rounded-full gradient-accent flex items-center justify-center text-white text-xs">
+                        <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
                             <i class="fas fa-check"></i>
                         </div>
                         <span class="text-slate-700 font-medium" data-i18n="feature-customs">Certified customs & compliance expertise</span>
@@ -305,7 +350,7 @@
             </div>
             
             <div class="rounded-2xl overflow-hidden shadow-2xl h-80 md:h-96">
-                <!-- Warehouse image - Direct Unsplash CDN URL -->
+                <!-- Warehouse image -->
                 <img src="images/Warehouse.jpeg" alt="Warehouse Operations" class="w-full h-full object-cover hover:scale-110 transition duration-500">
             </div>
         </div>
@@ -315,21 +360,21 @@
     <section id="catalog" class="bg-gradient-to-b from-slate-100 to-slate-50 py-20 border-y border-slate-200">
         <div class="max-w-4xl mx-auto px-6">
             <div class="text-center max-w-2xl mx-auto mb-16">
-                <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
-                    <span class="w-8 h-0.5 bg-blue-600"></span>
+                <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
+                    <span class="w-8 h-0.5 bg-gold"></span>
                     <span data-i18n="catalog-label">Our Portfolio</span>
-                    <span class="w-8 h-0.5 bg-blue-600"></span>
+                    <span class="w-8 h-0.5 bg-gold"></span>
                 </h2>
                 <h3 class="text-4xl font-black text-slate-900 mb-4" data-i18n="catalog-title">Premium Spirits & Beverages</h3>
-                <p class="text-slate-600 text-lg" data-i18n="catalog-desc">We specialize exclusively in tier-one international spirits and premium beverages available in wholesale container volumes.</p>
+                <p class="text-slate-600 text-lg" data-i18n="catalog-desc">We specialize exclusively in tier one international spirits and premium beverages available in wholesale container volumes.</p>
             </div>
             
             <!-- Single Product Card with Expandable Menu -->
             <div class="card-hover bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
                 <div class="h-64 overflow-hidden bg-slate-200 relative">
-                    <!-- Beverage drinks image - Local product photo -->
+                    <!-- Beverage drinks image -->
                     <img src="images/Beverages.JPG" alt="Premium Beverages" class="w-full h-full object-cover">
-                    <div class="absolute top-4 right-4 gradient-accent text-white px-4 py-2 rounded-full text-xs font-bold uppercase">
+                    <div class="absolute top-4 right-4 bg-gold text-black px-4 py-2 rounded-full text-xs font-bold uppercase">
                         <i class="fas fa-bottle mr-2"></i><span data-i18n="catalog-exclusive">Exclusive Selection</span>
                     </div>
                 </div>
@@ -343,7 +388,7 @@
                         <div class="border border-slate-200 rounded-lg overflow-hidden">
                             <button class="accordion-btn w-full p-4 bg-slate-50 hover:bg-slate-100 flex items-center justify-between text-left font-semibold text-slate-900 transition" onclick="toggleAccordion(this)">
                                 <span class="flex items-center gap-3">
-                                    <i class="fas fa-dice text-blue-600"></i> 
+                                    <i class="fas fa-dice text-gold"></i> 
                                     Roulette
                                 </span>
                                 <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300"></i>
@@ -354,9 +399,9 @@
                                         <img src="images/Roulette.jpg" alt="Roulette Whiskey" class="product-image">
                                         <div class="product-info">
                                             <p class="text-slate-600 font-medium mb-2"><strong data-i18n="catalog-category">Category:</strong> <span data-i18n="whiskey">Whiskey</span></p>
-                                            <p class="text-slate-600 text-sm" data-i18n="roulette-desc">ROULETTE Premium Whisky is a premium blended Indian whisky crafted in Goa using carefully selected grain spirit and quality malt whiskies. Matured in imported American ex-bourbon oak casks, it delivers exceptional smoothness, depth, and character. Available in both Peated and Unpeated expressions, the range offers either rich smoky complexity or a refined, fruit-forward profile, making it an ideal choice for premium retail, hospitality, and international markets.</p>
+                                            <p class="text-slate-600 text-sm" data-i18n="roulette-desc">ROULETTE Premium Whisky is a premium blended Indian whisky crafted in Goa using carefully selected grain spirit and quality malt whiskies. Matured in imported American ex bourbon oak casks, it delivers exceptional smoothness, depth, and character. Available in both Peated and Unpeated expressions, the range offers either rich smoky complexity or a refined, fruit forward profile, making it an ideal choice for premium retail, hospitality, and international markets.</p>
                                             <div class="mt-4 pt-4 border-t border-slate-200">
-                                                <span class="text-blue-600 font-bold text-sm" data-i18n="roulette-sizes">Sizes available: 60ml, 180ml, 200ml, 750ml</span>
+                                                <span class="text-gold font-bold text-sm" data-i18n="roulette-sizes">Sizes available: 60ml, 180ml, 200ml, 750ml</span>
                                             </div>
                                         </div>
                                     </div>
@@ -368,7 +413,7 @@
                         <div class="border border-slate-200 rounded-lg overflow-hidden">
                             <button class="accordion-btn w-full p-4 bg-slate-50 hover:bg-slate-100 flex items-center justify-between text-left font-semibold text-slate-900 transition" onclick="toggleAccordion(this)">
                                 <span class="flex items-center gap-3">
-                                    <i class="fas fa-award text-blue-600"></i>
+                                    <i class="fas fa-award text-gold"></i>
                                     Dennis
                                 </span>
                                 <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300"></i>
@@ -379,9 +424,9 @@
                                         <img src="images/Dennis.jpg" alt="Dennis Whiskey" class="product-image">
                                         <div class="product-info">
                                             <p class="text-slate-600 font-medium mb-2"><strong data-i18n="catalog-category">Category:</strong> <span data-i18n="whiskey">Whiskey</span></p>
-                                            <p class="text-slate-600 text-sm" data-i18n="dennis-desc">Dennis Special Whisky is a smooth blended whisky crafted for exceptional balance and everyday enjoyment. Bottled at 42.8% ABV, it presents a vibrant golden amber colour with a fresh aroma and subtle hints of peat. The palate is smooth and well-rounded, offering gentle warmth and a clean, lingering finish. Whether enjoyed neat, on the rocks, or with water or soda, Dennis Special Whisky delivers a refined and approachable whisky experience.</p>
+                                            <p class="text-slate-600 text-sm" data-i18n="dennis-desc">Dennis Special Whisky is a smooth blended whisky crafted for exceptional balance and everyday enjoyment. Bottled at 42.8% ABV, it presents a vibrant golden amber colour with a fresh aroma and subtle hints of peat. The palate is smooth and well rounded, offering gentle warmth and a clean, lingering finish. Whether enjoyed neat, on the rocks, or with water or soda, Dennis Special Whisky delivers a refined and approachable whisky experience.</p>
                                             <div class="mt-4 pt-4 border-t border-slate-200">
-                                                <span class="text-blue-600 font-bold text-sm" data-i18n="dennis-sizes">Sizes available: 750ml</span>
+                                                <span class="text-gold font-bold text-sm" data-i18n="dennis-sizes">Sizes available: 750ml</span>
                                             </div>
                                         </div>
                                     </div>
@@ -393,7 +438,7 @@
                         <div class="border border-slate-200 rounded-lg overflow-hidden">
                             <button class="accordion-btn w-full p-4 bg-slate-50 hover:bg-slate-100 flex items-center justify-between text-left font-semibold text-slate-900 transition" onclick="toggleAccordion(this)">
                                 <span class="flex items-center gap-3">
-                                    <i class="fas fa-wine-glass text-blue-600"></i>
+                                    <i class="fas fa-wine-glass text-gold"></i>
                                     Goana's
                                 </span>
                                 <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300"></i>
@@ -404,9 +449,9 @@
                                         <img src="images/Goanas.jpg" alt="Goana's Wine" class="product-image">
                                         <div class="product-info">
                                             <p class="text-slate-600 font-medium mb-2"><strong data-i18n="catalog-category">Category:</strong> <span data-i18n="wine">Wine</span></p>
-                                            <p class="text-slate-600 text-sm" data-i18n="goana-desc">Goana's Wine is a premium fortified wine crafted to deliver a rich, smooth, and satisfying drinking experience. With an ABV of 14%, it showcases a deep ruby red colour, complemented by inviting aromas of ripe berries and subtle spice. The palate is medium-sweet with balanced acidity and a long, pleasant finish, making it an excellent pairing for cheeses, grilled meats, desserts, spicy cuisine, and light snacks. Best served chilled between 12–16°C for optimal enjoyment.</p>
+                                            <p class="text-slate-600 text-sm" data-i18n="goana-desc">Goana's Wine is a premium fortified wine crafted to deliver a rich, smooth, and satisfying drinking experience. With an ABV of 14%, it showcases a deep ruby red colour, complemented by inviting aromas of ripe berries and subtle spice. The palate is medium sweet with balanced acidity and a long, pleasant finish, making it an excellent pairing for cheeses, grilled meats, desserts, spicy cuisine, and light snacks. Best served chilled between 12–16°C for optimal enjoyment.</p>
                                             <div class="mt-4 pt-4 border-t border-slate-200">
-                                                <span class="text-blue-600 font-bold text-sm" data-i18n="goana-sizes">Sizes available: 750ml</span>
+                                                <span class="text-gold font-bold text-sm" data-i18n="goana-sizes">Sizes available: 750ml</span>
                                             </div>
                                         </div>
                                     </div>
@@ -418,7 +463,7 @@
                         <div class="border border-slate-200 rounded-lg overflow-hidden">
                             <button class="accordion-btn w-full p-4 bg-slate-50 hover:bg-slate-100 flex items-center justify-between text-left font-semibold text-slate-900 transition" onclick="toggleAccordion(this)">
                                 <span class="flex items-center gap-3">
-                                    <i class="fas fa-chess-rook text-blue-600"></i>
+                                    <i class="fas fa-chess-rook text-gold"></i>
                                     Mont Castle
                                 </span>
                                 <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300"></i>
@@ -429,9 +474,9 @@
                                         <img src="images/MontCastle.jpg" alt="Mont Castle Whiskey" class="product-image">
                                         <div class="product-info">
                                             <p class="text-slate-600 font-medium mb-2"><strong data-i18n="catalog-category">Category:</strong> <span data-i18n="whiskey">Whiskey</span></p>
-                                            <p class="text-slate-600 text-sm" data-i18n="montcastle-desc">Mont Castle Whisky is a premium blended Indian whisky crafted for a smooth, well-balanced drinking experience. Bottled at 42.8% ABV, it features a bright golden amber colour with inviting aromas of light oak, vanilla, and caramel. The palate is mellow and slightly sweet, with subtle notes of malt and oak leading to a warm, lingering finish. Ideal for enjoying neat, on the rocks, or with water or soda, Mont Castle Whisky is a versatile choice for retail, hospitality, and international export markets.</p>
+                                            <p class="text-slate-600 text-sm" data-i18n="montcastle-desc">Mont Castle Whisky is a premium blended Indian whisky crafted for a smooth, well balanced drinking experience. Bottled at 42.8% ABV, it features a bright golden amber colour with inviting aromas of light oak, vanilla, and caramel. The palate is mellow and slightly sweet, with subtle notes of malt and oak leading to a warm, lingering finish. Ideal for enjoying neat, on the rocks, or with water or soda, Mont Castle Whisky is a versatile choice for retail, hospitality, and international export markets.</p>
                                             <div class="mt-4 pt-4 border-t border-slate-200">
-                                                <span class="text-blue-600 font-bold text-sm" data-i18n="montcastle-sizes">Sizes available: 180ml, 375ml, 750ml</span>
+                                                <span class="text-gold font-bold text-sm" data-i18n="montcastle-sizes">Sizes available: 180ml, 375ml, 750ml</span>
                                             </div>
                                         </div>
                                     </div>
@@ -443,7 +488,7 @@
                         <div class="border border-slate-200 rounded-lg overflow-hidden">
                             <button class="accordion-btn w-full p-4 bg-slate-50 hover:bg-slate-100 flex items-center justify-between text-left font-semibold text-slate-900 transition" onclick="toggleAccordion(this)">
                                 <span class="flex items-center gap-3">
-                                    <i class="fas fa-crown text-blue-600"></i>
+                                    <i class="fas fa-crown text-gold"></i>
                                     Aristocrat
                                 </span>
                                 <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300"></i>
@@ -456,7 +501,7 @@
                                             <p class="text-slate-600 font-medium mb-2"><strong data-i18n="catalog-category">Category:</strong> <span data-i18n="whiskey-rum">Whiskey</span></p>
                                             <p class="text-slate-600 text-sm" data-i18n="aristocrat-desc">AC Black & Aristocrat Premium Whiskies are expertly crafted Indian Made Foreign Liquors (IMFL), blended with imported Scotch malts and select Indian grain spirits to deliver exceptional smoothness and character. Bottled at 42.8% ABV, both whiskies feature rich golden amber hues with inviting notes of malt, vanilla, caramel, and gentle oak, leading to a smooth, balanced finish. Available in two premium expressions – AC Black Pure Grain Whisky and Aristocrat Premium Whisky – the range offers a refined whisky experience, perfect for enjoying neat, on the rocks, or with water or soda.</p>
                                             <div class="mt-4 pt-4 border-t border-slate-200">
-                                                <span class="text-blue-600 font-bold text-sm" data-i18n="aristocrat-sizes">Sizes available: 180ml, 375ml, 750ml, 1L</span>
+                                                <span class="text-gold font-bold text-sm" data-i18n="aristocrat-sizes">Sizes available: 180ml, 375ml, 750ml, 1L</span>
                                             </div>
                                         </div>
                                     </div>
@@ -468,7 +513,7 @@
                         <div class="border border-slate-200 rounded-lg overflow-hidden">
                             <button class="accordion-btn w-full p-4 bg-slate-50 hover:bg-slate-100 flex items-center justify-between text-left font-semibold text-slate-900 transition" onclick="toggleAccordion(this)">
                                 <span class="flex items-center gap-3">
-                                    <i class="fas fa-snowflake text-blue-600"></i>
+                                    <i class="fas fa-snowflake text-gold"></i>
                                     IceX
                                 </span>
                                 <i class="fas fa-chevron-down text-slate-400 transition-transform duration-300"></i>
@@ -479,9 +524,9 @@
                                         <img src="images/IceX.jpg" alt="IceX Vodka" class="product-image">
                                         <div class="product-info">
                                             <p class="text-slate-600 font-medium mb-2"><strong data-i18n="catalog-category">Category:</strong> <span data-i18n="vodka">Vodka</span></p>
-                                            <p class="text-slate-600 text-sm" data-i18n="icex-desc">IceX Vodka is a premium vodka crafted from 100% pure grain spirit and triple distilled to achieve exceptional smoothness and purity. Using advanced multi-stage filtration with carbon, silver, and platinum filtration technology, IceX Vodka delivers a clean, refined finish with a balanced character. Available at 42.8% ABV (subject to export market regulations), the range includes Original, Green Apple, Orange, Chilli, and Bare It All Premium Variant, offering a versatile selection designed for modern vodka consumers and international markets.</p>
+                                            <p class="text-slate-600 text-sm" data-i18n="icex-desc">IceX Vodka is a premium vodka crafted from 100% pure grain spirit and triple distilled to achieve exceptional smoothness and purity. Using advanced multi stage filtration with carbon, silver, and platinum filtration technology, IceX Vodka delivers a clean, refined finish with a balanced character. Available at 42.8% ABV (subject to export market regulations), the range includes Original, Green Apple, Orange, Chilli, and Bare It All Premium Variant, offering a versatile selection designed for modern vodka consumers and international markets.</p>
                                             <div class="mt-4 pt-4 border-t border-slate-200">
-                                                <span class="text-blue-600 font-bold text-sm" data-i18n="icex-sizes">Sizes available: 180ml, 375ml, 750ml</span>
+                                                <span class="text-gold font-bold text-sm" data-i18n="icex-sizes">Sizes available: 180ml, 375ml, 750ml</span>
                                             </div>
                                         </div>
                                     </div>
@@ -492,7 +537,7 @@
 
                     <!-- Call to Action -->
                     <div class="mt-8 pt-6 border-t border-slate-200">
-                        <a href="#contact" class="w-full inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-4 rounded-lg font-bold text-sm uppercase tracking-wide transition duration-300" data-i18n="catalog-cta">
+                        <a href="#contact" class="w-full inline-flex items-center justify-center gap-2 btn-gold px-6 py-4 rounded-lg font-bold text-sm uppercase tracking-wide transition duration-300" data-i18n="catalog-cta">
                             <i class="fas fa-envelope"></i>Request Quote for Any Brand
                         </a>
                     </div>
@@ -504,10 +549,10 @@
     <!-- 6. COMPLIANCE SECTION -->
     <section id="compliance" class="bg-white py-20 border-b border-slate-200">
         <div class="max-w-4xl mx-auto text-center px-6">
-            <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
-                <span class="w-8 h-0.5 bg-blue-600"></span>
+            <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
+                <span class="w-8 h-0.5 bg-gold"></span>
                 <span data-i18n="compliance-label">Regulatory Alignment</span>
-                <span class="w-8 h-0.5 bg-blue-600"></span>
+                <span class="w-8 h-0.5 bg-gold"></span>
             </h2>
             <h3 class="text-4xl font-black text-slate-900 mb-6" data-i18n="compliance-title">Fully Licensed Global Freight Integration</h3>
             <p class="text-slate-600 leading-relaxed text-lg max-w-3xl mx-auto mb-10" data-i18n="compliance-desc">
@@ -517,112 +562,125 @@
             <!-- Compliance checklist -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
                 <div class="p-6 bg-slate-50 rounded-xl border border-slate-200">
-                    <div class="text-3xl mb-3 text-blue-600">
+                    <div class="text-3xl mb-3 text-gold">
                         <i class="fas fa-certificate"></i>
                     </div>
                     <h4 class="font-bold text-slate-900 mb-2" data-i18n="compliance-iso-title">ISO & Safety Certified</h4>
                     <p class="text-slate-600 text-sm" data-i18n="compliance-iso-desc">Full compliance with ISO standards and international beverage safety regulations.</p>
                 </div>
                 <div class="p-6 bg-slate-50 rounded-xl border border-slate-200">
-                    <div class="text-3xl mb-3 text-blue-600">
+                    <div class="text-3xl mb-3 text-gold">
                         <i class="fas fa-passport"></i>
                     </div>
                     <h4 class="font-bold text-slate-900 mb-2" data-i18n="compliance-customs-title">Customs Verified</h4>
-                    <p class="text-slate-600 text-sm" data-i18n="compliance-customs-desc">Pre-cleared with port authorities across major African trading hubs.</p>
+                    <p class="text-slate-600 text-sm" data-i18n="compliance-customs-desc">Pre cleared with port authorities across major African trading hubs.</p>
                 </div>
                 <div class="p-6 bg-slate-50 rounded-xl border border-slate-200">
-                    <div class="text-3xl mb-3 text-blue-600">
+                    <div class="text-3xl mb-3 text-gold">
                         <i class="fas fa-check-double"></i>
                     </div>
                     <h4 class="font-bold text-slate-900 mb-2" data-i18n="compliance-quality-title">Quality Assured</h4>
-                    <p class="text-slate-600 text-sm" data-i18n="compliance-quality-desc">Third-party inspections and temperature-controlled logistics guarantee product integrity.</p>
+                    <p class="text-slate-600 text-sm" data-i18n="compliance-quality-desc">Third party inspections and temperature controlled logistics guarantee product integrity.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CONTACT -->
-<section id="contact" class="py-20 gradient-hero text-white">
-    <div class="max-w-3xl mx-auto px-6 text-center">
+    <!-- 7. CONTACT SECTION -->
+    <section id="contact" class="py-20 gradient-hero text-white">
+        <div class="max-w-3xl mx-auto px-6 text-center">
 
-        <h2 class="text-4xl font-black mb-4" data-i18n="contact-title">
-            Contact Us
-        </h2>
+            <h2 class="text-4xl font-black mb-4" data-i18n="contact-title">
+                Contact Us
+            </h2>
 
-        <p class="text-slate-300 text-lg mb-12" data-i18n="contact-subtitle">
-            For wholesale inquiries, pricing, or partnership opportunities,
-            please reach out using the details below.
-        </p>
+            <p class="text-slate-300 text-lg mb-12" data-i18n="contact-subtitle">
+                For wholesale inquiries, pricing, or partnership opportunities,
+                please reach out using the details below.
+            </p>
 
-        <div class="bg-white/10 backdrop-blur rounded-2xl p-10 border border-white/20">
+            <div class="bg-white/10 backdrop-blur rounded-2xl p-10 border border-white/20">
 
-            <div class="space-y-8">
+                <div class="space-y-8">
 
-                <div>
-                    <i class="fas fa-envelope text-blue-400 text-2xl mb-2"></i>
-                    <h3 class="font-bold uppercase tracking-wider text-sm mb-1" data-i18n="contact-email-label">
-                        Email
-                    </h3>
-                    <p class="text-lg">
-                        sales@shreeshyamxm.com
-                    </p>
-                </div>
+                    <div>
+                        <i class="fas fa-envelope text-gold text-2xl mb-2"></i>
+                        <h3 class="font-bold uppercase tracking-wider text-sm mb-1" data-i18n="contact-email-label">
+                            Email
+                        </h3>
+                        <p class="text-lg">
+                            sales@shreeshyamxm.com
+                        </p>
+                    </div>
 
-                <div>
-                    <i class="fas fa-phone text-blue-400 text-2xl mb-2"></i>
-                    <h3 class="font-bold uppercase tracking-wider text-sm mb-1" data-i18n="contact-phone-label">
-                        Phone
-                    </h3>
-                    <p class="text-lg">
-                        +228 72097250
-                    </p>
-                </div>
+                    <div>
+                        <i class="fas fa-phone text-gold text-2xl mb-2"></i>
+                        <h3 class="font-bold uppercase tracking-wider text-sm mb-1" data-i18n="contact-phone-label">
+                            Phone
+                        </h3>
+                        <p class="text-lg">
+                            +228 72097250
+                        </p>
+                    </div>
 
-                <div>
-                    <i class="fas fa-map-marker-alt text-blue-400 text-2xl mb-2"></i>
-                    <h3 class="font-bold uppercase tracking-wider text-sm mb-1" data-i18n="contact-service-label">
-                        Service Area
-                    </h3>
-                    <p class="text-lg" data-i18n="contact-service">
-                        Africa-wide Import & Distribution
-                    </p>
+                    <div>
+                        <i class="fab fa-whatsapp text-gold text-2xl mb-2"></i>
+                        <h3 class="font-bold uppercase tracking-wider text-sm mb-1" data-i18n="contact-whatsapp-label">
+                            WhatsApp
+                        </h3>
+                        <p class="text-lg">
+                            <a href="https://wa.me/919784928525" target="_blank" class="hover:text-gold transition duration-300">
+                                +91 9784928525
+                            </a>
+                        </p>
+                    </div>
+
+                    <div>
+                        <i class="fas fa-map-marker-alt text-gold text-2xl mb-2"></i>
+                        <h3 class="font-bold uppercase tracking-wider text-sm mb-1" data-i18n="contact-service-label">
+                            Service Area
+                        </h3>
+                        <p class="text-lg" data-i18n="contact-service">
+                            Africa wide Import & Distribution
+                        </p>
+                    </div>
+
                 </div>
 
             </div>
 
         </div>
-
-    </div>
-</section>
+    </section>
 
     <!-- 8. CORPORATE FOOTER -->
-    <footer class="bg-slate-950 text-slate-500 py-12 border-t border-slate-900">
+    <footer class="bg-slate-950 text-slate-500 py-12 border-t-2 border-gold">
         <div class="max-w-6xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                 <div>
-                    <h4 class="text-white font-bold mb-4" data-i18n="footer-brand">ShreeShyamXM</h4>
+                    <h4 class="text-gold font-bold mb-4" data-i18n="footer-brand">ShreeShyamXM</h4>
                     <p class="text-sm text-slate-400" data-i18n="footer-desc">Premier spirits and beverage bulk distribution across Africa's major ports and trading corridors.</p>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-4" data-i18n="footer-links-title">Quick Links</h4>
+                    <h4 class="text-gold font-bold mb-4" data-i18n="footer-links-title">Quick Links</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#about" class="text-slate-400 hover:text-white transition" data-i18n="footer-link-about">About Us</a></li>
-                        <li><a href="#catalog" class="text-slate-400 hover:text-white transition" data-i18n="footer-link-brands">Our Brands</a></li>
-                        <li><a href="#contact" class="text-slate-400 hover:text-white transition" data-i18n="footer-link-contact">Contact</a></li>
+                        <li><a href="#about" class="text-slate-400 hover:text-gold transition" data-i18n="footer-link-about">About Us</a></li>
+                        <li><a href="#catalog" class="text-slate-400 hover:text-gold transition" data-i18n="footer-link-brands">Our Brands</a></li>
+                        <li><a href="#contact" class="text-slate-400 hover:text-gold transition" data-i18n="footer-link-contact">Contact</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-4" data-i18n="footer-contact-title">Contact Info</h4>
+                    <h4 class="text-gold font-bold mb-4" data-i18n="footer-contact-title">Contact Info</h4>
                     <p class="text-sm text-slate-400">
                         <i class="fas fa-envelope mr-2"></i>sales@shreeshyamxm.com<br>
-                        <i class="fas fa-phone mr-2"></i>+228 72097250
+                        <i class="fas fa-phone mr-2"></i>+228 72097250<br>
+                        <i class="fab fa-whatsapp mr-2"></i><a href="https://wa.me/919784928525" target="_blank" class="hover:text-gold transition">+91 9784928525</a>
                     </p>
                 </div>
             </div>
             
             <div class="border-t border-slate-800 pt-8 text-center">
                 <p class="text-xs font-medium" data-i18n="footer-copyright">&copy; 2026 ShreeShyamXM. All rights reserved. Premium Spirits & Beverage Distribution & Logistics Network.</p>
-                <p class="text-xs text-slate-600 mt-2"><span data-i18n="footer-images">Images sourced from local assets and</span> <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a></p>
+                <p class="text-xs text-slate-600 mt-2"><span data-i18n="footer-images">Images sourced from local assets and</span> <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" class="text-gold hover:text-white transition">Unsplash</a></p>
             </div>
         </div>
     </footer>
@@ -635,32 +693,31 @@
                 "age-message": "You must be 21 years or older to access this site. This site contains content related to alcohol products.",
                 "age-confirm": "I am 21 or Older",
                 "age-deny": "I am Under 21",
-                "brand": "ShreeShyamXM",
                 "nav-about": "About Us",
                 "nav-catalog": "Bulk Catalog",
                 "nav-compliance": "Compliance",
-                "nav-contact": "Contact Our Sales Team",
+                "nav-contact": "Contact Sales",
                 "hero-badge": "Flexible Order Quantities",
-                "hero-title": "Premium FMCG Spirits & Liquor Distribution Across Africa",
-                "hero-subtitle": "Supplying major African ports with high-volume, reliable container shipments of premium international spirits and beverage brands.",
+                "hero-title": "Premium Spirits & Liquor Distribution Across Africa",
+                "hero-subtitle": "Supplying major African ports with high volume, reliable container shipments of premium international spirits and beverage brands.",
                 "hero-btn1": "View Our Brands",
                 "hero-btn2": "Our Infrastructure",
+                "metrics-count": "Multiple",
                 "metrics-brands": "Brands",
-                "metrics-brands-desc": "Premium Selection",
                 "metrics-containers": "Standard Containers",
                 "metrics-coldchain": "Cold Chain",
                 "metrics-reefer": "Reefer Operations",
                 "metrics-compliance": "Import Compliance",
                 "about-label": "Corporate Capacity",
                 "about-title": "Unbroken supply lines to Africa's largest trading markets",
-                "about-para1": "Just like global broad-line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperature control, and regulatory compliance across every shipment.",
+                "about-para1": "Just like global broad line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperature control, and regulatory compliance across every shipment.",
                 "about-para2": "Whether routing inventory to major commercial capitals or regional hubs, our network ensures your wholesale allocations arrive on time, securely packed, and compliant with all local import requirements.",
-                "feature-supply": "End-to-end supply chain management",
+                "feature-supply": "End to end supply chain management",
                 "feature-temp": "24/7 temperature & condition monitoring",
                 "feature-customs": "Certified customs & compliance expertise",
                 "catalog-label": "Our Portfolio",
                 "catalog-title": "Premium Spirits & Beverages",
-                "catalog-desc": "We specialize exclusively in tier-one international spirits and premium beverages available in wholesale container volumes.",
+                "catalog-desc": "We specialize exclusively in tier one international spirits and premium beverages available in wholesale container volumes.",
                 "catalog-exclusive": "Exclusive Selection",
                 "catalog-product": "Premium Spirits & Liquors",
                 "catalog-product-desc": "Curated selection of international premium spirits and beverages, carefully sourced for African wholesale distribution.",
@@ -669,17 +726,17 @@
                 "whiskey-rum": "Whiskey & Rum",
                 "wine": "Wine",
                 "vodka": "Vodka",
-                "roulette-desc": "ROULETTE Premium Whisky is a premium blended Indian whisky crafted in Goa using carefully selected grain spirit and quality malt whiskies. Matured in imported American ex-bourbon oak casks, it delivers exceptional smoothness, depth, and character. Available in both Peated and Unpeated expressions, the range offers either rich smoky complexity or a refined, fruit-forward profile, making it an ideal choice for premium retail, hospitality, and international markets.",
+                "roulette-desc": "ROULETTE Premium Whisky is a premium blended Indian whisky crafted in Goa using carefully selected grain spirit and quality malt whiskies. Matured in imported American ex bourbon oak casks, it delivers exceptional smoothness, depth, and character. Available in both Peated and Unpeated expressions, the range offers either rich smoky complexity or a refined, fruit forward profile, making it an ideal choice for premium retail, hospitality, and international markets.",
                 "roulette-sizes": "Sizes available: 60ml, 180ml, 200ml, 750ml",
-                "dennis-desc": "Dennis Special Whisky is a smooth blended whisky crafted for exceptional balance and everyday enjoyment. Bottled at 42.8% ABV, it presents a vibrant golden amber colour with a fresh aroma and subtle hints of peat. The palate is smooth and well-rounded, offering gentle warmth and a clean, lingering finish. Whether enjoyed neat, on the rocks, or with water or soda, Dennis Special Whisky delivers a refined and approachable whisky experience.",
+                "dennis-desc": "Dennis Special Whisky is a smooth blended whisky crafted for exceptional balance and everyday enjoyment. Bottled at 42.8% ABV, it presents a vibrant golden amber colour with a fresh aroma and subtle hints of peat. The palate is smooth and well rounded, offering gentle warmth and a clean, lingering finish. Whether enjoyed neat, on the rocks, or with water or soda, Dennis Special Whisky delivers a refined and approachable whisky experience.",
                 "dennis-sizes": "Sizes available: 750ml",
-                "goana-desc": "Goana's Wine is a premium fortified wine crafted to deliver a rich, smooth, and satisfying drinking experience. With an ABV of 14%, it showcases a deep ruby red colour, complemented by inviting aromas of ripe berries and subtle spice. The palate is medium-sweet with balanced acidity and a long, pleasant finish, making it an excellent pairing for cheeses, grilled meats, desserts, spicy cuisine, and light snacks. Best served chilled between 12–16°C for optimal enjoyment.",
+                "goana-desc": "Goana's Wine is a premium fortified wine crafted to deliver a rich, smooth, and satisfying drinking experience. With an ABV of 14%, it showcases a deep ruby red colour, complemented by inviting aromas of ripe berries and subtle spice. The palate is medium sweet with balanced acidity and a long, pleasant finish, making it an excellent pairing for cheeses, grilled meats, desserts, spicy cuisine, and light snacks. Best served chilled between 12–16°C for optimal enjoyment.",
                 "goana-sizes": "Sizes available: 750ml",
-                "montcastle-desc": "Mont Castle Whisky is a premium blended Indian whisky crafted for a smooth, well-balanced drinking experience. Bottled at 42.8% ABV, it features a bright golden amber colour with inviting aromas of light oak, vanilla, and caramel. The palate is mellow and slightly sweet, with subtle notes of malt and oak leading to a warm, lingering finish. Ideal for enjoying neat, on the rocks, or with water or soda, Mont Castle Whisky is a versatile choice for retail, hospitality, and international export markets.",
+                "montcastle-desc": "Mont Castle Whisky is a premium blended Indian whisky crafted for a smooth, well balanced drinking experience. Bottled at 42.8% ABV, it features a bright golden amber colour with inviting aromas of light oak, vanilla, and caramel. The palate is mellow and slightly sweet, with subtle notes of malt and oak leading to a warm, lingering finish. Ideal for enjoying neat, on the rocks, or with water or soda, Mont Castle Whisky is a versatile choice for retail, hospitality, and international export markets.",
                 "montcastle-sizes": "Sizes available: 180ml, 375ml, 750ml",
                 "aristocrat-desc": "AC Black & Aristocrat Premium Whiskies are expertly crafted Indian Made Foreign Liquors (IMFL), blended with imported Scotch malts and select Indian grain spirits to deliver exceptional smoothness and character. Bottled at 42.8% ABV, both whiskies feature rich golden amber hues with inviting notes of malt, vanilla, caramel, and gentle oak, leading to a smooth, balanced finish. Available in two premium expressions – AC Black Pure Grain Whisky and Aristocrat Premium Whisky – the range offers a refined whisky experience, perfect for enjoying neat, on the rocks, or with water or soda.",
                 "aristocrat-sizes": "Sizes available: 180ml, 375ml, 750ml, 1L",
-                "icex-desc": "IceX Vodka is a premium vodka crafted from 100% pure grain spirit and triple distilled to achieve exceptional smoothness and purity. Using advanced multi-stage filtration with carbon, silver, and platinum filtration technology, IceX Vodka delivers a clean, refined finish with a balanced character. Available at 42.8% ABV (subject to export market regulations), the range includes Original, Green Apple, Orange, Chilli, and Bare It All Premium Variant, offering a versatile selection designed for modern vodka consumers and international markets.",
+                "icex-desc": "IceX Vodka is a premium vodka crafted from 100% pure grain spirit and triple distilled to achieve exceptional smoothness and purity. Using advanced multi stage filtration with carbon, silver, and platinum filtration technology, IceX Vodka delivers a clean, refined finish with a balanced character. Available at 42.8% ABV (subject to export market regulations), the range includes Original, Green Apple, Orange, Chilli, and Bare It All Premium Variant, offering a versatile selection designed for modern vodka consumers and international markets.",
                 "icex-sizes": "Sizes available: 180ml, 375ml, 750ml",
                 "catalog-cta": "Request Quote for Any Brand",
                 "compliance-label": "Regulatory Alignment",
@@ -688,15 +745,16 @@
                 "compliance-iso-title": "ISO & Safety Certified",
                 "compliance-iso-desc": "Full compliance with ISO standards and international beverage safety regulations.",
                 "compliance-customs-title": "Customs Verified",
-                "compliance-customs-desc": "Pre-cleared with port authorities across major African trading hubs.",
+                "compliance-customs-desc": "Pre cleared with port authorities across major African trading hubs.",
                 "compliance-quality-title": "Quality Assured",
-                "compliance-quality-desc": "Third-party inspections and temperature-controlled logistics guarantee product integrity.",
+                "compliance-quality-desc": "Third party inspections and temperature controlled logistics guarantee product integrity.",
                 "contact-title": "Contact Us",
                 "contact-subtitle": "For wholesale inquiries, pricing, or partnership opportunities, please reach out using the details below.",
                 "contact-email-label": "Email",
                 "contact-phone-label": "Phone",
+                "contact-whatsapp-label": "WhatsApp",
                 "contact-service-label": "Service Area",
-                "contact-service": "Africa-wide Import & Distribution",
+                "contact-service": "Africa wide Import & Distribution",
                 "footer-brand": "ShreeShyamXM",
                 "footer-desc": "Premier spirits and beverage bulk distribution across Africa's major ports and trading corridors.",
                 "footer-links-title": "Quick Links",
@@ -712,18 +770,17 @@
                 "age-message": "Vous devez avoir 21 ans ou plus pour accéder à ce site. Ce site contient du contenu lié aux produits alcoolisés.",
                 "age-confirm": "J'ai 21 ans ou plus",
                 "age-deny": "J'ai moins de 21 ans",
-                "brand": "ShreeShyamXM",
                 "nav-about": "À propos",
                 "nav-catalog": "Catalogue en gros",
                 "nav-compliance": "Conformité",
-                "nav-contact": "Contacter Notre Équipe Commerciale",
+                "nav-contact": "Contacter les Ventes",
                 "hero-badge": "Quantités de Commande Flexibles",
-                "hero-title": "Distribution Premium de Spiritueux et Alcools FMCG en Afrique",
+                "hero-title": "Distribution Premium de Spiritueux et Alcools en Afrique",
                 "hero-subtitle": "Approvisionnement des principaux ports africains avec des expéditions fiables de conteneurs de spiritueux internationaux premium et de marques de boissons.",
                 "hero-btn1": "Voir Nos Marques",
                 "hero-btn2": "Notre Infrastructure",
+                "metrics-count": "Plusieurs",
                 "metrics-brands": "Marques",
-                "metrics-brands-desc": "Sélection Premium",
                 "metrics-containers": "Conteneurs Standard",
                 "metrics-coldchain": "Chaîne Froide",
                 "metrics-reefer": "Opérations de Réfrigération",
@@ -746,7 +803,7 @@
                 "whiskey-rum": "Whisky et Rhum",
                 "wine": "Vin",
                 "vodka": "Vodka",
-                "roulette-desc": "ROULETTE Premium Whisky est un whisky blended indien premium fabriqué à Goa en utilisant l'eau-de-vie de grain soigneusement sélectionnée et les whiskies de malt de qualité. Vieilli en fûts de chêne blanc américain ex-bourbon importés, il offre une douceur, une profondeur et un caractère exceptionnels. Disponible en expressions fumées et non fumées, la gamme offre soit une complexité fumée riche, soit un profil affiné et avant-gardiste, ce qui en fait un choix idéal pour la vente au détail premium, l'hospitalité et les marchés internationaux.",
+                "roulette-desc": "ROULETTE Premium Whisky est un whisky blended indien premium fabriqué à Goa en utilisant l'eau-de-vie de grain soigneusement sélectionnée et les whiskies de malt de qualité. Vieilli en fûts de chêne blanc américain ex bourbon importés, il offre une douceur, une profondeur et un caractère exceptionnels. Disponible en expressions fumées et non fumées, la gamme offre soit une complexité fumée riche, soit un profil affiné et avant-gardiste, ce qui en fait un choix idéal pour la vente au détail premium, l'hospitalité et les marchés internationaux.",
                 "roulette-sizes": "Tailles disponibles : 60 ml, 180 ml, 200 ml, 750 ml",
                 "dennis-desc": "Dennis Special Whisky est un whisky blended lisse conçu pour l'équilibre exceptionnel et le plaisir quotidien. Embouteillé à 42,8% ABV, il présente une couleur ambre doré vibrant avec un arôme frais et de subtiles notes de tourbe. Le palais est lisse et bien équilibré, offrant une chaleur douce et une finition propre et persistante. Que ce soit dégusté pur, avec des glaçons, ou avec de l'eau ou du soda, Dennis Special Whisky offre une expérience de whisky raffinée et accessible.",
                 "dennis-sizes": "Tailles disponibles : 750 ml",
@@ -765,13 +822,14 @@
                 "compliance-iso-title": "Certifiée ISO et Sécurité",
                 "compliance-iso-desc": "Conformité complète avec les normes ISO et les réglementations internationales de sécurité des boissons.",
                 "compliance-customs-title": "Vérifiée par les Douanes",
-                "compliance-customs-desc": "Pré-dédouanée auprès des autorités portuaires dans les principaux centres commerciaux africains.",
+                "compliance-customs-desc": "Pré dédouanée auprès des autorités portuaires dans les principaux centres commerciaux africains.",
                 "compliance-quality-title": "Qualité Assurée",
                 "compliance-quality-desc": "Les inspections par tiers et la logistique à température contrôlée garantissent l'intégrité des produits.",
                 "contact-title": "Nous Contacter",
                 "contact-subtitle": "Pour les demandes de gros, les tarifs ou les opportunités de partenariat, veuillez nous contacter en utilisant les détails ci-dessous.",
                 "contact-email-label": "Email",
                 "contact-phone-label": "Téléphone",
+                "contact-whatsapp-label": "WhatsApp",
                 "contact-service-label": "Zone de Service",
                 "contact-service": "Import et Distribution Panafricains",
                 "footer-brand": "ShreeShyamXM",
@@ -796,7 +854,7 @@
             document.body.classList.remove('scroll-locked');
         }
 
-        function denyAge() {
+                function denyAge() {
             window.location.href = 'https://www.google.com';
         }
 
@@ -862,11 +920,46 @@
             icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
+        // Initialize Leaflet map for distribution locations
+        function initializeMap() {
+            const map = L.map('distributionMap').setView([5.5, 0], 3);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Distribution locations with gold markers
+            const locations = [
+                { lat: 6.1256, lng: 1.2317, name: 'Togo' },
+                { lat: 9.3077, lng: 2.3158, name: 'Benin' },
+                { lat: 7.3697, lng: -0.5577, name: 'Ghana' },
+                { lat: 9.0765, lng: 7.3986, name: 'Nigeria' },
+                { lat: 20.5937, lng: 78.9629, name: 'India' }
+            ];
+
+            locations.forEach(location => {
+                const goldMarker = L.circleMarker([location.lat, location.lng], {
+                    radius: 8,
+                    fillColor: '#d4af37',
+                    color: '#0a0a0a',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                }).addTo(map).bindPopup(`<div class="text-center"><strong class="text-gold">${location.name}</strong></div>`);
+            });
+        }
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             checkAgeVerification();
             updatePageLanguage();
             updateLanguageButtons();
+            
+            // Initialize map if the element exists
+            if (document.getElementById('distributionMap')) {
+                setTimeout(initializeMap, 500);
+            }
         });
     </script>
 
