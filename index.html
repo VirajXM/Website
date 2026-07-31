@@ -15,6 +15,8 @@
         /* Smooth scrolling */
         html {
             scroll-behavior: smooth;
+            margin: 0;
+            padding: 0;
         }
         
         /* Prevent scrolling when modal is open */
@@ -26,6 +28,8 @@
         body {
             background-color: #0a0a0a;
             color: #d4af37;
+            margin: 0;
+            padding: 0;
         }
 
         /* Black and gold theme gradients */
@@ -228,21 +232,22 @@
             background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%);
         }
 
-        /* Hero section with background */
+        /* Hero section with subtle background */
         .hero-section {
-            background: linear-gradient(135deg, rgba(10, 10, 10, 0.85) 0%, rgba(26, 26, 26, 0.85) 100%),
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.90) 0%, rgba(26, 26, 26, 0.90) 100%),
+                        radial-gradient(ellipse at top, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
                         url('https://images.unsplash.com/photo-1608270861620-7c39bbc1ee98?w=1200&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-size: cover, cover, cover;
+            background-position: center, center, center;
+            background-attachment: fixed, fixed, fixed;
             position: relative;
         }
 
         /* Section backgrounds */
         .section-dark {
             background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
-            border-top: 2px solid #d4af37;
-            border-bottom: 2px solid #d4af37;
+            border-top: none;
+            border-bottom: none;
         }
 
         .section-black {
@@ -282,7 +287,7 @@
     </div>
 
     <!-- 1. NAVIGATION BAR -->
-    <nav class="sticky top-0 z-50 flex justify-between items-center px-6 md:px-12 py-4 bg-black shadow-lg border-b-2 border-gold">
+    <nav class="sticky top-0 z-50 flex justify-between items-center px-6 md:px-12 py-4 bg-black shadow-lg border-b border-gold">
         <div class="flex items-center gap-2">
             <img src="images/image-removebg-preview.png" alt="ShreeShyamXM Logo" class="logo-img">
         </div>
@@ -392,10 +397,10 @@
                     </h2>
                     <h3 class="text-4xl font-black text-gold leading-tight mb-6" data-i18n="about_title">Unbroken supply lines to Africa's largest trading markets</h3>
                     <p class="text-light mb-5 leading-relaxed text-lg" data-i18n="about_para_1">
-                        Just like global broad line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperat[...]
+                        Just like global broad line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperature control, and regulatory compliance at every stage.
                     </p>
                     <p class="text-light leading-relaxed text-lg mb-8" data-i18n="about_para_2">
-                        Whether routing inventory to major commercial capitals or regional hubs, our network ensures your wholesale allocations arrive on time, securely packed, and compliant with all [...]
+                        Whether routing inventory to major commercial capitals or regional hubs, our network ensures your wholesale allocations arrive on time, securely packed, and compliant with all local and international standards.
                     </p>
                     
                     <!-- Feature list -->
@@ -474,7 +479,7 @@
                                         <img src="images/Roulette.jpg" alt="Roulette Whiskey" class="product-image">
                                         <div class="product-info">
                                             <p class="text-light font-medium mb-2"><strong class="text-gold">Category:</strong> <span>Whiskey</span></p>
-                                            <p class="text-light text-sm">ROULETTE Premium Whisky is a premium blended Indian whisky crafted in Goa using carefully selected grain spirit and quality ma[...]
+                                            <p class="text-light text-sm">ROULETTE Premium Whisky is a premium blended Indian whisky crafted in Goa using carefully selected grain spirit and quality malts.</p>
                                             <div class="mt-4 pt-4 border-t border-gold">
                                                 <span class="text-gold font-bold text-sm">Sizes available: 60ml, 180ml, 200ml, 750ml</span>
                                             </div>
@@ -574,7 +579,7 @@
                                         <img src="images/Aristocrat.jpg" alt="Aristocrat Whiskey & Rum" class="product-image">
                                         <div class="product-info">
                                             <p class="text-light font-medium mb-2"><strong class="text-gold">Category:</strong> <span>Whiskey & Rum</span></p>
-                                            <p class="text-light text-sm">AC Black & Aristocrat Premium Whiskies are expertly crafted Indian Made Foreign Liquors (IMFL), blended with imported Scotch m[...]
+                                            <p class="text-light text-sm">AC Black & Aristocrat Premium Whiskies are expertly crafted Indian Made Foreign Liquors (IMFL), blended with imported Scotch malts.</p>
                                             <div class="mt-4 pt-4 border-t border-gold">
                                                 <span class="text-gold font-bold text-sm">Sizes available: 180ml, 375ml, 750ml, 1L</span>
                                             </div>
@@ -599,7 +604,7 @@
                                         <img src="images/IceX.jpg" alt="IceX Vodka" class="product-image">
                                         <div class="product-info">
                                             <p class="text-light font-medium mb-2"><strong class="text-gold">Category:</strong> <span>Vodka</span></p>
-                                            <p class="text-light text-sm">IceX Vodka is a premium vodka crafted from 100% pure grain spirit and triple distilled to achieve exceptional smoothness and p[...]
+                                            <p class="text-light text-sm">IceX Vodka is a premium vodka crafted from 100% pure grain spirit and triple distilled to achieve exceptional smoothness and purity.</p>
                                             <div class="mt-4 pt-4 border-t border-gold">
                                                 <span class="text-gold font-bold text-sm">Sizes available: 180ml, 375ml, 750ml</span>
                                             </div>
@@ -631,7 +636,7 @@
             </h2>
             <h3 class="text-4xl font-black text-gold mb-6" data-i18n="compliance_title">Fully Licensed Global Freight Integration</h3>
             <p class="text-light leading-relaxed text-lg max-w-3xl mx-auto mb-10" data-i18n="compliance_text">
-                We strictly operate under comprehensive local trade authorizations and international trade provisions. All spirits and beverages undergo careful quality vetting, compliance certificati[...]
+                We strictly operate under comprehensive local trade authorizations and international trade provisions. All spirits and beverages undergo careful quality vetting, compliance certification, and full customs pre-clearance.
             </p>
             
             <!-- Compliance checklist -->
@@ -714,7 +719,7 @@
     </section>
 
     <!-- 8. CORPORATE FOOTER -->
-    <footer class="bg-black text-gold py-12 border-t-2 border-gold">
+    <footer class="bg-black text-gold py-12 border-t border-gold">
         <div class="max-w-6xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                 <div>
@@ -776,8 +781,8 @@
                 metric_compliance_label: "Import Compliance",
                 corporate_capacity: "Corporate Capacity",
                 about_title: "Unbroken supply lines to Africa's largest trading markets",
-                about_para_1: "Just like global broad line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperat[...]",
-                about_para_2: "Whether routing inventory to major commercial capitals or regional hubs, our network ensures your wholesale allocations arrive on time, securely packed, and compliant with all [...]",
+                about_para_1: "Just like global broad line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperature control, and regulatory compliance at every stage.",
+                about_para_2: "Whether routing inventory to major commercial capitals or regional hubs, our network ensures your wholesale allocations arrive on time, securely packed, and compliant with all local and international standards.",
                 feature_1: "End to end supply chain management",
                 feature_2: "24/7 temperature & condition monitoring",
                 feature_3: "Certified customs & compliance expertise",
@@ -790,7 +795,7 @@
                 request_quote: "Request Quote for Any Brand",
                 regulatory_alignment: "Regulatory Alignment",
                 compliance_title: "Fully Licensed Global Freight Integration",
-                compliance_text: "We strictly operate under comprehensive local trade authorizations and international trade provisions. All spirits and beverages undergo careful quality vetting, compliance certificati[...]",
+                compliance_text: "We strictly operate under comprehensive local trade authorizations and international trade provisions. All spirits and beverages undergo careful quality vetting, compliance certification, and full customs pre-clearance.",
                 iso_cert: "ISO & Safety Certified",
                 iso_cert_text: "Full compliance with ISO standards and international beverage safety regulations.",
                 customs_verified: "Customs Verified",
@@ -838,8 +843,8 @@
                 metric_compliance_label: "Conformité à l'importation",
                 corporate_capacity: "Capacité d'entreprise",
                 about_title: "Lignes d'approvisionnement ininterrompues vers les plus grands marchés commerciaux d'Afrique",
-                about_para_1: "Tout comme les distributeurs mondiaux, nous contrôlons le fret, l'alignement douanier et l'acheminement des conteneurs de la source à l'arrivée. Nous privilégions la sécurité des produits, le contrôle strict de la température[...]",
-                about_para_2: "Qu'il s'agisse d'acheminer des stocks vers les principales capitales commerciales ou des hubs régionaux, notre réseau garantit que vos allocations en gros arrivent à temps, emballées en toute sécurité et conformes à toutes les [...]",
+                about_para_1: "Tout comme les distributeurs mondiaux, nous contrôlons le fret, l'alignement douanier et l'acheminement des conteneurs de la source à l'arrivée. Nous privilégions la sécurité des produits, le contrôle strict de la température et la conformité réglementaire à chaque étape.",
+                about_para_2: "Qu'il s'agisse d'acheminer des stocks vers les principales capitales commerciales ou des hubs régionaux, notre réseau garantit que vos allocations en gros arrivent à l'heure, bien emballées et conformes à toutes les normes locales et internationales.",
                 feature_1: "Gestion de la chaîne d'approvisionnement de bout en bout",
                 feature_2: "Suivi 24/7 de la température et des conditions",
                 feature_3: "Expertise certifiée en douane et conformité",
@@ -852,7 +857,7 @@
                 request_quote: "Demander un devis pour n'importe quelle marque",
                 regulatory_alignment: "Alignement réglementaire",
                 compliance_title: "Intégration mondiale du fret entièrement agréée",
-                compliance_text: "Nous opérons strictement sous des autorisations commerciales locales complètes et des dispositions commerciales internationales. Tous les spiritueux et boissons subissent des contrôles de qualité rigoureux et des certifications de conformité[...]",
+                compliance_text: "Nous opérons strictement sous des autorisations commerciales locales complètes et des dispositions commerciales internationales. Tous les spiritueux et boissons subissent un contrôle minutieux de la qualité, une certification de conformité et un pré-dédouanement complet.",
                 iso_cert: "Certifié ISO et sécurité",
                 iso_cert_text: "Conformité totale aux normes ISO et aux réglementations internationales sur la sécurité des boissons.",
                 customs_verified: "Vérifié par les douanes",
@@ -910,11 +915,9 @@
                 const key = el.getAttribute('data-i18n');
                 if (!key) return;
                 const txt = dict[key];
-                if (txt === undefined) return; // leave existing text if missing translation
+                if (txt === undefined) return;
 
-                // Preserve links / inner HTML where appropriate (simple heuristic)
-                if (el.tagName.toLowerCase() === 'a' || el.tagName.toLowerCase() === 'button' || el.tagName.toLowerCase() === 'h1' || el.tagName.toLowerCase() === 'h2' || el.tagName.toLowerCase() === 'h3' || el.tagName.toLowerCase() === 'p' || el.tagName.toLowerCase() === 'span' || el.tagName.toLowerCase() === 'h4') {
-                    // Use innerHTML for elements that may contain icons or markup
+                if (el.tagName.toLowerCase() === 'a' || el.tagName.toLowerCase() === 'button' || el.tagName.toLowerCase() === 'h1' || el.tagName.toLowerCase() === 'h2' || el.tagName.toLowerCase() === 'h3' || el.tagName.toLowerCase() === 'h4') {
                     el.innerHTML = txt;
                 } else {
                     el.textContent = txt;
@@ -945,7 +948,6 @@
             const content = button.nextElementSibling;
             const icon = button.querySelector('i.fa-chevron-down');
             
-            // Close all other accordions
             document.querySelectorAll('.accordion-content').forEach(item => {
                 if (item !== content) {
                     item.classList.remove('active');
@@ -957,16 +959,14 @@
                 }
             });
             
-            // Toggle current accordion
             content.classList.toggle('active');
             if (icon) icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
-        // Initialize Leaflet map - FULLY INTERACTIVE
+        // Initialize Leaflet map
         function initializeMap() {
             const mapContainer = document.getElementById('distributionMap');
             
-            // Create map with all interactions enabled
             mapInstance = L.map(mapContainer, {
                 center: [5.5, 15],
                 zoom: 4,
@@ -980,7 +980,6 @@
                 tap: true
             });
             
-            // Add OpenStreetMap tiles - in English
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors',
                 maxZoom: 19,
@@ -988,110 +987,26 @@
                 language: 'en'
             }).addTo(mapInstance);
 
-            // Distribution locations
             const locations = [
-                { 
-                    lat: 6.1256, 
-                    lng: 1.2317, 
-                    name: 'Togo',
-                    port: 'Port of Lomé',
-                    icon: '⚓'
-                },
-                { 
-                    lat: 9.3077, 
-                    lng: 2.3158, 
-                    name: 'Benin',
-                    port: 'Port of Cotonou',
-                    icon: '⚓'
-                },
-                { 
-                    lat: 7.3697, 
-                    lng: -0.5577, 
-                    name: 'Ghana',
-                    port: 'Port of Tema',
-                    icon: '⚓'
-                },
-                { 
-                    lat: 6.5244, 
-                    lng: 3.3792, 
-                    name: 'Nigeria',
-                    port: 'Port of Lagos',
-                    icon: '⚓'
-                },
-                { 
-                    lat: 20.5937, 
-                    lng: 78.9629, 
-                    name: 'India',
-                    port: 'Source Facility',
-                    icon: '🏭'
-                }
+                { lat: 6.1256, lng: 1.2317, name: 'Togo', port: 'Port of Lomé', icon: '⚓' },
+                { lat: -4.2634, lng: 15.2429, name: 'Congo', port: 'Port of Matadi', icon: '⚓' },
+                { lat: -22.5597, lng: 17.0832, name: 'Namibia', port: 'Port of Walvis Bay', icon: '⚓' },
+                { lat: -33.9249, lng: 18.4241, name: 'South Africa', port: 'Port of Cape Town', icon: '⚓' },
             ];
 
-            // Add markers
             locations.forEach(location => {
-                const markerHTML = `
-                    <div style="text-align: center; padding: 8px 0;">
-                        <div style="font-weight: bold; color: #d4af37; font-size: 15px; margin-bottom: 4px;">
-                            ${location.icon} ${location.name}
-                        </div>
-                        <div style="color: #475569; font-size: 12px;">
-                            ${location.port}
-                        </div>
-                    </div>
-                `;
-
-                const marker = L.circleMarker([location.lat, location.lng], {
-                    radius: 10,
-                    fillColor: '#d4af37',
-                    color: '#0a0a0a',
-                    weight: 3,
-                    opacity: 1,
-                    fillOpacity: 0.95
-                }).addTo(mapInstance)
-                  .bindPopup(markerHTML, {
-                    closeButton: true,
-                    autoClose: false,
-                    offset: L.point(0, -15)
-                  })
-                  .on('mouseover', function() {
-                    this.setStyle({
-                        radius: 14,
-                        fillOpacity: 1
-                    });
-                  })
-                  .on('mouseout', function() {
-                    this.setStyle({
-                        radius: 10,
-                        fillOpacity: 0.95
-                    });
-                  });
+                const marker = L.marker([location.lat, location.lng]).addTo(mapInstance);
+                marker.bindPopup(`<strong>${location.name}</strong><br>${location.port}`);
             });
-
-            // Invalidate size after a short delay to ensure proper rendering
-            setTimeout(function() {
-                mapInstance.invalidateSize();
-            }, 300);
         }
 
         // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('load', function() {
             checkAgeVerification();
-            updateLanguageButtons();
             applyTranslations();
-            
-            // Initialize map with delay to ensure DOM is ready
-            if (document.getElementById('distributionMap')) {
-                setTimeout(initializeMap, 100);
-            }
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            if (mapInstance) {
-                mapInstance.invalidateSize();
-            }
+            updateLanguageButtons();
+            initializeMap();
         });
     </script>
-
 </body>
 </html>
