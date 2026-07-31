@@ -996,39 +996,74 @@
 
         // Initialize Leaflet map
         function initializeMap() {
-            const mapContainer = document.getElementById('distributionMap');
-            
-            mapInstance = L.map(mapContainer, {
-                center: [5.5, 15],
-                zoom: 4,
-                scrollWheelZoom: true,
-                doubleClickZoom: true,
-                touchZoom: true,
-                dragging: true,
-                zoomControl: true,
-                boxZoom: true,
-                keyboard: true,
-                tap: true
-            });
-            
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors',
-                maxZoom: 19,
-                minZoom: 2
-            }).addTo(mapInstance);
+    const mapContainer = document.getElementById('distributionMap');
+    if (!mapContainer) return;
 
-            const locations = [
-                { lat: 6.1256, lng: 1.2317, name: 'Togo', port: 'Port of Lomé' },
-                { lat: -4.2634, lng: 15.2429, name: 'Congo', port: 'Port of Matadi' },
-                { lat: -22.5597, lng: 17.0832, name: 'Namibia', port: 'Port of Walvis Bay' },
-                { lat: -33.9249, lng: 18.4241, name: 'South Africa', port: 'Port of Cape Town' }
-            ];
+    // Create map with interactions enabled
+    mapInstance = L.map(mapContainer, {
+        center: [5.5, 15],
+        zoom: 4,
+        scrollWheelZoom: true,
+        doubleClickZoom: true,
+        touchZoom: true,
+        dragging: true,
+        zoomControl: true,
+        boxZoom: true,
+        keyboard: true,
+        tap: true
+    });
 
-            locations.forEach(location => {
-                const marker = L.marker([location.lat, location.lng]).addTo(mapInstance);
-                marker.bindPopup(`<strong>${location.name}</strong><br>${location.port}`);
-            });
-        }
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 19,
+        minZoom: 2
+    }).addTo(mapInstance);
+
+    // Distribution locations (Togo, Benin, Ghana, Nigeria, India)
+    const locations = [
+        { lat: 6.1256,  lng: 1.2317,  name: 'Togo',    port: 'Port of Lomé',    icon: '⚓' },
+        { lat: 9.3077,  lng: 2.3158,  name: 'Benin',   port: 'Port of Cotonou', icon: '⚓' },
+        { lat: 7.3697,  lng: -0.5577, name: 'Ghana',   port: 'Port of Tema',    icon: '⚓' },
+        { lat: 6.5244,  lng: 3.3792,  name: 'Nigeria', port: 'Port of Lagos',   icon: '⚓' },
+        { lat: 20.5937, lng: 78.9629, name: 'India',   port: 'Source Facility', icon: '🏭' }
+    ];
+
+    // Add markers with hover styling and popups
+    locations.forEach(location => {
+        const markerHTML = `
+            <div class="map-popup">
+                <div class="map-popup-title">${location.icon} ${location.name}</div>
+                <div class="map-popup-info">${location.port}</div>
+            </div>
+        `;
+
+        const marker = L.circleMarker([location.lat, location.lng], {
+            radius: 10,
+            fillColor: '#d4af37',
+            color: '#0a0a0a',
+            weight: 3,
+            opacity: 1,
+            fillOpacity: 0.95
+        }).addTo(mapInstance)
+          .bindPopup(markerHTML, {
+            closeButton: true,
+            autoClose: false,
+            offset: L.point(0, -15)
+        })
+          .on('mouseover', function() {
+            this.setStyle({ radius: 14, fillOpacity: 1 });
+          })
+          .on('mouseout', function() {
+            this.setStyle({ radius: 10, fillOpacity: 0.95 });
+          });
+    });
+
+    // Ensure map renders correctly after layout
+    setTimeout(function() {
+        if (mapInstance) mapInstance.invalidateSize();
+    }, 300);
+}
 
         // Hook up accordion buttons
         function wireAccordionButtons() {
