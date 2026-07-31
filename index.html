@@ -834,172 +834,201 @@
 
     <script>
         // Global map variable
-        let mapInstance = null;
+let mapInstance = null;
 
-        // Simple translations object (kept short for brevity)
-        const translations = {
-            en: {
-                age_title: "Age Verification",
-                age_text: "You must be 21 years or older to access this site. This site contains content related to alcohol products.",
-                age_confirm: "I am 21 or Older",
-                age_deny: "I am Under 21",
-                nav_about: "About Us",
-                nav_catalog: "Bulk Catalog",
-                nav_compliance: "Compliance",
-                contact_sales: "Contact Sales",
-                hero_title: "Premium Spirits & Liquor Distribution Across Africa",
-                hero_sub: "Supplying major African ports with high-volume, reliable container shipments of premium international spirits and beverage brands.",
-                view_brands: "View Our Brands",
-                our_infrastructure: "Our Infrastructure",
-                exclusive_selection: "Exclusive Selection",
-                product_heading: "Premium Spirits & Liquors",
-                product_intro: "Curated selection of international premium spirits and beverages, carefully sourced for African wholesale distribution.",
-                request_quote: "Request Quote for Any Brand",
-                regulatory_alignment: "Regulatory Alignment",
-                compliance_title: "Fully Licensed Global Freight Integration",
-                contact_heading: "Contact Us",
-                contact_intro: "For wholesale inquiries, pricing, or partnership opportunities, please reach out using the details below.",
-                contact_email_label: "Email",
-                contact_email: "sales@shreeshyamxm.com",
-                contact_phone_label: "Phone",
-                contact_phone: "+228 72097250",
-                contact_whatsapp_label: "WhatsApp",
-                contact_whatsapp: "+91 9784928525",
-                contact_service_area_label: "Service Area",
-                contact_service_area: "Africa wide Import & Distribution",
-                footer_blurb: "Premier spirits and beverage bulk distribution across Africa's major ports and trading corridors.",
-                footer_quick_links: "Quick Links",
-                nav_about_footer: "About Us",
-                nav_catalog_footer: "Our Brands",
-                nav_contact_footer: "Contact",
-                footer_copyright: "© 2026 ShreeShyamXM. All rights reserved. Premium Spirits & Beverage Distribution & Logistics Network."
-            },
-            fr: {
-                age_title: "Vérification de l'âge",
-                age_text: "Vous devez avoir 21 ans ou plus pour accéder à ce site. Ce site contient du contenu lié aux produits alcoolisés.",
-                age_confirm: "J'ai 21 ans ou plus",
-                age_deny: "J'ai moins de 21 ans",
-                nav_about: "À propos",
-                nav_catalog: "Catalogue en gros",
-                nav_compliance: "Conformité",
-                contact_sales: "Contacter les ventes",
-                hero_title: "Distribution de spiritueux et de boissons alcoolisées de qualité à travers l'Afrique",
-                hero_sub: "Approvisionnement des principaux ports africains avec des expéditions conteneurisées volumineuses et fiables de marques internationales de spiritueux et de boissons haut de gamme.",
-                view_brands: "Voir nos marques",
-                our_infrastructure: "Notre infrastructure",
-                exclusive_selection: "Sélection exclusive",
-                product_heading: "Spiritueux & Alcools de qualité",
-                product_intro: "Sélection soignée de spiritueux et de boissons internationales haut de gamme, soigneusement sourcées pour la distribution en gros en Afrique.",
-                request_quote: "Demander un devis pour n'importe quelle marque",
-                regulatory_alignment: "Alignement réglementaire",
-                compliance_title: "Intégration mondiale du fret entièrement agréée",
-                contact_heading: "Contactez-nous",
-                contact_intro: "Pour toute demande en gros, tarification ou opportunités de partenariat, veuillez nous contacter en utilisant les coordonnées ci-dessous.",
-                contact_email_label: "Courriel",
-                contact_email: "sales@shreeshyamxm.com",
-                contact_phone_label: "Téléphone",
-                contact_phone: "+228 72097250",
-                contact_whatsapp_label: "WhatsApp",
-                contact_whatsapp: "+91 9784928525",
-                contact_service_area_label: "Zone de service",
-                contact_service_area: "Importation et distribution à l'échelle de l'Afrique",
-                footer_blurb: "Distribution en gros de spiritueux et de boissons haut de gamme sur les principaux ports et corridors commerciaux d'Afrique.",
-                footer_quick_links: "Liens rapides",
-                nav_about_footer: "À propos",
-                nav_catalog_footer: "Nos marques",
-                nav_contact_footer: "Contact",
-                footer_copyright: "© 2026 ShreeShyamXM. Tous droits réservés. Réseau de distribution et logistique des spiritueux et boissons de qualité."
+//  FIXED TRANSLATIONS OBJECT (Icons are now embedded safely inside the translation strings)
+const translations = {
+    en: {
+        age_title: "Age Verification",
+        age_text: "You must be 21 years or older to access this site. This site contains content related to alcohol products.",
+        age_confirm: "I am 21 or Older",
+        age_deny: "I am Under 21",
+        nav_about: "About Us",
+        nav_catalog: "Bulk Catalog",
+        nav_compliance: "Compliance",
+        contact_sales: "Contact Sales",
+        // Embedded icon safely:
+        hero_badge: '<i class="fas fa-check-circle mr-2"></i>Flexible Order Quantities',
+        hero_title: "Premium Spirits & Liquor Distribution Across Africa",
+        hero_sub: "Supplying major African ports with high-volume, reliable container shipments of premium international spirits and beverage brands.",
+        view_brands: '<i class="fas fa-wine-bottle mr-2"></i> View Our Brands',
+        our_infrastructure: '<i class="fas fa-warehouse mr-2"></i> Our Infrastructure',
+        exclusive_selection: '<i class="fas fa-wine-bottle mr-2"></i> Exclusive Selection',
+        product_heading: "Premium Spirits & Liquors",
+        product_intro: "Curated selection of international premium spirits and beverages, carefully sourced for African wholesale distribution.",
+        request_quote: '<i class="fas fa-envelope mr-2"></i> Request Quote for Any Brand',
+        corporate_capacity: '<span class="w-8 h-0.5 bg-gold"></span>Corporate Capacity',
+        about_title: "Unbroken supply lines to Africa's largest trading markets",
+        about_para_1: "Just like global broad line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperature control and secure packaging.",
+        about_para_2: "Whether routing inventory to major commercial capitals or regional hubs, our network ensures your wholesale allocations arrive on time, securely packed, and compliant with all local regulations.",
+        feature_1: "End to end supply chain management",
+        feature_2: "24/7 temperature & condition monitoring",
+        feature_3: "Certified customs & compliance expertise",
+        portfolio_label: '<span class="w-8 h-0.5 bg-gold"></span>Our Portfolio<span class="w-8 h-0.5 bg-gold"></span>',
+        portfolio_title: "Premium Spirits & Beverages",
+        portfolio_sub: "We specialize exclusively in tier one international spirits and premium beverages available in wholesale container volumes.",
+        regulatory_alignment: '<span class="w-8 h-0.5 bg-gold"></span>Regulatory Alignment<span class="w-8 h-0.5 bg-gold"></span>',
+        compliance_title: "Fully Licensed Global Freight Integration",
+        compliance_text: "We strictly operate under comprehensive local trade authorizations and international trade provisions. All spirits and beverages undergo careful quality vetting, compliance certification and third-party inspection as required.",
+        iso_cert: "ISO & Safety Certified",
+        iso_cert_text: "Full compliance with ISO standards and international beverage safety regulations.",
+        customs_verified: "Customs Verified",
+        customs_verified_text: "Pre cleared with port authorities across major African trading hubs.",
+        quality_assured: "Quality Assured",
+        quality_assured_text: "Third party inspections and temperature controlled logistics guarantee product integrity.",
+        contact_heading: "Contact Us",
+        contact_intro: "For wholesale inquiries, pricing, or partnership opportunities, please reach out using the details below.",
+        contact_email_label: "Email",
+        contact_phone_label: "Phone",
+        contact_whatsapp_label: "WhatsApp",
+        contact_service_area_label: "Service Area",
+        contact_service_area: "Africa wide Import & Distribution",
+        footer_blurb: "Premier spirits and beverage bulk distribution across Africa's major ports and trading corridors.",
+        footer_quick_links: "Quick Links",
+        nav_about_footer: "About Us",
+        nav_catalog_footer: "Our Brands",
+        nav_contact_footer: "Contact",
+        footer_copyright: "&copy; 2026 ShreeShyamXM. All rights reserved. Premium Spirits & Beverage Distribution & Logistics Network."
+    },
+    fr: {
+        age_title: "Vérification de l'âge",
+        age_text: "Vous devez avoir 21 ans ou plus pour accéder à ce site. Ce site contient du contenu lié aux produits alcoolisés.",
+        age_confirm: "J'ai 21 ans ou plus",
+        age_deny: "J'ai moins de 21 ans",
+        nav_about: "À propos",
+        nav_catalog: "Catalogue en gros",
+        nav_compliance: "Conformité",
+        contact_sales: "Contacter les ventes",
+        // Embedded icon safely:
+        hero_badge: '<i class="fas fa-check-circle mr-2"></i>Quantités de commande flexibles',
+        hero_title: "Distribution de spiritueux et de boissons alcoolisées de qualité à travers l'Afrique",
+        hero_sub: "Approvisionnement des principaux ports africains avec des expéditions conteneurisées volumineuses et fiables de marques internationales de spiritueux et de boissons haut de gamme.",
+        view_brands: '<i class="fas fa-wine-bottle mr-2"></i> Voir nos marques',
+        our_infrastructure: '<i class="fas fa-warehouse mr-2"></i> Notre infrastructure',
+        exclusive_selection: '<i class="fas fa-wine-bottle mr-2"></i> Sélection exclusive',
+        product_heading: "Spiritueux & Alcools de qualité",
+        product_intro: "Sélection soignée de spiritueux et de boissons internationales haut de gamme, soigneusement sourcées pour la distribution en gros en Afrique.",
+        request_quote: '<i class="fas fa-envelope mr-2"></i> Demander un devis pour n\'importe quelle marque',
+        corporate_capacity: '<span class="w-8 h-0.5 bg-gold"></span>Capacité d\'entreprise',
+        about_title: "Lignes d'approvisionnement ininterrompues vers les plus grands marchés commerciaux d'Afrique",
+        about_para_1: "Tout comme les grands distributeurs mondiaux, nous contrôlons le fret, l'alignement douanier et l'acheminement des conteneurs depuis la source jusqu'à l'arrivée. Nous donnons la priorité à la sécurité des produits, à un contrôle strict de la température et à un emballage sécurisé.",
+        about_para_2: "Qu'il s'agisse d'acheminer les stocks vers les grandes capitales commerciales ou les hubs régionaux, notre réseau garantit que vos allocations de gros arrivent à temps, emballées de manière sécurisée et conformes à toutes les réglementations locales.",
+        feature_1: "Gestion de la chaîne d'approvisionnement de bout en bout",
+        feature_2: "Surveillance 24/7 de la température et des conditions",
+        feature_3: "Expertise douanière et de conformité certifiée",
+        portfolio_label: '<span class="w-8 h-0.5 bg-gold"></span>Notre Portefeuille<span class="w-8 h-0.5 bg-gold"></span>',
+        portfolio_title: "Spiritueux & Boissons de qualité",
+        portfolio_sub: "Nous nous spécialisons exclusivement dans les spiritueux internationaux de premier plan et les boissons haut de gamme disponibles en volumes de conteneurs de gros.",
+        regulatory_alignment: '<span class="w-8 h-0.5 bg-gold"></span>Alignement Réglementaire<span class="w-8 h-0.5 bg-gold"></span>',
+        compliance_title: "Intégration mondiale du fret entièrement agréée",
+        compliance_text: "Nous opérons strictement sous des autorisations commerciales locales complètes et des dispositions commerciales internationales. Tous les spiritueux et boissons font l'objet d'un contrôle de qualité rigoureux, d'une certification de conformité et d'une inspection par des tiers, si nécessaire.",
+        iso_cert: "Certifié ISO & Sécurité",
+        iso_cert_text: "Pleine conformité aux normes ISO et aux réglementations internationales sur la sécurité des boissons.",
+        customs_verified: "Vérifié en Douane",
+        customs_verified_text: "Dédouané à l'avance auprès des autorités portuaires des principaux hubs commerciaux africains.",
+        quality_assured: "Qualité Assurée",
+        quality_assured_text: "Des inspections tierces et une logistique sous température contrôlée garantissent l'intégrité du produit.",
+        contact_heading: "Contactez-nous",
+        contact_intro: "Pour toute demande en gros, tarification ou opportunités de partenariat, veuillez nous contacter en utilisant les coordonnées ci-dessous.",
+        contact_email_label: "Courriel",
+        contact_phone_label: "Téléphone",
+        contact_whatsapp_label: "WhatsApp",
+        contact_service_area_label: "Zone de service",
+        contact_service_area: "Importation et distribution à l'échelle de l'Afrique",
+        footer_blurb: "Distribution en gros de spiritueux et de boissons haut de gamme sur les principaux ports et corridors commerciaux d'Afrique.",
+        footer_quick_links: "Liens rapides",
+        nav_about_footer: "À propos",
+        nav_catalog_footer: "Nos marques",
+        nav_contact_footer: "Contact",
+        footer_copyright: "&copy; 2026 ShreeShyamXM. Tous droits réservés. Réseau de distribution et logistique des spiritueux et boissons de qualité."
+    }
+};
+
+// Age verification
+function confirmAge() {
+    localStorage.setItem('ageVerified', 'true');
+    document.getElementById('ageModal').classList.add('hidden');
+    document.body.classList.remove('scroll-locked');
+}
+
+function denyAge() {
+    window.location.href = 'https://google.com';
+}
+
+// Check age on page load
+function checkAgeVerification() {
+    const ageVerified = localStorage.getItem('ageVerified');
+    if (!ageVerified) {
+        document.getElementById('ageModal').classList.remove('hidden');
+        document.body.classList.add('scroll-locked');
+    } else {
+        document.getElementById('ageModal').classList.add('hidden');
+        document.body.classList.remove('scroll-locked');
+    }
+}
+
+        // ==========================================
+// FIXED TRANSLATION ENGINE & CORE FUNCTIONS
+// ==========================================
+
+function applyTranslations() {
+    const lang = localStorage.getItem('language') || 'en';
+    const dict = translations[lang] || translations.en;
+    
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (!key) return;
+        
+        const txt = dict[key];
+        if (txt === undefined) return;
+        
+        el.innerHTML = txt;
+    });
+}
+
+// Set language function
+function setLanguage(lang) {
+    localStorage.setItem('language', lang);
+    updateLanguageButtons();
+    applyTranslations();
+}
+
+// Update language button states
+function updateLanguageButtons() {
+    const currentLang = localStorage.getItem('language') || 'en';
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.lang === currentLang) {
+            btn.classList.add('active');
+        }
+    });
+}
+
+// Toggle accordion
+function toggleAccordion(button) {
+    const content = button.nextElementSibling;
+    const icon = button.querySelector('i.fa-chevron-down');
+    
+    document.querySelectorAll('.accordion-content').forEach(item => {
+        if (item !== content) {
+            item.classList.remove('active');
+            const prev = item.previousElementSibling;
+            if (prev) {
+                const prevIcon = prev.querySelector('i.fa-chevron-down');
+                if (prevIcon) prevIcon.style.transform = 'rotate(0deg)';
             }
-        };
-
-        // Age verification
-        function confirmAge() {
-            localStorage.setItem('ageVerified', 'true');
-            document.getElementById('ageModal').classList.add('hidden');
-            document.body.classList.remove('scroll-locked');
         }
+    });
+    
+    content.classList.toggle('active');
+    if (icon) icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+}
 
-        function denyAge() {
-            window.location.href = 'https://www.google.com';
-        }
-
-        // Check age on page load
-        function checkAgeVerification() {
-            const ageVerified = localStorage.getItem('ageVerified');
-            if (!ageVerified) {
-                document.getElementById('ageModal').classList.remove('hidden');
-                document.body.classList.add('scroll-locked');
-            } else {
-                document.getElementById('ageModal').classList.add('hidden');
-                document.body.classList.remove('scroll-locked');
-            }
-        }
-
-        // Apply translations to elements with data-i18n
-        function applyTranslations() {
-            const lang = localStorage.getItem('language') || 'en';
-            const dict = translations[lang] || translations.en;
-
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (!key) return;
-                const txt = dict[key];
-                if (txt === undefined) return;
-
-                // For elements that need HTML (icons etc.), set innerHTML; otherwise textContent
-                const tag = el.tagName.toLowerCase();
-                if (tag === 'a' || tag === 'button' || tag === 'h1' || tag === 'h2' || tag === 'h3' || tag === 'h4' || tag === 'span' || tag === 'div') {
-                    el.innerHTML = txt;
-                } else {
-                    el.textContent = txt;
-                }
-            });
-        }
-
-        // Set language function
-        function setLanguage(lang) {
-            localStorage.setItem('language', lang);
-            updateLanguageButtons();
-            applyTranslations();
-        }
-
-        // Update language button states
-        function updateLanguageButtons() {
-            const currentLang = localStorage.getItem('language') || 'en';
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.lang === currentLang) {
-                    btn.classList.add('active');
-                }
-            });
-        }
-
-        // Toggle accordion
-        function toggleAccordion(button) {
-            const content = button.nextElementSibling;
-            const icon = button.querySelector('i.fa-chevron-down');
-            
-            document.querySelectorAll('.accordion-content').forEach(item => {
-                if (item !== content) {
-                    item.classList.remove('active');
-                    const prev = item.previousElementSibling;
-                    if (prev) {
-                        const prevIcon = prev.querySelector('i.fa-chevron-down');
-                        if (prevIcon) prevIcon.style.transform = 'rotate(0deg)';
-                    }
-                }
-            });
-            
-            content.classList.toggle('active');
-            if (icon) icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
-        }
-
-        // Initialize Leaflet map
-        function initializeMap() {
+// Initialize Leaflet map
+function initializeMap() {
     const mapContainer = document.getElementById('distributionMap');
     if (!mapContainer) return;
-
-    // Create map with interactions enabled
+    
     mapInstance = L.map(mapContainer, {
         center: [5.5, 15],
         zoom: 4,
@@ -1012,33 +1041,31 @@
         keyboard: true,
         tap: true
     });
-
-    // Add OpenStreetMap tiles
+    
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors',
         maxZoom: 19,
         minZoom: 2
     }).addTo(mapInstance);
-
-    // Distribution locations (Togo, Benin, Ghana, Nigeria, India)
+    
     const locations = [
-        { lat: 6.1256,  lng: 1.2317,  name: 'Togo',    port: 'Port of Lomé',    icon: '⚓' },
-        { lat: 9.3077,  lng: 2.3158,  name: 'Benin',   port: 'Port of Cotonou', icon: '⚓' },
-        { lat: 7.3697,  lng: -0.5577, name: 'Ghana',   port: 'Port of Tema',    icon: '⚓' },
-        { lat: 6.5244,  lng: 3.3792,  name: 'Nigeria', port: 'Port of Lagos',   icon: '⚓' },
-        { lat: 20.5937, lng: 78.9629, name: 'India',   port: 'Source Facility', icon: '🏭' }
+        { lat: 6.1256, lng: 1.2317, name: 'Togo', port: 'Port of Lomé', icon: '⚓' },
+        { lat: 9.3077, lng: 2.3158, name: 'Benin', port: 'Port of Cotonou', icon: '⚓' },
+        { lat: 7.3697, lng: -0.5577, name: 'Ghana', port: 'Port of Tema', icon: '⚓' },
+        { lat: 6.5244, lng: 3.3792, name: 'Nigeria', port: 'Port of Lagos', icon: '⚓' },
+        { lat: 20.5937, lng: 78.9629, name: 'India', port: 'Source Facility', icon: '🏭' }
     ];
-
-    // Add markers with hover styling and popups
+    
     locations.forEach(location => {
+        //  FIXED: Wrapped template literal string in backticks properly
         const markerHTML = `
-            <div class="map-popup">
-                <div class="map-popup-title">${location.icon} ${location.name}</div>
-                <div class="map-popup-info">${location.port}</div>
+            <div class="map-popup" style="color: #0a0a0a;"> 
+                <strong>${location.icon} ${location.name}</strong><br> 
+                <small>${location.port}</small> 
             </div>
         `;
-
-        const marker = L.circleMarker([location.lat, location.lng], {
+        
+        L.circleMarker([location.lat, location.lng], {
             radius: 10,
             fillColor: '#d4af37',
             color: '#0a0a0a',
@@ -1046,47 +1073,42 @@
             opacity: 1,
             fillOpacity: 0.95
         }).addTo(mapInstance)
-          .bindPopup(markerHTML, {
+        .bindPopup(markerHTML, {
             closeButton: true,
             autoClose: false,
             offset: L.point(0, -15)
-        })
-          .on('mouseover', function() {
+        }).on('mouseover', function() {
             this.setStyle({ radius: 14, fillOpacity: 1 });
-          })
-          .on('mouseout', function() {
+        }).on('mouseout', function() {
             this.setStyle({ radius: 10, fillOpacity: 0.95 });
-          });
+        });
     });
-
-    // Ensure map renders correctly after layout
+    
     setTimeout(function() {
         if (mapInstance) mapInstance.invalidateSize();
     }, 300);
 }
 
-        // Hook up accordion buttons
-        function wireAccordionButtons() {
-            document.querySelectorAll('.accordion-btn').forEach(btn => {
-                btn.addEventListener('click', () => toggleAccordion(btn));
-            });
-        }
+// Hook up accordion buttons
+function wireAccordionButtons() {
+    document.querySelectorAll('.accordion-btn').forEach(btn => {
+        btn.addEventListener('click', () => toggleAccordion(btn));
+    });
+}
 
-        // On DOM ready
-        document.addEventListener('DOMContentLoaded', function () {
-            // init
-            if (!localStorage.getItem('language')) localStorage.setItem('language', 'en');
-            updateLanguageButtons();
-            applyTranslations();
-            checkAgeVerification();
-            initializeMap();
-            wireAccordionButtons();
-
-            // handle resize: leaflet needs to invalidate size after images load/layout changes
-            window.addEventListener('load', () => {
-                if (mapInstance) mapInstance.invalidateSize();
-            });
-        });
+// On DOM ready
+document.addEventListener('DOMContentLoaded', function () {
+    if (!localStorage.getItem('language')) localStorage.setItem('language', 'en');
+    updateLanguageButtons();
+    applyTranslations();
+    checkAgeVerification();
+    initializeMap();
+    wireAccordionButtons();
+    
+    window.addEventListener('load', () => {
+        if (mapInstance) mapInstance.invalidateSize();
+    });
+});
     </script>
 </body>
 </html>
