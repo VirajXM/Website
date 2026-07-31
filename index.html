@@ -266,15 +266,15 @@
         <div class="age-modal-content">
             <div class="mb-6">
                 <i class="fas fa-exclamation-triangle text-yellow-400 text-5xl mb-4"></i>
-                <h2 class="text-2xl font-black mb-2">Age Verification</h2>
-                <p class="mb-4">You must be 21 years or older to access this site. This site contains content related to alcohol products.</p>
+                <h2 class="text-2xl font-black mb-2" data-i18n="age_title">Age Verification</h2>
+                <p class="mb-4" data-i18n="age_text">You must be 21 years or older to access this site. This site contains content related to alcohol products.</p>
             </div>
             
             <div class="space-y-3">
-                <button onclick="confirmAge()" class="w-full gradient-accent text-black font-bold py-3 rounded-lg transition duration-300">
+                <button onclick="confirmAge()" class="w-full gradient-accent text-black font-bold py-3 rounded-lg transition duration-300" data-i18n="age_confirm">
                     I am 21 or Older
                 </button>
-                <button onclick="denyAge()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-lg transition duration-300">
+                <button onclick="denyAge()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-lg transition duration-300" data-i18n="age_deny">
                     I am Under 21
                 </button>
             </div>
@@ -287,20 +287,20 @@
             <img src="images/image-removebg-preview.png" alt="ShreeShyamXM Logo" class="logo-img">
         </div>
         <div class="hidden md:flex space-x-8 font-semibold text-sm">
-            <a href="#about" class="text-gold hover:text-white transition duration-300">About Us</a>
-            <a href="#catalog" class="text-gold hover:text-white transition duration-300">Bulk Catalog</a>
-            <a href="#compliance" class="text-gold hover:text-white transition duration-300">Compliance</a>
+            <a href="#about" class="text-gold hover:text-white transition duration-300" data-i18n="nav_about">About Us</a>
+            <a href="#catalog" class="text-gold hover:text-white transition duration-300" data-i18n="nav_catalog">Bulk Catalog</a>
+            <a href="#compliance" class="text-gold hover:text-white transition duration-300" data-i18n="nav_compliance">Compliance</a>
         </div>
         <div class="flex items-center gap-3">
-            <button onclick="setLanguage('en')" class="lang-btn px-3 py-1 rounded hover:bg-slate-900 active text-gold">
+            <button onclick="setLanguage('en')" data-lang="en" class="lang-btn px-3 py-1 rounded hover:bg-slate-900 active text-gold">
                 🇬🇧 EN
             </button>
-            <button onclick="setLanguage('fr')" class="lang-btn px-3 py-1 rounded hover:bg-slate-900 text-gold">
+            <button onclick="setLanguage('fr')" data-lang="fr" class="lang-btn px-3 py-1 rounded hover:bg-slate-900 text-gold">
                 🇫🇷 FR
             </button>
         </div>
         <div>
-            <a href="#contact" class="btn-gold font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-lg transition shadow-lg hover:shadow-xl hover:scale-105 duration-300">
+            <a href="#contact" class="btn-gold font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-lg transition shadow-lg hover:shadow-xl hover:scale-105 duration-300" data-i18n="contact_sales">
                 Contact Sales
             </a>
         </div>
@@ -311,20 +311,20 @@
         <!-- Map container -->
         <div class="relative max-w-5xl mx-auto px-6 z-20">
             <div class="mb-12 text-center">
-                <span class="inline-block bg-gold/20 text-gold text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-gold/50 backdrop-blur-sm hero-badge">
+                <span class="inline-block bg-gold/20 text-gold text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-gold/50 backdrop-blur-sm hero-badge" data-i18n="hero_badge">
                     <i class="fas fa-check-circle mr-2"></i>Flexible Order Quantities
                 </span>
-                <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6 text-white drop-shadow-lg">
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6 text-white drop-shadow-lg" data-i18n="hero_title">
                     Premium Spirits & Liquor Distribution Across Africa
                 </h1>
-                <p class="text-base md:text-lg text-slate-300 max-w-2xl mx-auto mb-10 font-normal leading-relaxed">
+                <p class="text-base md:text-lg text-slate-300 max-w-2xl mx-auto mb-10 font-normal leading-relaxed" data-i18n="hero_sub">
                     Supplying major African ports with high-volume, reliable container shipments of premium international spirits and beverage brands.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="#catalog" class="btn-gold px-8 py-4 rounded-lg font-bold text-sm tracking-wide shadow-xl hover:shadow-2xl transition duration-300 uppercase">
+                    <a href="#catalog" class="btn-gold px-8 py-4 rounded-lg font-bold text-sm tracking-wide shadow-xl hover:shadow-2xl transition duration-300 uppercase" data-i18n="view_brands">
                         <i class="fas fa-bottle"></i> View Our Brands
                     </a>
-                    <a href="#about" class="border-2 border-gold hover:bg-gold/20 text-white px-8 py-4 rounded-lg font-bold text-sm tracking-wide transition duration-300 uppercase">
+                    <a href="#about" class="border-2 border-gold hover:bg-gold/20 text-white px-8 py-4 rounded-lg font-bold text-sm tracking-wide transition duration-300 uppercase" data-i18n="our_infrastructure">
                         <i class="fas fa-warehouse"></i> Our Infrastructure
                     </a>
                 </div>
@@ -345,8 +345,8 @@
                         <i class="fas fa-tags"></i>
                     </div>
                 </div>
-                <p class="text-3xl md:text-4xl font-black text-gold mb-2">Multiple</p>
-                <p class="text-xs uppercase tracking-wider text-light font-semibold">Brands</p>
+                <p class="text-3xl md:text-4xl font-black text-gold mb-2" data-i18n="metric_brands">Multiple</p>
+                <p class="text-xs uppercase tracking-wider text-light font-semibold" data-i18n="metric_brands_label">Brands</p>
             </div>
             
             <div class="metric-card text-center">
@@ -355,8 +355,8 @@
                         <i class="fas fa-layer-group"></i>
                     </div>
                 </div>
-                <p class="text-3xl md:text-4xl font-black text-gold mb-2">20ft/40ft</p>
-                <p class="text-xs uppercase tracking-wider text-light font-semibold">Standard Containers</p>
+                <p class="text-3xl md:text-4xl font-black text-gold mb-2" data-i18n="metric_containers">20ft/40ft</p>
+                <p class="text-xs uppercase tracking-wider text-light font-semibold" data-i18n="metric_containers_label">Standard Containers</p>
             </div>
             
             <div class="metric-card text-center">
@@ -365,8 +365,8 @@
                         <i class="fas fa-snowflake"></i>
                     </div>
                 </div>
-                <p class="text-3xl md:text-4xl font-black text-gold mb-2">Cold Chain</p>
-                <p class="text-xs uppercase tracking-wider text-light font-semibold">Reefer Operations</p>
+                <p class="text-3xl md:text-4xl font-black text-gold mb-2" data-i18n="metric_coldchain">Cold Chain</p>
+                <p class="text-xs uppercase tracking-wider text-light font-semibold" data-i18n="metric_coldchain_label">Reefer Operations</p>
             </div>
             
             <div class="metric-card text-center">
@@ -375,8 +375,8 @@
                         <i class="fas fa-shield-alt"></i>
                     </div>
                 </div>
-                <p class="text-3xl md:text-4xl font-black text-gold mb-2">100%</p>
-                <p class="text-xs uppercase tracking-wider text-light font-semibold">Import Compliance</p>
+                <p class="text-3xl md:text-4xl font-black text-gold mb-2" data-i18n="metric_compliance">100%</p>
+                <p class="text-xs uppercase tracking-wider text-light font-semibold" data-i18n="metric_compliance_label">Import Compliance</p>
             </div>
         </div>
     </section>
@@ -388,14 +388,14 @@
                 <div>
                     <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center gap-2">
                         <span class="w-8 h-0.5 bg-gold"></span>
-                        <span>Corporate Capacity</span>
+                        <span data-i18n="corporate_capacity">Corporate Capacity</span>
                     </h2>
-                    <h3 class="text-4xl font-black text-gold leading-tight mb-6">Unbroken supply lines to Africa's largest trading markets</h3>
-                    <p class="text-light mb-5 leading-relaxed text-lg">
-                        Just like global broad line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperature management, and full regulatory compliance every step of the way.
+                    <h3 class="text-4xl font-black text-gold leading-tight mb-6" data-i18n="about_title">Unbroken supply lines to Africa's largest trading markets</h3>
+                    <p class="text-light mb-5 leading-relaxed text-lg" data-i18n="about_para_1">
+                        Just like global broad line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperat[...]
                     </p>
-                    <p class="text-light leading-relaxed text-lg mb-8">
-                        Whether routing inventory to major commercial capitals or regional hubs, our network ensures your wholesale allocations arrive on time, securely packed, and compliant with all local import requirements.
+                    <p class="text-light leading-relaxed text-lg mb-8" data-i18n="about_para_2">
+                        Whether routing inventory to major commercial capitals or regional hubs, our network ensures your wholesale allocations arrive on time, securely packed, and compliant with all [...]
                     </p>
                     
                     <!-- Feature list -->
@@ -404,19 +404,19 @@
                             <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
                                 <i class="fas fa-check"></i>
                             </div>
-                            <span class="text-light font-medium">End to end supply chain management</span>
+                            <span class="text-light font-medium" data-i18n="feature_1">End to end supply chain management</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
                                 <i class="fas fa-check"></i>
                             </div>
-                            <span class="text-light font-medium">24/7 temperature & condition monitoring</span>
+                            <span class="text-light font-medium" data-i18n="feature_2">24/7 temperature & condition monitoring</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
                                 <i class="fas fa-check"></i>
                             </div>
-                            <span class="text-light font-medium">Certified customs & compliance expertise</span>
+                            <span class="text-light font-medium" data-i18n="feature_3">Certified customs & compliance expertise</span>
                         </div>
                     </div>
                 </div>
@@ -435,11 +435,13 @@
             <div class="text-center max-w-2xl mx-auto mb-16">
                 <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
                     <span class="w-8 h-0.5 bg-gold"></span>
-                    <span>Our Portfolio</span>
+                    <span data-i18n="portfolio_label">Our Portfolio</span>
                     <span class="w-8 h-0.5 bg-gold"></span>
                 </h2>
-                <h3 class="text-4xl font-black text-gold mb-4">Premium Spirits & Beverages</h3>
-                <p class="text-light text-lg">We specialize exclusively in tier one international spirits and premium beverages available in wholesale container volumes.</p>
+                <h3 class="text-4xl font-black text-gold mb-4" data-i18n="portfolio_title">Premium Spirits & Beverages</h3>
+                <p class="text-light text-lg" data-i18n="portfolio_sub">
+                    We specialize exclusively in tier one international spirits and premium beverages available in wholesale container volumes.
+                </p>
             </div>
             
             <!-- Single Product Card with Expandable Menu -->
@@ -448,12 +450,12 @@
                     <!-- Beverage drinks image -->
                     <img src="images/Beverages.JPG" alt="Premium Beverages" class="w-full h-full object-cover">
                     <div class="absolute top-4 right-4 bg-gold text-black px-4 py-2 rounded-full text-xs font-bold uppercase">
-                        <i class="fas fa-bottle mr-2"></i><span>Exclusive Selection</span>
+                        <i class="fas fa-bottle mr-2"></i><span data-i18n="exclusive_selection">Exclusive Selection</span>
                     </div>
                 </div>
                 <div class="p-8">
-                    <h4 class="font-extrabold text-2xl text-gold mb-2">Premium Spirits & Liquors</h4>
-                    <p class="text-light text-sm mb-8 leading-relaxed">Curated selection of international premium spirits and beverages, carefully sourced for African wholesale distribution.</p>
+                    <h4 class="font-extrabold text-2xl text-gold mb-2" data-i18n="product_heading">Premium Spirits & Liquors</h4>
+                    <p class="text-light text-sm mb-8 leading-relaxed" data-i18n="product_intro">Curated selection of international premium spirits and beverages, carefully sourced for African wholesale distribution.</p>
                     
                     <!-- Accordion Menu -->
                     <div class="space-y-2">
@@ -472,7 +474,7 @@
                                         <img src="images/Roulette.jpg" alt="Roulette Whiskey" class="product-image">
                                         <div class="product-info">
                                             <p class="text-light font-medium mb-2"><strong class="text-gold">Category:</strong> <span>Whiskey</span></p>
-                                            <p class="text-light text-sm">ROULETTE Premium Whisky is a premium blended Indian whisky crafted in Goa using carefully selected grain spirit and quality malt whiskies.</p>
+                                            <p class="text-light text-sm">ROULETTE Premium Whisky is a premium blended Indian whisky crafted in Goa using carefully selected grain spirit and quality ma[...]
                                             <div class="mt-4 pt-4 border-t border-gold">
                                                 <span class="text-gold font-bold text-sm">Sizes available: 60ml, 180ml, 200ml, 750ml</span>
                                             </div>
@@ -572,7 +574,7 @@
                                         <img src="images/Aristocrat.jpg" alt="Aristocrat Whiskey & Rum" class="product-image">
                                         <div class="product-info">
                                             <p class="text-light font-medium mb-2"><strong class="text-gold">Category:</strong> <span>Whiskey & Rum</span></p>
-                                            <p class="text-light text-sm">AC Black & Aristocrat Premium Whiskies are expertly crafted Indian Made Foreign Liquors (IMFL), blended with imported Scotch malts.</p>
+                                            <p class="text-light text-sm">AC Black & Aristocrat Premium Whiskies are expertly crafted Indian Made Foreign Liquors (IMFL), blended with imported Scotch m[...]
                                             <div class="mt-4 pt-4 border-t border-gold">
                                                 <span class="text-gold font-bold text-sm">Sizes available: 180ml, 375ml, 750ml, 1L</span>
                                             </div>
@@ -597,7 +599,7 @@
                                         <img src="images/IceX.jpg" alt="IceX Vodka" class="product-image">
                                         <div class="product-info">
                                             <p class="text-light font-medium mb-2"><strong class="text-gold">Category:</strong> <span>Vodka</span></p>
-                                            <p class="text-light text-sm">IceX Vodka is a premium vodka crafted from 100% pure grain spirit and triple distilled to achieve exceptional smoothness and purity.</p>
+                                            <p class="text-light text-sm">IceX Vodka is a premium vodka crafted from 100% pure grain spirit and triple distilled to achieve exceptional smoothness and p[...]
                                             <div class="mt-4 pt-4 border-t border-gold">
                                                 <span class="text-gold font-bold text-sm">Sizes available: 180ml, 375ml, 750ml</span>
                                             </div>
@@ -610,7 +612,7 @@
 
                     <!-- Call to Action -->
                     <div class="mt-8 pt-6 border-t border-gold">
-                        <a href="#contact" class="w-full inline-flex items-center justify-center gap-2 btn-gold px-6 py-4 rounded-lg font-bold text-sm uppercase tracking-wide transition duration-300">
+                        <a href="#contact" class="w-full inline-flex items-center justify-center gap-2 btn-gold px-6 py-4 rounded-lg font-bold text-sm uppercase tracking-wide transition duration-300" data-i18n="request_quote">
                             <i class="fas fa-envelope"></i>Request Quote for Any Brand
                         </a>
                     </div>
@@ -624,12 +626,12 @@
         <div class="max-w-4xl mx-auto text-center px-6">
             <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
                 <span class="w-8 h-0.5 bg-gold"></span>
-                <span>Regulatory Alignment</span>
+                <span data-i18n="regulatory_alignment">Regulatory Alignment</span>
                 <span class="w-8 h-0.5 bg-gold"></span>
             </h2>
-            <h3 class="text-4xl font-black text-gold mb-6">Fully Licensed Global Freight Integration</h3>
-            <p class="text-light leading-relaxed text-lg max-w-3xl mx-auto mb-10">
-                We strictly operate under comprehensive local trade authorizations and international trade provisions. All spirits and beverages undergo careful quality vetting, compliance certification, and regulatory alignment before shipment.
+            <h3 class="text-4xl font-black text-gold mb-6" data-i18n="compliance_title">Fully Licensed Global Freight Integration</h3>
+            <p class="text-light leading-relaxed text-lg max-w-3xl mx-auto mb-10" data-i18n="compliance_text">
+                We strictly operate under comprehensive local trade authorizations and international trade provisions. All spirits and beverages undergo careful quality vetting, compliance certificati[...]
             </p>
             
             <!-- Compliance checklist -->
@@ -638,22 +640,22 @@
                     <div class="text-3xl mb-3 text-gold">
                         <i class="fas fa-certificate"></i>
                     </div>
-                    <h4 class="font-bold text-gold mb-2">ISO & Safety Certified</h4>
-                    <p class="text-light text-sm">Full compliance with ISO standards and international beverage safety regulations.</p>
+                    <h4 class="font-bold text-gold mb-2" data-i18n="iso_cert">ISO & Safety Certified</h4>
+                    <p class="text-light text-sm" data-i18n="iso_cert_text">Full compliance with ISO standards and international beverage safety regulations.</p>
                 </div>
                 <div class="p-6 bg-slate-900 rounded-xl border-2 border-gold">
                     <div class="text-3xl mb-3 text-gold">
                         <i class="fas fa-passport"></i>
                     </div>
-                    <h4 class="font-bold text-gold mb-2">Customs Verified</h4>
-                    <p class="text-light text-sm">Pre cleared with port authorities across major African trading hubs.</p>
+                    <h4 class="font-bold text-gold mb-2" data-i18n="customs_verified">Customs Verified</h4>
+                    <p class="text-light text-sm" data-i18n="customs_verified_text">Pre cleared with port authorities across major African trading hubs.</p>
                 </div>
                 <div class="p-6 bg-slate-900 rounded-xl border-2 border-gold">
                     <div class="text-3xl mb-3 text-gold">
                         <i class="fas fa-check-double"></i>
                     </div>
-                    <h4 class="font-bold text-gold mb-2">Quality Assured</h4>
-                    <p class="text-light text-sm">Third party inspections and temperature controlled logistics guarantee product integrity.</p>
+                    <h4 class="font-bold text-gold mb-2" data-i18n="quality_assured">Quality Assured</h4>
+                    <p class="text-light text-sm" data-i18n="quality_assured_text">Third party inspections and temperature controlled logistics guarantee product integrity.</p>
                 </div>
             </div>
         </div>
@@ -662,11 +664,11 @@
     <!-- 7. CONTACT SECTION -->
     <section id="contact" class="section-dark py-20">
         <div class="max-w-3xl mx-auto px-6 text-center">
-            <h2 class="text-4xl font-black text-gold mb-4">
+            <h2 class="text-4xl font-black text-gold mb-4" data-i18n="contact_heading">
                 Contact Us
             </h2>
 
-            <p class="text-light text-lg mb-12">
+            <p class="text-light text-lg mb-12" data-i18n="contact_intro">
                 For wholesale inquiries, pricing, or partnership opportunities,
                 please reach out using the details below.
             </p>
@@ -675,44 +677,36 @@
                 <div class="space-y-8">
                     <div>
                         <i class="fas fa-envelope text-gold text-2xl mb-2"></i>
-                        <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold">
+                        <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_email_label">
                             Email
                         </h3>
-                        <p class="text-light text-lg">
-                            sales@shreeshyamxm.com
-                        </p>
+                        <p class="text-light text-lg" data-i18n="contact_email">sales@shreeshyamxm.com</p>
                     </div>
 
                     <div>
                         <i class="fas fa-phone text-gold text-2xl mb-2"></i>
-                        <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold">
+                        <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_phone_label">
                             Phone
                         </h3>
-                        <p class="text-light text-lg">
-                            +228 72097250
-                        </p>
+                        <p class="text-light text-lg" data-i18n="contact_phone">+228 72097250</p>
                     </div>
 
                     <div>
                         <i class="fab fa-whatsapp text-gold text-2xl mb-2"></i>
-                        <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold">
+                        <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_whatsapp_label">
                             WhatsApp
                         </h3>
                         <p class="text-light text-lg">
-                            <a href="https://wa.me/919784928525" target="_blank" class="hover:text-white transition duration-300">
-                                +91 9784928525
-                            </a>
+                            <a href="https://wa.me/919784928525" target="_blank" class="hover:text-white transition duration-300" data-i18n="contact_whatsapp">+91 9784928525</a>
                         </p>
                     </div>
 
                     <div>
                         <i class="fas fa-map-marker-alt text-gold text-2xl mb-2"></i>
-                        <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold">
+                        <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_service_area_label">
                             Service Area
                         </h3>
-                        <p class="text-light text-lg">
-                            Africa wide Import & Distribution
-                        </p>
+                        <p class="text-light text-lg" data-i18n="contact_service_area">Africa wide Import & Distribution</p>
                     </div>
                 </div>
             </div>
@@ -725,14 +719,14 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                 <div>
                     <h4 class="text-gold font-bold mb-4">ShreeShyamXM</h4>
-                    <p class="text-muted text-sm">Premier spirits and beverage bulk distribution across Africa's major ports and trading corridors.</p>
+                    <p class="text-muted text-sm" data-i18n="footer_blurb">Premier spirits and beverage bulk distribution across Africa's major ports and trading corridors.</p>
                 </div>
                 <div>
-                    <h4 class="text-gold font-bold mb-4">Quick Links</h4>
+                    <h4 class="text-gold font-bold mb-4" data-i18n="footer_quick_links">Quick Links</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#about" class="text-muted hover:text-gold transition">About Us</a></li>
-                        <li><a href="#catalog" class="text-muted hover:text-gold transition">Our Brands</a></li>
-                        <li><a href="#contact" class="text-muted hover:text-gold transition">Contact</a></li>
+                        <li><a href="#about" class="text-muted hover:text-gold transition" data-i18n="nav_about_footer">About Us</a></li>
+                        <li><a href="#catalog" class="text-muted hover:text-gold transition" data-i18n="nav_catalog_footer">Our Brands</a></li>
+                        <li><a href="#contact" class="text-muted hover:text-gold transition" data-i18n="nav_contact_footer">Contact</a></li>
                     </ul>
                 </div>
                 <div>
@@ -746,8 +740,8 @@
             </div>
             
             <div class="border-t border-gold pt-8 text-center">
-                <p class="text-sm font-medium">&copy; 2026 ShreeShyamXM. All rights reserved. Premium Spirits & Beverage Distribution & Logistics Network.</p>
-                <p class="text-xs text-muted mt-2"><span>Images sourced from local assets and</span> <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" class="hover:text-gold transition">Unsplash</a></p>
+                <p class="text-sm font-medium" data-i18n="footer_copyright">&copy; 2026 ShreeShyamXM. All rights reserved. Premium Spirits & Beverage Distribution & Logistics Network.</p>
+                <p class="text-xs text-muted mt-2"><span>Images sourced from local assets and</span> <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" class="hover:text-gold">Unsplash</a></p>
             </div>
         </div>
     </footer>
@@ -755,6 +749,134 @@
     <script>
         // Global map variable
         let mapInstance = null;
+
+        // Simple translations object
+        const translations = {
+            en: {
+                age_title: "Age Verification",
+                age_text: "You must be 21 years or older to access this site. This site contains content related to alcohol products.",
+                age_confirm: "I am 21 or Older",
+                age_deny: "I am Under 21",
+                nav_about: "About Us",
+                nav_catalog: "Bulk Catalog",
+                nav_compliance: "Compliance",
+                contact_sales: "Contact Sales",
+                hero_badge: "Flexible Order Quantities",
+                hero_title: "Premium Spirits & Liquor Distribution Across Africa",
+                hero_sub: "Supplying major African ports with high-volume, reliable container shipments of premium international spirits and beverage brands.",
+                view_brands: "View Our Brands",
+                our_infrastructure: "Our Infrastructure",
+                metric_brands: "Multiple",
+                metric_brands_label: "Brands",
+                metric_containers: "20ft/40ft",
+                metric_containers_label: "Standard Containers",
+                metric_coldchain: "Cold Chain",
+                metric_coldchain_label: "Reefer Operations",
+                metric_compliance: "100%",
+                metric_compliance_label: "Import Compliance",
+                corporate_capacity: "Corporate Capacity",
+                about_title: "Unbroken supply lines to Africa's largest trading markets",
+                about_para_1: "Just like global broad line distributors, we control the freight, customs alignment, and container routing from source to arrival. We prioritize product safety, strict temperat[...]",
+                about_para_2: "Whether routing inventory to major commercial capitals or regional hubs, our network ensures your wholesale allocations arrive on time, securely packed, and compliant with all [...]",
+                feature_1: "End to end supply chain management",
+                feature_2: "24/7 temperature & condition monitoring",
+                feature_3: "Certified customs & compliance expertise",
+                portfolio_label: "Our Portfolio",
+                portfolio_title: "Premium Spirits & Beverages",
+                portfolio_sub: "We specialize exclusively in tier one international spirits and premium beverages available in wholesale container volumes.",
+                exclusive_selection: "Exclusive Selection",
+                product_heading: "Premium Spirits & Liquors",
+                product_intro: "Curated selection of international premium spirits and beverages, carefully sourced for African wholesale distribution.",
+                request_quote: "Request Quote for Any Brand",
+                regulatory_alignment: "Regulatory Alignment",
+                compliance_title: "Fully Licensed Global Freight Integration",
+                compliance_text: "We strictly operate under comprehensive local trade authorizations and international trade provisions. All spirits and beverages undergo careful quality vetting, compliance certificati[...]",
+                iso_cert: "ISO & Safety Certified",
+                iso_cert_text: "Full compliance with ISO standards and international beverage safety regulations.",
+                customs_verified: "Customs Verified",
+                customs_verified_text: "Pre cleared with port authorities across major African trading hubs.",
+                quality_assured: "Quality Assured",
+                quality_assured_text: "Third party inspections and temperature controlled logistics guarantee product integrity.",
+                contact_heading: "Contact Us",
+                contact_intro: "For wholesale inquiries, pricing, or partnership opportunities, please reach out using the details below.",
+                contact_email_label: "Email",
+                contact_email: "sales@shreeshyamxm.com",
+                contact_phone_label: "Phone",
+                contact_phone: "+228 72097250",
+                contact_whatsapp_label: "WhatsApp",
+                contact_whatsapp: "+91 9784928525",
+                contact_service_area_label: "Service Area",
+                contact_service_area: "Africa wide Import & Distribution",
+                footer_blurb: "Premier spirits and beverage bulk distribution across Africa's major ports and trading corridors.",
+                footer_quick_links: "Quick Links",
+                nav_about_footer: "About Us",
+                nav_catalog_footer: "Our Brands",
+                nav_contact_footer: "Contact",
+                footer_copyright: "© 2026 ShreeShyamXM. All rights reserved. Premium Spirits & Beverage Distribution & Logistics Network."
+            },
+            fr: {
+                age_title: "Vérification de l'âge",
+                age_text: "Vous devez avoir 21 ans ou plus pour accéder à ce site. Ce site contient du contenu lié aux produits alcoolisés.",
+                age_confirm: "J'ai 21 ans ou plus",
+                age_deny: "J'ai moins de 21 ans",
+                nav_about: "À propos",
+                nav_catalog: "Catalogue en gros",
+                nav_compliance: "Conformité",
+                contact_sales: "Contacter les ventes",
+                hero_badge: "Quantités de commande flexibles",
+                hero_title: "Distribution de spiritueux et de boissons alcoolisées de qualité à travers l'Afrique",
+                hero_sub: "Approvisionnement des principaux ports africains avec des expéditions conteneurisées volumineuses et fiables de marques internationales de spiritueux et de boissons haut de gamme.",
+                view_brands: "Voir nos marques",
+                our_infrastructure: "Notre infrastructure",
+                metric_brands: "Plusieurs",
+                metric_brands_label: "Marques",
+                metric_containers: "20ft/40ft",
+                metric_containers_label: "Conteneurs standards",
+                metric_coldchain: "Chaîne du froid",
+                metric_coldchain_label: "Opérations frigorifiques",
+                metric_compliance: "100%",
+                metric_compliance_label: "Conformité à l'importation",
+                corporate_capacity: "Capacité d'entreprise",
+                about_title: "Lignes d'approvisionnement ininterrompues vers les plus grands marchés commerciaux d'Afrique",
+                about_para_1: "Tout comme les distributeurs mondiaux, nous contrôlons le fret, l'alignement douanier et l'acheminement des conteneurs de la source à l'arrivée. Nous privilégions la sécurité des produits, le contrôle strict de la température[...]",
+                about_para_2: "Qu'il s'agisse d'acheminer des stocks vers les principales capitales commerciales ou des hubs régionaux, notre réseau garantit que vos allocations en gros arrivent à temps, emballées en toute sécurité et conformes à toutes les [...]",
+                feature_1: "Gestion de la chaîne d'approvisionnement de bout en bout",
+                feature_2: "Suivi 24/7 de la température et des conditions",
+                feature_3: "Expertise certifiée en douane et conformité",
+                portfolio_label: "Notre portefeuille",
+                portfolio_title: "Spiritueux et boissons haut de gamme",
+                portfolio_sub: "Nous nous spécialisons exclusivement dans les spiritueux internationaux de premier ordre et les boissons haut de gamme disponibles en volumes de conteneurs en gros.",
+                exclusive_selection: "Sélection exclusive",
+                product_heading: "Spiritueux & Alcools de qualité",
+                product_intro: "Sélection soignée de spiritueux et de boissons internationales haut de gamme, soigneusement sourcées pour la distribution en gros en Afrique.",
+                request_quote: "Demander un devis pour n'importe quelle marque",
+                regulatory_alignment: "Alignement réglementaire",
+                compliance_title: "Intégration mondiale du fret entièrement agréée",
+                compliance_text: "Nous opérons strictement sous des autorisations commerciales locales complètes et des dispositions commerciales internationales. Tous les spiritueux et boissons subissent des contrôles de qualité rigoureux et des certifications de conformité[...]",
+                iso_cert: "Certifié ISO et sécurité",
+                iso_cert_text: "Conformité totale aux normes ISO et aux réglementations internationales sur la sécurité des boissons.",
+                customs_verified: "Vérifié par les douanes",
+                customs_verified_text: "Pré-dédouané auprès des autorités portuaires dans les principaux hubs commerciaux africains.",
+                quality_assured: "Qualité garantie",
+                quality_assured_text: "Inspections tiers et logistique à température contrôlée garantissent l'intégrité des produits.",
+                contact_heading: "Contactez-nous",
+                contact_intro: "Pour toute demande en gros, tarification ou opportunités de partenariat, veuillez nous contacter en utilisant les coordonnées ci-dessous.",
+                contact_email_label: "Courriel",
+                contact_email: "sales@shreeshyamxm.com",
+                contact_phone_label: "Téléphone",
+                contact_phone: "+228 72097250",
+                contact_whatsapp_label: "WhatsApp",
+                contact_whatsapp: "+91 9784928525",
+                contact_service_area_label: "Zone de service",
+                contact_service_area: "Importation et distribution à l'échelle de l'Afrique",
+                footer_blurb: "Distribution en gros de spiritueux et de boissons de premier plan sur les principaux ports et corridors commerciaux d'Afrique.",
+                footer_quick_links: "Liens rapides",
+                nav_about_footer: "À propos",
+                nav_catalog_footer: "Nos marques",
+                nav_contact_footer: "Contact",
+                footer_copyright: "© 2026 ShreeShyamXM. Tous droits réservés. Réseau de distribution et logistique des spiritueux et boissons de qualité."
+            }
+        };
 
         // Age verification
         function confirmAge() {
@@ -779,20 +901,40 @@
             }
         }
 
+        // Apply translations to elements with data-i18n
+        function applyTranslations() {
+            const lang = localStorage.getItem('language') || 'en';
+            const dict = translations[lang] || translations.en;
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (!key) return;
+                const txt = dict[key];
+                if (txt === undefined) return; // leave existing text if missing translation
+
+                // Preserve links / inner HTML where appropriate (simple heuristic)
+                if (el.tagName.toLowerCase() === 'a' || el.tagName.toLowerCase() === 'button' || el.tagName.toLowerCase() === 'h1' || el.tagName.toLowerCase() === 'h2' || el.tagName.toLowerCase() === 'h3' || el.tagName.toLowerCase() === 'p' || el.tagName.toLowerCase() === 'span' || el.tagName.toLowerCase() === 'h4') {
+                    // Use innerHTML for elements that may contain icons or markup
+                    el.innerHTML = txt;
+                } else {
+                    el.textContent = txt;
+                }
+            });
+        }
+
         // Set language function
         function setLanguage(lang) {
             localStorage.setItem('language', lang);
             updateLanguageButtons();
+            applyTranslations();
         }
 
         // Update language button states
         function updateLanguageButtons() {
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
             const currentLang = localStorage.getItem('language') || 'en';
             document.querySelectorAll('.lang-btn').forEach(btn => {
-                if (btn.getAttribute('onclick').includes(`'${currentLang}'`)) {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === currentLang) {
                     btn.classList.add('active');
                 }
             });
@@ -807,13 +949,17 @@
             document.querySelectorAll('.accordion-content').forEach(item => {
                 if (item !== content) {
                     item.classList.remove('active');
-                    item.previousElementSibling.querySelector('i.fa-chevron-down').style.transform = 'rotate(0deg)';
+                    const prev = item.previousElementSibling;
+                    if (prev) {
+                        const prevIcon = prev.querySelector('i.fa-chevron-down');
+                        if (prevIcon) prevIcon.style.transform = 'rotate(0deg)';
+                    }
                 }
             });
             
             // Toggle current accordion
             content.classList.toggle('active');
-            icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+            if (icon) icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
         // Initialize Leaflet map - FULLY INTERACTIVE
@@ -931,6 +1077,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             checkAgeVerification();
             updateLanguageButtons();
+            applyTranslations();
             
             // Initialize map with delay to ensure DOM is ready
             if (document.getElementById('distributionMap')) {
