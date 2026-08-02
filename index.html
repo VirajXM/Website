@@ -437,7 +437,7 @@
             <!-- Compact Google Translate Widget -->
             <div class="translate-compact" aria-hidden="false" title="Translate" style="display: inline-flex; align-items: center; gap: 6px;">
                 <i class="fas fa-globe translate-icon" aria-hidden="true"></i>
-                <span class="translate-text" style="white-space: nowrap;">Select Language</span>
+                <span class="translate-text" style="white-space: nowrap;">Language</span>
                 <div id="google_translate_element"></div>
             </div>
         </div>
@@ -948,7 +948,7 @@
             if (!mapContainer) return;
 
             // Very narrow zoom range for tight control
-            const initialZoom = 5;
+            const initialZoom = 2;
             const zoomStepLimit = 1; // small range (initialZoom +/- 1)
             const minZoom = Math.max(0, initialZoom - zoomStepLimit); // e.g. 4
             const maxZoom = initialZoom + zoomStepLimit; // e.g. 6
