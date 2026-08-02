@@ -434,13 +434,29 @@
         </div>
 
         <div class="flex items-center gap-3">
-            <!-- Compact Google Translate Widget -->
-            <div class="translate-compact" aria-hidden="false" title="Translate" style="display: inline-flex; align-items: center; gap: 6px;">
-                <i class="fas fa-globe translate-icon" aria-hidden="true"></i>
-                <span class="translate-text" style="white-space: nowrap;">Language</span>
-                <div id="google_translate_element"></div>
-            </div>
+    <!-- Language Selector Dropdown -->
+    <div class="relative group">
+        <button class="flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-gold text-gold hover:bg-gold/10 transition duration-300" title="Select Language">
+            <i class="fas fa-globe"></i>
+            <span>Language</span>
+            <i class="fas fa-chevron-down text-xs"></i>
+        </button>
+        <div class="absolute right-0 mt-2 w-40 bg-slate-900 border-2 border-gold rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300 z-50">
+            <a href="javascript:void(0);" onclick="changeLanguage('en')" class="block px-4 py-2 text-gold hover:bg-slate-800 first:rounded-t-lg" data-lang="en">
+                <i class="fas fa-check mr-2" id="check-en"></i>English
+            </a>
+            <a href="javascript:void(0);" onclick="changeLanguage('es')" class="block px-4 py-2 text-gold hover:bg-slate-800" data-lang="es">
+                <i class="fas fa-check mr-2 hidden" id="check-es"></i>Español
+            </a>
+            <a href="javascript:void(0);" onclick="changeLanguage('fr')" class="block px-4 py-2 text-gold hover:bg-slate-800" data-lang="fr">
+                <i class="fas fa-check mr-2 hidden" id="check-fr"></i>Français
+            </a>
+            <a href="javascript:void(0);" onclick="changeLanguage('pt')" class="block px-4 py-2 text-gold hover:bg-slate-800 last:rounded-b-lg" data-lang="pt">
+                <i class="fas fa-check mr-2 hidden" id="check-pt"></i>Português
+            </a>
         </div>
+    </div>
+</div>
 
         <div>
             <a href="#contact"
@@ -1067,6 +1083,27 @@
         }
 
         window.addEventListener('load', initPage);
+        function changeLanguage(lang) {
+    // Hide all checkmarks
+    document.getElementById('check-en').classList.add('hidden');
+    document.getElementById('check-es').classList.add('hidden');
+    document.getElementById('check-fr').classList.add('hidden');
+    document.getElementById('check-pt').classList.add('hidden');
+    
+    // Show checkmark for selected language
+    document.getElementById('check-' + lang).classList.remove('hidden');
+    
+    // Store language preference
+    localStorage.setItem('selectedLanguage', lang);
+    
+    console.log('Language changed to: ' + lang);
+}
+
+// On page load, restore saved language preference
+window.addEventListener('DOMContentLoaded', function() {
+    const savedLang = localStorage.getItem('selectedLanguage') || 'en';
+    changeLanguage(savedLang);
+});
     </script>
 </body>
 </html>
