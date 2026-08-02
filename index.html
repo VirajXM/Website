@@ -301,7 +301,7 @@
             border-top: 2px solid rgba(212, 175, 55, 0.08);
         }
 
-                /* Google Translate Compact Styling */
+        /* Google Translate Compact Styling */
         .translate-compact {
             display: inline-flex;
             align-items: center;
@@ -350,21 +350,52 @@
             color: #d4af37 !important;
         }
 
-        /* Contact section tweaks */
-        .contact-section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 14px;
-        }
-        .contact-section-header h2 {
-            margin: 0;
-
-        }
-
         .goog-te-banner-frame {
             display: none !important;
+        }
+
+        /* Custom compact tweaks to reduce the large gap after "Select Language" */
+        .translate-compact {
+            gap: 6px;
+        }
+        .translate-compact .translate-icon {
+            margin-right: 4px;
+        }
+        .translate-compact .translate-text {
+            max-width: 90px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 6px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .translate-compact #google_translate_element,
+        .translate-compact .goog-te-gadget-simple {
+            display: inline-block !important;
+            vertical-align: middle;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .translate-compact .goog-te-combo {
+            margin-left: 4px !important;
+        }
+
+        /* Custom emoji-pin style for Leaflet markers */
+        .custom-emoji-icon {
+            background: rgba(10,10,10,0.9);
+            border: 2px solid #d4af37;
+            color: #d4af37;
+            border-radius: 50%;
+            text-align: center;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.45);
+            transform: translateY(-6px);
         }
     </style>
 </head>
@@ -403,13 +434,12 @@
         </div>
 
         <div class="flex items-center gap-3">
-                        <!-- Compact Google Translate Widget -->
-<div class="translate-compact" aria-hidden="false" title="Translate" style="display: inline-flex; align-items: center; gap: 6px;">
-    <i class="fas fa-globe translate-icon" aria-hidden="true"></i>
-    <span class="translate-text" style="white-space: nowrap;">Select Language</span>
-    <div id="google_translate_element"></div>
-</div>
-
+            <!-- Compact Google Translate Widget -->
+            <div class="translate-compact" aria-hidden="false" title="Translate" style="display: inline-flex; align-items: center; gap: 6px;">
+                <i class="fas fa-globe translate-icon" aria-hidden="true"></i>
+                <span class="translate-text" style="white-space: nowrap;">Select Language</span>
+                <div id="google_translate_element"></div>
+            </div>
         </div>
 
         <div>
@@ -772,7 +802,7 @@
     <!-- 7. CONTACT SECTION (Map moved here: left = map + "Our presence", right = contact card) -->
     <section id="contact" class="section-dark py-20">
         <div class="max-w-6xl mx-auto px-6">
-                        <!-- New Contact Us header -->
+            <!-- New Contact Us header -->
             <div class="contact-section-header">
                 <h2 class="text-3xl md:text-4xl font-extrabold text-gold" id="contact-us">Contact Us</h2>
                 <p class="text-sm text-muted hidden md:block">Reach out for sales, distribution partnerships, and logistics enquiries.</p>
@@ -782,7 +812,7 @@
                 <div>
                     <h3 class="text-2xl font-black text-gold mb-4" data-i18n="our_presence">Our presence</h3>
                     <div id="distributionMap" class="rounded-2xl overflow-hidden mb-4" aria-label="Distribution map"></div>
-                    <p class="text-gold text-xs mt-2 font-semibold">Drag to pan • Scroll to zoom (hover over map to scroll) • Click markers for location details</p>
+                    <p class="text-gold text-xs mt-2 font-semibold">Drag to pan • Scroll to zoom (hold Ctrl/Cmd + scroll to zoom) • Click markers for location details</p>
                 </div>
 
                 <!-- RIGHT: Contact Card -->
@@ -912,31 +942,32 @@
             if (icon) icon.style.transform = isActive ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
-        // Initialize Leaflet map with limited zoom levels (exactly two steps by default)
+        // Initialize Leaflet map with limited zoom levels and custom emoji pins
         function initializeMap() {
             const mapContainer = document.getElementById('distributionMap');
             if (!mapContainer) return;
 
-            // Define initial zoom here and limit (zoomStepLimit = 2 means two steps up or down)
-            const initialZoom = 4;
-            const zoomStepLimit = 5;
-            const minZoom = Math.max(0, initialZoom - zoomStepLimit);
-            const maxZoom = initialZoom + zoomStepLimit;
+            // Very narrow zoom range for tight control
+            const initialZoom = 5;
+            const zoomStepLimit = 1; // small range (initialZoom +/- 1)
+            const minZoom = Math.max(0, initialZoom - zoomStepLimit); // e.g. 4
+            const maxZoom = initialZoom + zoomStepLimit; // e.g. 6
 
-            // Create map with min/max computed above
+            // Create the map with strict zoom/pan constraints and limited interactions
             mapInstance = L.map(mapContainer, {
                 center: [6.0, 15.0],
                 zoom: initialZoom,
-                maxZoom: maxZoom,
                 minZoom: minZoom,
-                scrollWheelZoom: false,
-                doubleClickZoom: true,
+                maxZoom: maxZoom,
+                scrollWheelZoom: false,   // disabled by default
+                doubleClickZoom: false,   // disable double click zoom
                 touchZoom: true,
                 dragging: true,
                 zoomControl: true,
-                boxZoom: true,
-                keyboard: true,
-                tap: true
+                boxZoom: false,
+                keyboard: false,
+                tap: true,
+                inertia: false
             });
 
             // Tile layer
@@ -946,33 +977,71 @@
                 minZoom: minZoom
             }).addTo(mapInstance);
 
-            // Limit panning to a reasonable bounding box covering Africa and India region
+            // Tight bounds to limit panning (Africa + India area) — adjust if needed
             const bounds = L.latLngBounds(
-                L.latLng(-35, -25),
-                L.latLng(38, 105)
+                L.latLng(-35, -20),   // SW lat,lng
+                L.latLng(40, 105)     // NE lat,lng
             );
             mapInstance.setMaxBounds(bounds);
-
-            // Enable scroll wheel zoom only on hover
-            mapContainer.addEventListener('mouseenter', () => {
-                mapInstance.scrollWheelZoom.enable();
+            // Ensure the map snaps back inside bounds if dragged out
+            mapInstance.on('drag', function() {
+                mapInstance.panInsideBounds(bounds, { animate: false });
             });
+            mapInstance.on('moveend', function() {
+                mapInstance.panInsideBounds(bounds, { animate: false });
+            });
+
+            // Strict scroll behavior:
+            // - Wheel zoom is disabled by default
+            // - While hovering, attach a wheel handler that only allows zoom when Ctrl (or Meta) is held
+            function wheelHandler(e) {
+                // If user holds Ctrl (or Meta on macOS), allow the wheel event (so Leaflet can zoom)
+                // Otherwise prevent it entirely to avoid accidental zooming
+                if (!(e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+                // If ctrl/meta is held, allow event (Leaflet will perform zoom)
+            }
+
+            mapContainer.addEventListener('mouseenter', () => {
+                // Enable Leaflet's scrollWheelZoom but intercept wheel events to require Ctrl/Cmd
+                mapInstance.scrollWheelZoom.enable();
+                mapContainer.addEventListener('wheel', wheelHandler, { passive: false });
+            });
+
             mapContainer.addEventListener('mouseleave', () => {
                 mapInstance.scrollWheelZoom.disable();
+                mapContainer.removeEventListener('wheel', wheelHandler);
             });
 
-            // Distribution markers
+            // New requested locations with emoji icons
             const locations = [
-                { lat: -33.9249, lng: 18.4241, name: 'Cape Town, South Africa', desc: 'Major shipping hub' },
-                { lat: -4.0383, lng: 21.7587, name: 'Kinshasa, DRC', desc: 'Central Africa logistics' },
-                { lat: 6.4969, lng: 3.5636, name: 'Lagos, Nigeria', desc: 'West Africa distribution' },
-                { lat: -1.2921, lng: 36.8219, name: 'Nairobi, Kenya', desc: 'East Africa operations' },
-                { lat: 8.9753, lng: 38.7469, name: 'Addis Ababa, Ethiopia', desc: 'Northeast Africa hub' }
+                { lat: 6.1256, lng: 1.2317, name: 'Togo', port: 'Port of Lomé', icon: '⚓' },
+                { lat: 9.3077, lng: 2.3158, name: 'Benin', port: 'Port of Cotonou', icon: '⚓' },
+                { lat: 7.3697, lng: -0.5577, name: 'Ghana', port: 'Port of Tema', icon: '⚓' },
+                { lat: 6.5244, lng: 3.3792, name: 'Nigeria', port: 'Port of Lagos', icon: '⚓' },
+                { lat: 20.5937, lng: 78.9629, name: 'India', port: 'Source Facility', icon: '🏭' }
             ];
 
             locations.forEach(loc => {
-                const marker = L.marker([loc.lat, loc.lng]).addTo(mapInstance);
-                marker.bindPopup(`<div class="bg-slate-900 text-gold p-3 rounded"><strong>${loc.name}</strong><br>${loc.desc}</div>`);
+                // Create a divIcon using the emoji provided
+                const emojiHtml = `<div style="line-height:1;">${loc.icon}</div>`;
+                const emojiIcon = L.divIcon({
+                    className: 'custom-emoji-icon',
+                    html: emojiHtml,
+                    iconSize: [36, 36],
+                    iconAnchor: [18, 36]
+                });
+
+                const marker = L.marker([loc.lat, loc.lng], { icon: emojiIcon }).addTo(mapInstance);
+                const popupHtml = `
+                    <div style="background:#0f1724;color:#d4af37;padding:8px;border-radius:8px;max-width:220px;">
+                        <strong style="display:block;margin-bottom:6px;">${loc.name}</strong>
+                        <div style="font-size:13px;color:#e6d29a;">${loc.port}</div>
+                    </div>`;
+                marker.bindPopup(popupHtml, { closeButton: true, autoPan: true });
             });
         }
 
@@ -998,26 +1067,6 @@
         }
 
         window.addEventListener('load', initPage);
-    </script>
-
-    <!-- Google Translate script placed after initialization functions to avoid race with callback -->
-    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script>
-        // Google Translate Initialization
-        function googleTranslateElementInit() {
-            // Try-catch to avoid errors if the element isn't present for some reason
-            try {
-                new google.translate.TranslateElement({
-                    pageLanguage: 'en',
-                    includedLanguages: 'en,fr,es,de,pt,ar,sw',
-                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                    autoDisplay: false
-                }, 'google_translate_element');
-            } catch (e) {
-                // fail silently
-                console.warn('Google Translate init failed', e);
-            }
-        }
     </script>
 </body>
 </html>
