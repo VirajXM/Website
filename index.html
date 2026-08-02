@@ -912,31 +912,32 @@
             if (icon) icon.style.transform = isActive ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
-        // Initialize Leaflet map with limited zoom levels (exactly two steps by default)
+        // Initialize Leaflet map with limited zoom levels and custom emoji pins
         function initializeMap() {
             const mapContainer = document.getElementById('distributionMap');
             if (!mapContainer) return;
 
-            // Define initial zoom here and limit (zoomStepLimit = 2 means two steps up or down)
+            // Very narrow zoom range for tight control
             const initialZoom = 5;
-            const zoomStepLimit = 1;
-            const minZoom = Math.max(0, initialZoom - zoomStepLimit);
-            const maxZoom = initialZoom + zoomStepLimit;
+            const zoomStepLimit = 1; // small range (initialZoom +/- 1)
+            const minZoom = Math.max(0, initialZoom - zoomStepLimit); // e.g. 4
+            const maxZoom = initialZoom + zoomStepLimit; // e.g. 6
 
-            // Create map with min/max computed above
+            // Create the map with strict zoom/pan constraints and limited interactions
             mapInstance = L.map(mapContainer, {
                 center: [6.0, 15.0],
                 zoom: initialZoom,
-                maxZoom: maxZoom,
                 minZoom: minZoom,
-                scrollWheelZoom: false,
-                doubleClickZoom: true,
+                maxZoom: maxZoom,
+                scrollWheelZoom: false,   // disabled by default
+                doubleClickZoom: false,   // disable double click zoom
                 touchZoom: true,
                 dragging: true,
                 zoomControl: true,
-                boxZoom: true,
-                keyboard: true,
-                tap: true
+                boxZoom: false,
+                keyboard: false,
+                tap: true,
+                inertia: false
             });
 
             // Tile layer
@@ -946,22 +947,46 @@
                 minZoom: minZoom
             }).addTo(mapInstance);
 
-            // Limit panning to a reasonable bounding box covering Africa and India region
+            // Tight bounds to limit panning (Africa + India area) — adjust if needed
             const bounds = L.latLngBounds(
-                L.latLng(-35, -25),
-                L.latLng(38, 105)
+                L.latLng(-35, -20),   // SW lat,lng
+                L.latLng(40, 105)     // NE lat,lng
             );
             mapInstance.setMaxBounds(bounds);
-
-            // Enable scroll wheel zoom only on hover
-            mapContainer.addEventListener('mouseenter', () => {
-                mapInstance.scrollWheelZoom.enable();
+            // Ensure the map snaps back inside bounds if dragged out
+            mapInstance.on('drag', function() {
+                mapInstance.panInsideBounds(bounds, { animate: false });
             });
+            mapInstance.on('moveend', function() {
+                mapInstance.panInsideBounds(bounds, { animate: false });
+            });
+
+            // Strict scroll behavior:
+            // - Wheel zoom is disabled by default
+            // - While hovering, attach a wheel handler that only allows zoom when Ctrl (or Meta) is held
+            function wheelHandler(e) {
+                // If user holds Ctrl (or Meta on macOS), allow the wheel event (so Leaflet can zoom)
+                // Otherwise prevent it entirely to avoid accidental zooming
+                if (!(e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+                // If ctrl/meta is held, allow event (Leaflet will perform zoom)
+            }
+
+            mapContainer.addEventListener('mouseenter', () => {
+                // Enable Leaflet's scrollWheelZoom but intercept wheel events to require Ctrl/Cmd
+                mapInstance.scrollWheelZoom.enable();
+                mapContainer.addEventListener('wheel', wheelHandler, { passive: false });
+            });
+
             mapContainer.addEventListener('mouseleave', () => {
                 mapInstance.scrollWheelZoom.disable();
+                mapContainer.removeEventListener('wheel', wheelHandler);
             });
 
-            // Distribution markers
+            // New requested locations with emoji icons
             const locations = [
                 { lat: 6.1256, lng: 1.2317, name: 'Togo', port: 'Port of Lomé', icon: '⚓' },
                 { lat: 9.3077, lng: 2.3158, name: 'Benin', port: 'Port of Cotonou', icon: '⚓' },
@@ -971,8 +996,22 @@
             ];
 
             locations.forEach(loc => {
-                const marker = L.marker([loc.lat, loc.lng]).addTo(mapInstance);
-                marker.bindPopup(`<div class="bg-slate-900 text-gold p-3 rounded"><strong>${loc.name}</strong><br>${loc.desc}</div>`);
+                // Create a divIcon using the emoji provided
+                const emojiHtml = `<div style="line-height:1;">${loc.icon}</div>`;
+                const emojiIcon = L.divIcon({
+                    className: 'custom-emoji-icon',
+                    html: emojiHtml,
+                    iconSize: [36, 36],
+                    iconAnchor: [18, 36]
+                });
+
+                const marker = L.marker([loc.lat, loc.lng], { icon: emojiIcon }).addTo(mapInstance);
+                const popupHtml = `
+                    <div style="background:#0f1724;color:#d4af37;padding:8px;border-radius:8px;max-width:220px;">
+                        <strong style="display:block;margin-bottom:6px;">${loc.name}</strong>
+                        <div style="font-size:13px;color:#e6d29a;">${loc.port}</div>
+                    </div>`;
+                marker.bindPopup(popupHtml, { closeButton: true, autoPan: true });
             });
         }
 
@@ -998,26 +1037,6 @@
         }
 
         window.addEventListener('load', initPage);
-    </script>
-
-    <!-- Google Translate script placed after initialization functions to avoid race with callback -->
-    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script>
-        // Google Translate Initialization
-        function googleTranslateElementInit() {
-            // Try-catch to avoid errors if the element isn't present for some reason
-            try {
-                new google.translate.TranslateElement({
-                    pageLanguage: 'en',
-                    includedLanguages: 'en,fr,es,de,pt,ar,sw',
-                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                    autoDisplay: false
-                }, 'google_translate_element');
-            } catch (e) {
-                // fail silently
-                console.warn('Google Translate init failed', e);
-            }
-        }
     </script>
 </body>
 </html>
