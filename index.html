@@ -411,25 +411,6 @@
         .goog-te-banner-frame {
             display: none !important;
         }
-        /* Force-hide Google Translate banner/iframes and prevent page shift */
-.goog-te-banner-frame, .goog-te-banner-frame.skiptranslate, iframe.goog-te-banner-frame,
-iframe[src*="translate"], .goog-te-gadget-icon {
-  display: none !important;
-  visibility: hidden !important;
-  height: 0 !important;
-  width: 0 !important;
-}
-
-/* Guard against the script adding inline top margin to html/body */
-html[style*="top"], body[style*="top"] {
-  top: 0 !important;
-  margin-top: 0 !important;
-}
-
-/* Occasionally the injected iframe gets a wrapper; hide known translate wrappers but keep the select usable */
-.skiptranslate { display: none !important; }
-.goog-te-gadget-simple { display: inline-block !important; }
-.goog-te-combo { max-height: none !important; }
     </style>
 </head>
 <body class="bg-black text-gold antialiased selection:bg-gold selection:text-black">
@@ -1075,54 +1056,27 @@ html[style*="top"], body[style*="top"] {
             }, 200);
         }
 
+        window.addEventListener('load', initPage);
+    </script>
 
-<script>
-(function removeGoogleTranslateBanner() {
-    function clearBanner() {
-        const banner = document.querySelector('.goog-te-banner-frame, iframe.goog-te-banner-frame, iframe[src*="translate"]');
-        if (banner) {
-            banner.style.display = 'none';
-            banner.style.visibility = 'hidden';
-            banner.style.height = '0px';
-            banner.style.width = '0px';
+    <!-- Google Translate script placed after initialization functions to avoid race with callback -->
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+        // Google Translate Initialization
+        function googleTranslateElementInit() {
+            // Try-catch to avoid errors if the element isn't present for some reason
+            try {
+                new google.translate.TranslateElement({
+                    pageLanguage: 'en',
+                    includedLanguages: 'en,fr,es,de,pt,ar,sw',
+                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                    autoDisplay: false
+                }, 'google_translate_element');
+            } catch (e) {
+                // fail silently
+                console.warn('Google Translate init failed', e);
+            }
         }
-        if (document.documentElement && document.documentElement.style.top) document.documentElement.style.top = '0px';
-        if (document.body && document.body.style.top) document.body.style.top = '0px';
-        if (document.body && document.body.style.marginTop) document.body.style.marginTop = '0px';
-    }
-    clearBanner();
-    setTimeout(clearBanner, 500);
-    setTimeout(clearBanner, 1500);
-    try {
-        const observer = new MutationObserver(() => clearBanner());
-        observer.observe(document.documentElement || document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] });
-    } catch (e) { /* ignore */ }
-})();
-</script>
-
-<!-- 2) Google Translate init function (define BEFORE loading the external script) -->
-<script>
-function googleTranslateElementInit() {
-    try {
-        new google.translate.TranslateElement({
-            pageLanguage: 'en',
-            includedLanguages: 'en,fr,es,de,pt,ar,sw',
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false
-        }, 'google_translate_element');
-    } catch (e) {
-        console.warn('Google Translate init failed', e);
-    }
-}
-</script>
-
-<!-- 3) Load Google Translate script which will call googleTranslateElementInit when ready -->
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-<!-- 4) Start page init -->
-<script>
-window.addEventListener('load', initPage);
-</script>
-    
+    </script>
 </body>
 </html>
