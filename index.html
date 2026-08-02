@@ -349,6 +349,32 @@
             background: #0a0a0a !important;
             color: #d4af37 !important;
         }
+        /* Additional language widget adjustments */
+.translate-compact {
+    max-width: 160px;           /* prevent it from stretching the navbar */
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.translate-text {
+    display: inline-block;
+    max-width: 90px;            /* room for icon + short label */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+/* Make the embedded select narrower */
+.goog-te-combo {
+    width: 90px !important;
+    padding: 6px 8px !important;
+}
+
+/* On small screens hide the text label and show only the globe + select */
+@media (max-width: 768px) {
+    .translate-text { display: none; }
+    .translate-compact { max-width: 110px; }
+}
 
         /* Contact section tweaks */
         .contact-section-header {
@@ -406,7 +432,7 @@
                         <!-- Compact Google Translate Widget -->
 <div class="translate-compact" aria-hidden="false" title="Translate" style="display: inline-flex; align-items: center; gap: 6px;">
     <i class="fas fa-globe translate-icon" aria-hidden="true"></i>
-    <span class="translate-text" style="white-space: nowrap;">Select Language</span>
+    <span class="translate-text" style="white-space: nowrap;">Language</span>
     <div id="google_translate_element"></div>
 </div>
 
@@ -972,7 +998,17 @@
 
             locations.forEach(loc => {
                 const marker = L.marker([loc.lat, loc.lng]).addTo(mapInstance);
-                marker.bindPopup(`<div class="bg-slate-900 text-gold p-3 rounded"><strong>${loc.name}</strong><br>${loc.desc}</div>`);
+
+                const popupHtml = `
+                    <div class="bg-slate-900 text-gold p-3 rounded">
+                        <strong>${loc.icon ? loc.icon + ' ' : ''}${loc.name}</strong><br>
+                        ${loc.port ? loc.port : ''}
+                    </div>
+                `;
+                marker.bindPopup(popupHtml);
+
+                // Optional: quick tooltip on hover
+                if (loc.port) marker.bindTooltip(`${loc.name} — ${loc.port}`, { direction: 'top', offset: [0, -8] });
             });
         }
 
