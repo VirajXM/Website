@@ -11,10 +11,6 @@
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-    <!-- Leaflet Map -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-
     <style>
         /* Smooth scrolling */
         html {
@@ -909,7 +905,7 @@
                 <!-- LEFT: Map + heading -->
                 <div>
                     <h3 class="text-2xl font-black text-gold mb-4" data-i18n="our_presence">Our presence</h3>
-                    <div id="distributionMap" class="rounded-2xl overflow-hidden mb-4" aria-label="Distribution map"></div>
+                    <img id="distributionMap" src="images/Map.jpeg" alt="Distribution Map" class="rounded-2xl overflow-hidden mb-4 w-full h-auto object-cover" aria-label="Distribution map" />
                     <p class="text-gold text-xs mt-2 font-semibold">Drag to pan • Scroll to zoom (hover over map to scroll) • Click markers for location details</p>
                 </div>
 
@@ -1040,78 +1036,11 @@
             if (icon) icon.style.transform = isActive ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
-        // Initialize Leaflet map with limited zoom levels (exactly two steps by default)
         function initializeMap() {
-            const mapContainer = document.getElementById('distributionMap');
-            if (!mapContainer) return;
-
-            // Define initial zoom here and limit (zoomStepLimit = 2 means two steps up or down)
-            const initialZoom = 2;
-            const zoomStepLimit = 1;
-            const minZoom = Math.max(0, initialZoom - zoomStepLimit);
-            const maxZoom = initialZoom + zoomStepLimit;
-
-            // Create map with min/max computed above
-            mapInstance = L.map(mapContainer, {
-                center: [6.0, 15.0],
-                zoom: initialZoom,
-                maxZoom: maxZoom,
-                minZoom: minZoom,
-                scrollWheelZoom: false,
-                doubleClickZoom: true,
-                touchZoom: true,
-                dragging: true,
-                zoomControl: true,
-                boxZoom: true,
-                keyboard: true,
-                tap: true
-            });
-
-            // Tile layer
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors',
-                maxZoom: 19,
-                minZoom: minZoom
-            }).addTo(mapInstance);
-
-            // Limit panning to a reasonable bounding box covering Africa and India region
-            const bounds = L.latLngBounds(
-                L.latLng(-35, -25),
-);
-            mapInstance.setMaxBounds(bounds);
-
-            // Enable scroll wheel zoom only on hover
-            mapContainer.addEventListener('mouseenter', () => {
-                mapInstance.scrollWheelZoom.enable();
-            });
-            mapContainer.addEventListener('mouseleave', () => {
-                mapInstance.scrollWheelZoom.disable();
-            });
-
-            // Distribution markers
-            const locations = [
-                { lat: 6.1256, lng: 1.2317, name: 'Togo', port: 'Port of Lomé', icon: '⚓' },
-                { lat: 9.3077, lng: 2.3158, name: 'Benin', port: 'Port of Cotonou', icon: '⚓' },
-                { lat: 7.3697, lng: -0.5577, name: 'Ghana', port: 'Port of Tema', icon: '⚓' },
-                { lat: 6.5244, lng: 3.3792, name: 'Nigeria', port: 'Port of Lagos', icon: '⚓' },
-                { lat: 20.5937, lng: 78.9629, name: 'India', port: 'Source Facility', icon: '🏭' }
-            ];
-
-            locations.forEach(loc => {
-                const marker = L.marker([loc.lat, loc.lng]).addTo(mapInstance);
-
-                const popupHtml = `
-                    <div class="bg-slate-900 text-gold p-3 rounded">
-                        <strong>${loc.icon ? loc.icon + ' ' : ''}${loc.name}</strong><br>
-                        ${loc.port ? loc.port : ''}
-                    </div>
-                `;
-                marker.bindPopup(popupHtml);
-
-                // Optional: quick tooltip on hover
-                if (loc.port) marker.bindTooltip(`${loc.name} — ${loc.port}`, { direction: 'top', offset: [0, -8] });
-            });
-        }
+    // Leaflet map removed — using static image instead.
+    // Kept as a no-op to avoid errors if other scripts call initializeMap().
+    return;
+}
 
         // Helper to extract the primary language code from browser (e.g., 'en-US' -> 'en')
         function getBrowserLang() {
