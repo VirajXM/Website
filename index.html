@@ -338,7 +338,7 @@
             appearance: none !important;
         }
 
-        /*Hide the small Google label and icon to keep the control compact 
+        /* Hide the small Google label and icon to keep the control compact 
         .goog-logo-link {
             display: none !important;
         }
@@ -408,52 +408,78 @@
 
         }
 
-      /*  .goog-te-banner-frame {
+     /*   .goog-te-banner-frame {
             display: none !important;
         } */
-        
-    </style>
-    <!-- NAV + Google Translate overrides: make nav white and ensure the translate control is visible -->
-    <style>
-    /* Force the top navigation to white while leaving the rest of the site dark */
-    nav {
-        background-color: #ffffff !important;
-        color: #0a0a0a !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
-    }
 
-    /* Make nav links / icon / text readable on a white background */
-    nav a,
-    nav .translate-text,
-    nav .translate-icon,
-    nav .logo-img,
-    nav .btn-gold {
-        color: #0a0a0a !important;
-    }
+        /* ----- Custom compact selector CSS (prevents the big Google white box) ----- */
+        /* Compact custom selector inserted for a cleaner nav language UI */
+        .translate-compact {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 6px 8px;
+          border-radius: 8px;
+          background: #ffffff; /* matches white nav */
+          border: 1px solid rgba(0,0,0,0.06);
+          color: #0a0a0a;
+          position: relative;
+          font-size: 14px;
+        }
 
-    /* If your logo is fine on white, keep it. Remove any inversion filters. */
-    nav .logo-img {
-        filter: none !important;
-    }
+        .translate-btn {
+          display: inline-flex;
+          gap: 8px;
+          align-items: center;
+          background: transparent;
+          border: none;
+          padding: 0;
+          color: inherit;
+          cursor: pointer;
+          font-weight: 600;
+        }
 
-    /* Keep CTA styling but ensure contrast on white nav */
-    nav .btn-gold {
-        box-shadow: 0 6px 18px rgba(212,175,55,0.18);
-    }
+        .translate-selected {
+          font-weight: 800;
+          margin-left: 4px;
+        }
 
-    /* Make the compact translate widget match the white nav and be visible */
-    .translate-compact {
-        background: #ffffff !important;
-        border: 1px solid rgba(0,0,0,0.06) !important;
-        color: #0a0a0a !important;
-    }
+        .translate-list {
+          position: absolute;
+          right: 0;
+          top: calc(100% + 8px);
+          background: #ffffff;
+          border: 1px solid rgba(0,0,0,0.08);
+          border-radius: 8px;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+          list-style: none;
+          padding: 6px;
+          margin: 0;
+          min-width: 150px;
+          z-index: 600;
+        }
 
-    /* Make the injected Google select readable on white */
-    .goog-te-combo {
-        background: #ffffff !important;
-        color: #0a0a0a !important;
-        border: 1px solid rgba(0,0,0,0.08) !important;
-    }
+        .hidden { display: none !important; }
+
+        .translate-item {
+          padding: 8px 10px;
+          cursor: pointer;
+          border-radius: 6px;
+          font-weight: 600;
+          color: #0a0a0a;
+        }
+        .translate-item:hover { background: rgba(212,175,55,0.08); color: #000; }
+
+        /* Hide the injected Google UI entirely (prevents the big white box) */
+        .goog-te-gadget, .goog-te-gadget-simple, #google_translate_element > * { display: none !important; }
+
+        /* Ensure no banner appears */
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+
+        @media (max-width: 640px) {
+          .translate-compact { padding: 6px; font-size: 13px; }
+          .translate-list { min-width: 120px; }
+        }
     </style>
 </head>
 <body class="bg-black text-gold antialiased selection:bg-gold selection:text-black">
@@ -491,17 +517,26 @@
         </div>
 
         <div class="flex items-center gap-3">
-                        <!-- Compact Google Translate Widget -->
-<div class="translate-compact" aria-hidden="false" title="Translate" style="display: inline-flex; align-items: center; gap: 6px; position: relative;">
-    <i class="fas fa-globe translate-icon" aria-hidden="true"></i>
+            <!-- Compact custom language selector (replaces previous google widget block) -->
+            <div class="translate-compact" id="translateCompact">
+              <button id="translateToggle" class="translate-btn" aria-haspopup="listbox" aria-expanded="false" type="button">
+                <i class="fas fa-globe translate-icon" aria-hidden="true"></i>
+                <span class="translate-text">Language</span>
+                <span id="translateSelected" class="translate-selected">EN</span>
+                <i class="fas fa-caret-down ml-2" aria-hidden="true"></i>
+              </button>
 
-    <!-- Google element first so it doesn't overlay the text -->
-    <div id="google_translate_element" class="translate-widget"></div>
+              <ul id="translateList" class="translate-list hidden" role="listbox" aria-label="Select language">
+                <li class="translate-item" data-lang="en">🇬🇧 English</li>
+                <li class="translate-item" data-lang="fr">🇫🇷 Français</li>
+                <li class="translate-item" data-lang="hi">🇮🇳 हिंदी</li>
+                <li class="translate-item" data-lang="es">🇪🇸 Español</li>
+                <li class="translate-item" data-lang="pt">🇵🇹 Português</li>
+              </ul>
 
-    <!-- Visible label placed after the select -->
-    <span class="translate-text" style="white-space: nowrap; margin-left:6px;">Language</span>
-</div>
-
+              <!-- kept for the Google engine to inject into (we hide it with CSS) -->
+              <div id="google_translate_element" style="display:none;"></div>
+            </div>
         </div>
 
         <div>
@@ -1041,8 +1076,7 @@
             // Limit panning to a reasonable bounding box covering Africa and India region
             const bounds = L.latLngBounds(
                 L.latLng(-35, -25),
-                L.latLng(38, 105)
-            );
+);
             mapInstance.setMaxBounds(bounds);
 
             // Enable scroll wheel zoom only on hover
@@ -1102,22 +1136,139 @@
         window.addEventListener('load', initPage);
     </script>
 
-    <!-- Google Translate initialization (loads the widget into #google_translate_element) -->
+    <!-- Google Translate: quiet engine loader + custom selector wiring -->
     <script>
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-          pageLanguage: 'en',
-          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-        }, 'google_translate_element');
+    /* Helper: set cookie (tries host and root domain) */
+    function setCookie(name, value, days, domain) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
       }
+      var path = "; path=/";
+      if (domain) {
+        document.cookie = name + "=" + (value || "") + expires + path + "; domain=" + domain + ";";
+      } else {
+        document.cookie = name + "=" + (value || "") + expires + path + ";";
+      }
+    }
 
-      (function() {
-        var gt = document.createElement('script');
-        gt.type = 'text/javascript';
-        gt.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-        gt.async = true;
-        document.head.appendChild(gt);
-      })();
+    /* attempt to compute root domain for cookie (example.com from www.example.com) */
+    function rootDomain() {
+      try {
+        var hostname = window.location.hostname.split('.');
+        if (hostname.length > 2) {
+          return '.' + hostname.slice(-2).join('.');
+        }
+        return window.location.hostname;
+      } catch(e) {
+        return window.location.hostname;
+      }
+    }
+
+    /* Create the Google Translate element (script callback) — we let it initialize but hide its UI */
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+
+    /* Load the Google translate script (quietly) */
+    (function loadGTScript() {
+      if (document.querySelector('script[src*="translate_a/element.js"]')) return;
+      var gt = document.createElement('script');
+      gt.type = 'text/javascript';
+      gt.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      gt.async = true;
+      document.head.appendChild(gt);
+    })();
+
+    /* Try to apply a language using the hidden select injected by Google */
+    function applyTranslation(lang) {
+      // target language code is the same as data-lang e.g. "fr", "hi"
+      const sel = document.querySelector('select.goog-te-combo') || document.querySelector('#google_translate_element select');
+      if (sel) {
+        // set value and dispatch change so Google Translate runs inline
+        sel.value = lang;
+        sel.dispatchEvent(new Event('change'));
+        // update visible label
+        const label = document.getElementById('translateSelected');
+        if (label) label.textContent = lang.toUpperCase();
+      } else {
+        // if the select isn't ready yet, set the googtrans cookie and reload
+        // Googles cookie format: /<sourceLang>/<targetLang>
+        var cookieVal = '/en/' + lang;
+        try {
+          setCookie('googtrans', cookieVal, 7);
+          setCookie('googtrans', cookieVal, 7, rootDomain());
+        } catch(e) {
+          setCookie('googtrans', cookieVal, 7);
+        }
+        // reload so the engine picks up the cookie
+        setTimeout(function(){ window.location.reload(); }, 200);
+      }
+    }
+
+    /* UI behaviour for the custom dropdown */
+    (function wireTranslateUI() {
+      const toggle = document.getElementById('translateToggle');
+      const list = document.getElementById('translateList');
+      const items = document.querySelectorAll('.translate-item');
+      const selected = document.getElementById('translateSelected');
+
+      if (!toggle || !list) return;
+
+      // toggle dropdown
+      toggle.addEventListener('click', function(e) {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        list.classList.toggle('hidden');
+      });
+
+      // outside click closes it
+      document.addEventListener('click', function(e) {
+        if (!document.getElementById('translateCompact').contains(e.target)) {
+          list.classList.add('hidden');
+          toggle.setAttribute('aria-expanded','false');
+        }
+      });
+
+      // click on language
+      items.forEach(function(it) {
+        it.addEventListener('click', function() {
+          const lang = it.getAttribute('data-lang');
+          if (!lang) return;
+          // display nicer label (use upper-case code here)
+          if (selected) selected.textContent = lang.toUpperCase();
+          list.classList.add('hidden');
+          toggle.setAttribute('aria-expanded','false');
+          // attempt to use injected select else cookie+reload
+          applyTranslation(lang);
+        });
+      });
+
+      // if the hidden google select appears later, we might want to sync selected label
+      // small observer to update UI if Google injects selected value
+      const root = document.getElementById('google_translate_element');
+      if (root) {
+        const mo = new MutationObserver(function() {
+          const sel = document.querySelector('select.goog-te-combo');
+          if (sel) {
+            // keep element hidden visually but wire it automatically whenever it changes
+            sel.addEventListener('change', function() {
+              const v = sel.value || sel.options[sel.selectedIndex].value;
+              if (selected && v) selected.textContent = (''+v).toUpperCase();
+            });
+            mo.disconnect();
+          }
+        });
+        mo.observe(root, { childList:true, subtree:true });
+      }
+    })();
     </script>
 </body>
 </html>
+
+
