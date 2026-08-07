@@ -447,28 +447,37 @@
 
   <!-- 2. HERO BANNER -->
   <header class="hero-section text-white py-16 md:py-24 overflow-hidden relative bg-[#0a0a0a]">
-    <div class="hero-inner relative max-w-5xl mx-auto px-6 z-20">
-      <div class="mb-12 text-center">
-        <span class="inline-block bg-gold/20 text-gold text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-gold/50 backdrop-blur-sm hero-badge">
-          <i class="fas fa-check-circle mr-2"></i>Flexible Order Quantities
-        </span>
-        <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6 text-white drop-shadow-lg" data-i18n="hero_title">
-          Premium Spirits & Liquor Distribution Across Africa
-        </h1>
-        <p class="text-base md:text-lg text-slate-300 max-w-2xl mx-auto mb-10 font-normal leading-relaxed" data-i18n="hero_sub">
-          Supplying major African ports with high-volume, reliable container shipments of premium international spirits and beverage brands.
-        </p>
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a href="#catalog" class="btn-gold px-8 py-4 rounded-lg font-bold text-sm tracking-wide shadow-xl hover:shadow-2xl transition duration-300 uppercase" data-i18n="view_brands">
-            <i class="fas fa-bottle"></i> View Our Brands
-          </a>
-          <a href="#about" class="border-2 border-gold hover:bg-gold/20 text-white px-8 py-4 rounded-lg font-bold text-sm tracking-wide transition duration-300 uppercase" data-i18n="our_infrastructure">
-            <i class="fas fa-warehouse"></i> Our Infrastructure
-          </a>
-        </div>
+  <!-- Background video (placed behind the hero content) -->
+  <div class="absolute inset-0 overflow-hidden" aria-hidden="true" style="z-index:0;">
+    <video autoplay muted loop playsinline class="w-full h-full object-cover" style="min-width:100%; min-height:100%; filter:brightness(0.35);">
+      <source src="VIDEO-2026-06-09-20-01-24.MP4" type="video/mp4" />
+      <!-- Fallback image or message -->
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <div class="hero-inner relative max-w-5xl mx-auto px-6 z-20">
+    <div class="mb-12 text-center">
+      <span class="inline-block bg-gold/20 text-gold text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-gold/50 backdrop-blur-sm hero-badge">
+        <i class="fas fa-check-circle mr-2"></i>Flexible Order Quantities
+      </span>
+      <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6 text-white drop-shadow-lg" data-i18n="hero_title">
+        Premium Spirits & Liquor Distribution Across Africa
+      </h1>
+      <p class="text-base md:text-lg text-slate-300 max-w-2xl mx-auto mb-10 font-normal leading-relaxed" data-i18n="hero_sub">
+        Supplying major African ports with high-volume, reliable container shipments of premium international spirits and beverage brands.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="#catalog" class="btn-gold px-8 py-4 rounded-lg font-bold text-sm tracking-wide shadow-xl hover:shadow-2xl transition duration-300 uppercase" data-i18n="view_brands">
+          <i class="fas fa-bottle"></i> View Our Brands
+        </a>
+        <a href="#about" class="border-2 border-gold hover:bg-gold/20 text-white px-8 py-4 rounded-lg font-bold text-sm tracking-wide transition duration-300 uppercase" data-i18n="our_infrastructure[...]
+          <i class="fas fa-warehouse"></i> Our Infrastructure
+        </a>
       </div>
     </div>
-  </header>
+  </div>
+</header>
 
   <!-- 3. ABOUT & INFRASTRUCTURE SECTION -->
   <section id="about" class="py-20 section-black">
