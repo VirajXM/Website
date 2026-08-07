@@ -449,7 +449,7 @@
   <header class="hero-section text-white py-16 md:py-24 overflow-hidden relative bg-[#0a0a0a]">
   <!-- Background video (placed behind the hero content) -->
   <div class="absolute inset-0 overflow-hidden" aria-hidden="true" style="z-index:0;">
-    <video autoplay muted loop playsinline class="w-full h-full object-cover" style="min-width:100%; min-height:100%; filter:brightness(0.35);">
+    <video autoplay muted loop playsinline preload="metadata" poster="images/Map.jpeg" class="w-full h-full object-cover pointer-events-none" style="min-width:100%; min-height:100%; filter:brightness(0.35);">
       <source src="images/VIDEO-2026-06-09-20-01-24.MP4" type="video/mp4" />
       <!-- Fallback image or message -->
       Your browser does not support the video tag.
@@ -478,7 +478,6 @@
     </div>
   </div>
 </header>
-
   <!-- 3. ABOUT & INFRASTRUCTURE SECTION -->
   <section id="about" class="py-20 section-black">
     <div class="max-w-6xl mx-auto px-6">
