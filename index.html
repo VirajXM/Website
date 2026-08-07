@@ -388,17 +388,16 @@
   <div id="ageModal" class="age-modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="ageTitle">
     <div class="age-modal-content">
       <div class="mb-6">
-        <i class="fas fa-exclamation-triangle text-yellow-400 text-5xl mb-4"></i>
         <h2 id="ageTitle" class="text-2xl font-black mb-2" data-i18n="age_title">Age Verification</h2>
-        <p class="mb-4" data-i18n="age_text">You must be 21 years or older to access this site. This site contains content related to alcohol products.</p>
+        <p class="mb-4" data-i18n="age_text">Are you of drinking age in your country?</p>
       </div>
 
       <div class="space-y-3">
         <button onclick="confirmAge()" class="w-full gradient-accent text-black font-bold py-3 rounded-lg transition duration-300" data-i18n="age_confirm">
-          I am 21 or Older
+          Yes
         </button>
         <button onclick="denyAge()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-lg transition duration-300" data-i18n="age_deny">
-          I am Under 21
+          No
         </button>
       </div>
     </div>
