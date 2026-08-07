@@ -1763,6 +1763,133 @@
           applyTranslation(lang);
         });
       });
+            <!-- Google Translate: quiet engine loader + custom selector wiring -->
+    <script>
+    /* Helper: set cookie (tries host and root domain) */
+    function setCookie(name, value, days, domain) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      var path = "; path=/";
+      if (domain) {
+        document.cookie = name + "=" + (value || "") + expires + path + "; domain=" + domain + ";";
+      } else {
+        document.cookie = name + "=" + (value || "") + expires + path + ";";
+      }
+    }
+
+    /* attempt to compute root domain for cookie (example.com from www.example.com) */
+    function rootDomain() {
+      try {
+        var hostname = window.location.hostname.split('.');
+        if (hostname.length > 2) {
+          return '.' + hostname.slice(-2).join('.');
+        }
+        return window.location.hostname;
+      } catch(e) {
+        return window.location.hostname;
+      }
+    }
+
+    /* Create the Google Translate element (script callback) — we let it initialize but hide its UI */
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+
+    /* Load the Google translate script (quietly) */
+    (function loadGTScript() {
+      if (document.querySelector('script[src*="translate_a/element.js"]')) return;
+      var gt = document.createElement('script');
+      gt.type = 'text/javascript';
+      gt.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      gt.async = true;
+      document.head.appendChild(gt);
+    })();
+
+    /* Try to apply a language using the hidden select injected by Google */
+    function applyTranslation(lang) {
+      // target language code is the same as data-lang e.g. "fr", "hi"
+      const sel = document.querySelector('select.goog-te-combo') || document.querySelector('#google_translate_element select');
+      if (sel) {
+        // set value and dispatch change so Google Translate runs inline
+        sel.value = lang;
+        sel.dispatchEvent(new Event('change'));
+        // update visible label
+        const label = document.getElementById('translateSelected');
+        if (label) label.textContent = lang.toUpperCase();
+      } else {
+        // if the select isn't ready yet, set the googtrans cookie and reload
+        // Googles cookie format: /<sourceLang>/<targetLang>
+        var cookieVal = '/en/' + lang;
+        try {
+          setCookie('googtrans', cookieVal, 7);
+          setCookie('googtrans', cookieVal, 7, rootDomain());
+        } catch(e) {
+          setCookie('googtrans', cookieVal, 7);
+        }
+        // reload so the engine picks up the cookie
+        setTimeout(function(){ window.location.reload(); }, 200);
+      }
+    }
+
+    /* UI behaviour for the custom dropdown */
+    (function wireTranslateUI() {
+      const toggle = document.getElementById('translateToggle');
+      const list = document.getElementById('translateList');
+      const items = document.querySelectorAll('.translate-item');
+      const selected = document.getElementById('translateSelected');
+
+      if (!toggle || !list) return;
+
+      // toggle dropdown
+      toggle.addEventListener('click', function(e) {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        list.classList.toggle('hidden');
+      });
+
+      // outside click closes it
+      document.addEventListener('click', function(e) {
+        if (!document.getElementById('translateCompact').contains(e.target)) {
+          list.classList.add('hidden');
+          toggle.setAttribute('aria-expanded','false');
+        }
+      });
+
+      // click on language
+      items.forEach(function(it) {
+        it.addEventListener('click', function() {
+          const lang = it.getAttribute('data-lang');
+          if (!lang) return;
+          // display nicer label (use upper-case code here)
+          if (selected) selected.textContent = lang.toUpperCase();
+          list.classList.add('hidden');
+          toggle.setAttribute('aria-expanded','false');
+          // attempt to use injected select else cookie+reload
+          applyTranslation(lang);
+        });
+      });
+
+      // if the hidden google select appears later, we might want to sync selected label
+      // small observer to update UI if Google injects selected value
+      const root = document.getElementById('google_translate_element');
+      if (root) {
+        const mo = new MutationObserver(function() {
+          const sel = document.querySelector('select.goog-te-combo');
+          if (sel) {
+            // keep element hidden visually but wire it automatically whenever it changes
+            sel.addEventListener('change', function() {
+              const v = sel.value || sel.options[sel.selectedIndex].value;
+              if (selected && v) selected.textContent = (''+v).toUpperCase();
+            });
+            mo.disconnect();
+          }
 
       // if the hidden google select appears later, we might want to sync selected label
       // small observer to update UI if Google injects selected value
