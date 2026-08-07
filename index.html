@@ -1,939 +1,967 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ShreeShyamXM - Premium Spirits & Liquor Distribution</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShreeShyamXM - Premium Spirits & Liquor Distribution</title>
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-    <style>
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-            margin: 0;
-            padding: 0;
-            direction: ltr !important;
-        }
+  <style>
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+      margin: 0;
+      padding: 0;
+      direction: ltr !important;
+    }
 
-        /* Prevent scrolling when modal is open */
-        body.scroll-locked {
-            overflow: hidden;
-        }
+    /* Prevent scrolling when modal is open */
+    body.scroll-locked {
+      overflow: hidden;
+    }
 
-        /* Black and gold throughout */
-        body {
-            background-color: #0a0a0a;
-            color: #d4af37;
-            margin: 0;
-            padding: 0;
-        }
+    /* Black and gold throughout */
+    body {
+      background-color: #0a0a0a;
+      color: #d4af37;
+      margin: 0;
+      padding: 0;
+    }
 
-        /* Black and gold theme gradients */
-        .gradient-hero {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-        }
+    /* Black and gold theme gradients */
+    .gradient-hero {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    }
 
-        .gradient-accent {
-            background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%);
-        }
+    .gradient-accent {
+      background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%);
+    }
 
-        .gradient-accent-dark {
-            background: linear-gradient(135deg, #8b7500 0%, #6b5d00 100%);
-        }
+    .gradient-accent-dark {
+      background: linear-gradient(135deg, #8b7500 0%, #6b5d00 100%);
+    }
 
-        /* Card hover effects */
-        .card-hover {
-            transition: all 0.3s ease;
-        }
+    /* Card hover effects */
+    .card-hover {
+      transition: all 0.3s ease;
+    }
 
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(212, 175, 55, 0.3);
-        }
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgba(212, 175, 55, 0.3);
+    }
 
-        /* Metric counter animation */
-        @keyframes countup {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    /* Metric counter animation */
+    @keyframes countup {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-        .metric-card {
-            animation: countup 0.6s ease forwards;
-        }
+    .metric-card {
+      animation: countup 0.6s ease forwards;
+    }
 
-        /* Accordion styles */
-        .accordion-btn {
-            transition: all 0.3s ease;
-        }
+    /* Accordion styles */
+    .accordion-btn {
+      transition: all 0.3s ease;
+    }
 
-        .accordion-btn:hover {
-            background-color: #1a1a1a;
-            color: #d4af37;
-        }
+    .accordion-btn:hover {
+      background-color: #1a1a1a;
+      color: #d4af37;
+    }
 
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-        }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
 
-        .accordion-content.active {
-            max-height: 700px;
-        }
+    .accordion-content.active {
+      max-height: 700px;
+    }
 
-        /* Language button active state */
-        .lang-btn.active {
-            background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%);
-            color: #0a0a0a;
-            font-weight: bold;
-        }
+    /* Age verification modal */
+    .age-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
 
-        /* Age verification modal */
-        .age-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
-        }
+    .age-modal-overlay.hidden {
+      display: none;
+    }
 
-        .age-modal-overlay.hidden {
-            display: none;
-        }
+    .age-modal-content {
+      background: #1a1a1a;
+      border: 2px solid #d4af37;
+      border-radius: 16px;
+      padding: 2.5rem;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+    }
 
-        .age-modal-content {
-            background: #1a1a1a;
-            border: 2px solid #d4af37;
-            border-radius: 16px;
-            padding: 2.5rem;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
-        }
+    .age-modal-content h2,
+    .age-modal-content p {
+      color: #d4af37;
+    }
 
-        .age-modal-content h2,
-        .age-modal-content p {
-            color: #d4af37;
-        }
+    /* Product container with side by side layout */
+    .product-detail-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: center;
+    }
 
-        /* Product container with side by side layout */
-        .product-detail-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            align-items: center;
-        }
+    @media (max-width: 768px) {
+      .product-detail-container {
+        grid-template-columns: 1fr;
+      }
+    }
 
-        /* Increase responsive breakpoint to 768px for more forgiving stacking */
-        @media (max-width: 768px) {
-            .product-detail-container {
-                grid-template-columns: 1fr;
-            }
-        }
+    /* Product image styling */
+    .product-image {
+      width: 100%;
+      height: auto;
+      max-height: 360px;
+      object-fit: contain;
+      background-color: white;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 0;
+    }
 
-        /* Product image styling (responsive) */
-        .product-image {
-            width: 100%;
-            height: auto;
-            max-height: 360px;
-            object-fit: contain;
-            background-color: white;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 0;
-        }
+    .product-info {
+      flex: 1;
+    }
 
-        .product-info {
-            flex: 1;
-        }
+    /* Logo styling */
+    .logo-img {
+      height: 100px;
+      width: auto;
+      object-fit: contain;
+    }
 
-        /* Logo styling - enlarged */
-        .logo-img {
-            height: 100px;
-            width: auto;
-            object-fit: contain;
-        }
+    /* Map styling */
+    #distributionMap {
+      min-height: 300px;
+      height: 500px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+      z-index: 10;
+      position: relative !important;
+      border: 2px solid #d4af37;
+    }
 
-        /* Map styling - responsive */
-        #distributionMap {
-            min-height: 300px;
-            height: 500px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
-            z-index: 10;
-            position: relative !important;
-            border: 2px solid #d4af37;
-        }
+    @media (max-width: 768px) {
+      #distributionMap {
+        height: 340px;
+      }
+    }
 
-        @media (max-width: 768px) {
-            #distributionMap {
-                height: 340px;
-            }
-        }
+    /* Gold accent text */
+    .text-gold {
+      color: #d4af37;
+    }
 
-        /* Ensure map controls are visible and clickable */
-        .leaflet-control {
-            z-index: 400 !important;
-        }
+    .bg-gold {
+      background-color: #d4af37;
+    }
 
-        .leaflet-control-zoom {
-            border-radius: 8px !important;
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3) !important;
-        }
+    /* Hero badge styling */
+    .hero-badge {
+      background: rgba(212, 175, 55, 0.15);
+      border-color: rgba(212, 175, 55, 0.5);
+      color: #d4af37;
+    }
 
-        .leaflet-control-zoom a {
-            background-color: #d4af37 !important;
-            color: #0a0a0a !important;
-            border: none !important;
-            width: 38px !important;
-            height: 38px !important;
-            line-height: 38px !important;
-            font-weight: bold !important;
-        }
+    /* Contact buttons */
+    .btn-gold {
+      background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%);
+      color: #0a0a0a;
+    }
 
-        .leaflet-control-zoom a:hover {
-            background-color: #c9a227 !important;
-        }
+    .btn-gold:hover {
+      box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+    }
 
-        /* Gold accent text */
-        .text-gold {
-            color: #d4af37;
-        }
+    /* Gold metric circle */
+    .metric-gold-circle {
+      background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%);
+    }
 
-        .bg-gold {
-            background-color: #d4af37;
-        }
+    /* HERO section */
+    .hero-section {
+      background-color: #0a0a0a;
+      position: relative;
+      overflow: hidden;
+    }
 
-        /* Hero badge styling */
-        .hero-badge {
-            background: rgba(212, 175, 55, 0.15);
-            border-color: rgba(212, 175, 55, 0.5);
-            color: #d4af37;
-        }
+    .hero-section .hero-inner {
+      position: relative;
+      z-index: 20;
+    }
 
-        /* Contact buttons */
-        .btn-gold {
-            background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%);
-            color: #0a0a0a;
-        }
+    /* Nav and footer */
+    nav {
+      border-bottom: none !important;
+      box-shadow: none !important;
+      background-color: #000;
+    }
 
-        .btn-gold:hover {
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
-        }
+    footer {
+      border-top: none !important;
+      box-shadow: none !important;
+      background-color: #0a0a0a;
+    }
 
-        /* Gold metric circle */
-        .metric-gold-circle {
-            background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%);
-        }
+    /* Border gold */
+    .border-gold {
+      border-color: #d4af37 !important;
+    }
 
-        /* HERO: simplified with feather images */
-        .hero-section {
-            background-color: #0a0a0a;
-            position: relative;
-            overflow: hidden;
-        }
+    /* Section backgrounds */
+    .section-dark {
+      background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+      border-top: none;
+      border-bottom: none;
+    }
 
-        .hero-section .hero-inner {
-            position: relative;
-            z-index: 20;
-        }
+    .section-black {
+      background-color: #0f0f0f;
+    }
 
-        /* Remove visible nav/footer lines: explicitly disable top/bottom borders and remove bright shadows */
-        nav {
-            border-bottom: none !important;
-            box-shadow: none !important;
-            background-color: #000;
-        }
+    /* Text colors */
+    .text-light {
+      color: #e0e0e0;
+    }
 
-        footer {
-            border-top: none !important;
-            box-shadow: none !important;
-            background-color: #0a0a0a;
-        }
+    .text-muted {
+      color: #a0a0a0;
+    }
 
-        /* Ensure .border-gold stays gold */
-        .border-gold {
-            border-color: #d4af37 !important;
-        }
+    /* Gold separators */
+    header, section, footer {
+      border-top: 2px solid rgba(212, 175, 55, 0.08);
+    }
 
-        /* Section backgrounds */
-        .section-dark {
-            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
-            border-top: none;
-            border-bottom: none;
-        }
+    /* Google Translate Compact Styling */
+    .translate-compact {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.1);
+      position: relative;
+      font-size: 14px;
+    }
 
-        .section-black {
-            background-color: #0f0f0f;
-        }
+    .translate-btn {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      background: transparent;
+      border: none;
+      padding: 0;
+      color: #0a0a0a;
+      cursor: pointer;
+      font-weight: 600;
+    }
 
-        /* Text colors for dark theme */
-        .text-light {
-            color: #e0e0e0;
-        }
+    .translate-btn i {
+      color: #0a0a0a;
+      font-size: 16px;
+    }
 
-        .text-muted {
-            color: #a0a0a0;
-        }
+    .translate-text {
+      color: #0a0a0a;
+      font-size: 14px;
+    }
 
-        /* Gold separators between major blocks (subtle) */
-        header, section, footer {
-            border-top: 2px solid rgba(212, 175, 55, 0.08);
-        }
+    .translate-selected {
+      font-weight: 800;
+      color: #0a0a0a;
+      font-size: 13px;
+    }
 
-        /* Google Translate Compact Styling */
-        .translate-compact {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 8px;
-            border-radius: 8px;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(212,175,55,0.08);
-        }
+    .translate-list {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      list-style: none;
+      padding: 6px;
+      margin: 0;
+      min-width: 160px;
+      z-index: 600;
+    }
 
-        .translate-compact .translate-icon {
-            color: #d4af37;
-            font-size: 18px;
-            width: 20px;
-            text-align: center;
-        }
+    .hidden { 
+      display: none !important; 
+    }
 
-        /* Make the injected Google Translate select compact and match theme */
-        .goog-te-gadget-simple {
-            background: transparent !important;
-            border: none !important;
-            padding: 0 !important;
-            display: inline-block !important;
-        }
+    .translate-item {
+      padding: 10px 12px;
+      cursor: pointer;
+      border-radius: 6px;
+      font-weight: 600;
+      color: #0a0a0a;
+      transition: all 0.2s ease;
+    }
 
-        .goog-te-combo {
-            width: 110px !important;
-            padding: 6px 8px !important;
-            background: #0a0a0a !important;
-            color: #d4af37 !important;
-            border: 1px solid rgba(212,175,55,0.14) !important;
-            border-radius: 6px !important;
-            font-size: 13px !important;
-            appearance: none !important;
-        }
+    .translate-item:hover { 
+      background: rgba(212,175,55,0.1); 
+      color: #0a0a0a;
+    }
 
-        .goog-te-combo option {
-            background: #0a0a0a !important;
-            color: #d4af37 !important;
-        }
+    /* Hide the injected Google UI */
+    .goog-te-gadget, .goog-te-gadget-simple, #google_translate_element > * { 
+      display: none !important; 
+    }
 
-        /* Language widget layout fixes */
-        .translate-compact {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            position: relative;
-        }
+    .goog-te-banner-frame.skiptranslate { 
+      display: none !important; 
+    }
 
-        .translate-widget {
-            z-index: 410;
-            display: inline-block;
-        }
+    /* Contact section tweaks */
+    .contact-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
 
-        /* Label shown beside the select — ensure it's above the injected elements */
-        .translate-text {
-            z-index: 420;
-            color: #d4af37;
-            font-size: 13px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-left: 6px;
-        }
+    .contact-section-header h2 {
+      margin: 0;
+    }
 
-        /* Ensure the injected Google markup is inline and vertically aligned */
-        .goog-te-gadget-simple {
-            display: inline-block !important;
-            vertical-align: middle !important;
-        }
+    /* Brand page link */
+    .brand-page-link {
+      background: transparent;
+      color: #d4af37;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(212,175,55,0.12);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
 
-        /* Make the select compact and themed */
-        .goog-te-combo {
-            width: 90px !important;
-            padding: 6px 8px !important;
-            background: #0a0a0a !important;
-            color: #d4af37 !important;
-            border-radius: 6px !important;
-            border: 1px solid rgba(212,175,55,0.14) !important;
-        }
-
-        /* Keep label hidden on small screens to save space (optional) */
-        @media (max-width: 768px) {
-            .translate-text { display: none !important; }
-            .translate-compact { max-width: 110px; }
-        }
-
-        /* Contact section tweaks */
-        .contact-section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 14px;
-        }
-        .contact-section-header h2 {
-            margin: 0;
-        }
-
-        /* Hide Google Translate banner */
-        .goog-te-banner-frame.skiptranslate {
-            display: none !important;
-        }
-
-        .hidden { display: none !important; }
-        
-        /* style the view-page link in product headers */
-        .brand-page-link {
-            background: transparent;
-            color: #d4af37;
-            font-weight: 700;
-            padding: 6px 10px;
-            border-radius: 8px;
-            border: 1px solid rgba(212,175,55,0.12);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-        .brand-page-link:hover {
-            background: rgba(212,175,55,0.08);
-            color: #fff;
-            text-decoration: none;
-        }
-    </style>
+    .brand-page-link:hover {
+      background: rgba(212,175,55,0.08);
+      color: #fff;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body class="bg-black text-gold antialiased selection:bg-gold selection:text-black">
 
-    <!-- AGE VERIFICATION MODAL -->
-    <div id="ageModal" class="age-modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="ageTitle">
-        <div class="age-modal-content">
-            <div class="mb-6">
-                <i class="fas fa-exclamation-triangle text-yellow-400 text-5xl mb-4"></i>
-                <h2 id="ageTitle" class="text-2xl font-black mb-2">Age Verification</h2>
-                <p class="mb-4">You must be 21 years or older to access this site. This site contains content related to alcohol products.</p>
-            </div>
+  <!-- AGE VERIFICATION MODAL -->
+  <div id="ageModal" class="age-modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="ageTitle">
+    <div class="age-modal-content">
+      <div class="mb-6">
+        <i class="fas fa-exclamation-triangle text-yellow-400 text-5xl mb-4"></i>
+        <h2 id="ageTitle" class="text-2xl font-black mb-2" data-i18n="age_title">Age Verification</h2>
+        <p class="mb-4" data-i18n="age_text">You must be 21 years or older to access this site. This site contains content related to alcohol products.</p>
+      </div>
 
-            <div class="space-y-3">
-                <button onclick="confirmAge()" class="w-full gradient-accent text-black font-bold py-3 rounded-lg transition duration-300">
-                    I am 21 or Older
-                </button>
-                <button onclick="denyAge()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-lg transition duration-300">
-                    I am Under 21
-                </button>
-            </div>
-        </div>
+      <div class="space-y-3">
+        <button onclick="confirmAge()" class="w-full gradient-accent text-black font-bold py-3 rounded-lg transition duration-300" data-i18n="age_confirm">
+          I am 21 or Older
+        </button>
+        <button onclick="denyAge()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-lg transition duration-300" data-i18n="age_deny">
+          I am Under 21
+        </button>
+      </div>
     </div>
+  </div>
 
-    <!-- 1. NAVIGATION BAR -->
-    <nav class="sticky top-0 z-50 flex justify-between items-center px-6 md:px-12 py-4 bg-white font-sans">
+  <!-- 1. NAVIGATION BAR -->
+  <nav class="sticky top-0 z-50 flex justify-between items-center px-6 md:px-12 py-4 bg-white font-sans">
     <div class="flex items-center gap-2">
-        <img src="images/LogoXM.png" alt="ShreeShyamXM Logo" class="logo-img" />
+      <img src="images/LogoXM.png" alt="ShreeShyamXM Logo" class="logo-img" />
     </div>
 
-    <!-- show links on all screen sizes (removed the 'hidden' so mobile also shows them) -->
     <div class="flex space-x-8 font-semibold text-sm">
-        <a href="#about" class="text-black hover:text-gold transition duration-300">About Us</a>
-        <a href="#catalog" class="text-black hover:text-gold transition duration-300">Bulk Catalog</a>
-        <a href="#compliance" class="text-black hover:text-gold transition duration-300">Compliance</a>
+      <a href="#about" class="text-black hover:text-gold transition duration-300" data-i18n="nav_about">About Us</a>
+      <a href="#catalog" class="text-black hover:text-gold transition duration-300" data-i18n="nav_catalog">Bulk Catalog</a>
+      <a href="#compliance" class="text-black hover:text-gold transition duration-300" data-i18n="nav_compliance">Compliance</a>
     </div>
 
     <div class="flex items-center gap-3">
-        <!-- Google Translate Widget Container -->
-        <div class="translate-compact" id="google_translate_element"></div>
+      <!-- Compact custom language selector -->
+      <div class="translate-compact" id="translateCompact">
+        <button id="translateToggle" class="translate-btn" aria-haspopup="listbox" aria-expanded="false" type="button">
+          <i class="fas fa-globe" aria-hidden="true"></i>
+          <span class="translate-text">Language</span>
+          <span id="translateSelected" class="translate-selected">EN</span>
+          <i class="fas fa-caret-down" aria-hidden="true"></i>
+        </button>
+
+        <ul id="translateList" class="translate-list hidden" role="listbox" aria-label="Select language">
+          <li class="translate-item" data-lang="en">🇬🇧 English</li>
+          <li class="translate-item" data-lang="fr">🇫🇷 Français</li>
+          <li class="translate-item" data-lang="hi">🇮🇳 हिंदी</li>
+          <li class="translate-item" data-lang="es">🇪🇸 Español</li>
+          <li class="translate-item" data-lang="pt">🇵🇹 Português</li>
+        </ul>
+
+        <div id="google_translate_element" style="display:none;"></div>
+      </div>
     </div>
 
     <div>
-        <a href="#contact"
-           class="btn-gold font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-lg transition shadow-lg hover:shadow-xl hover:scale-105 duration-300">
-            Contact Sales
-        </a>
+      <a href="#contact" class="btn-gold font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-lg transition shadow-lg hover:shadow-xl hover:scale-105 duration-300" data-i18n="contact_sales">
+        Contact Sales
+      </a>
     </div>
-</nav>
+  </nav>
 
-    <!-- 2. HERO BANNER -->
-    <header class="hero-section text-white py-16 md:py-24 overflow-hidden relative bg-[#0a0a0a]">
-        <div class="hero-inner relative max-w-5xl mx-auto px-6 z-20">
-            <div class="mb-12 text-center">
-                <span class="inline-block bg-gold/20 text-gold text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-gold/50 backdrop-blur-sm hero-badge">
-                    <i class="fas fa-check-circle mr-2"></i>Flexible Order Quantities
-                </span>
-                <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6 text-white drop-shadow-lg">
-                    Premium Spirits & Liquor Distribution Across Africa
-                </h1>
-                <p class="text-base md:text-lg text-slate-300 max-w-2xl mx-auto mb-10 font-normal leading-relaxed">
-                    Supplying major African ports with high-volume, reliable container shipments of premium international spirits and beverage brands.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="#catalog" class="btn-gold px-8 py-4 rounded-lg font-bold text-sm tracking-wide shadow-xl hover:shadow-2xl transition duration-300 uppercase">
-                        <i class="fas fa-bottle"></i> View Our Brands
-                    </a>
-                    <a href="#about" class="border-2 border-gold hover:bg-gold/20 text-white px-8 py-4 rounded-lg font-bold text-sm tracking-wide transition duration-300 uppercase">
-                        <i class="fas fa-warehouse"></i> Our Infrastructure
-                    </a>
-                </div>
-            </div>
+  <!-- 2. HERO BANNER -->
+  <header class="hero-section text-white py-16 md:py-24 overflow-hidden relative bg-[#0a0a0a]">
+    <div class="hero-inner relative max-w-5xl mx-auto px-6 z-20">
+      <div class="mb-12 text-center">
+        <span class="inline-block bg-gold/20 text-gold text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-gold/50 backdrop-blur-sm hero-badge">
+          <i class="fas fa-check-circle mr-2"></i>Flexible Order Quantities
+        </span>
+        <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6 text-white drop-shadow-lg" data-i18n="hero_title">
+          Premium Spirits & Liquor Distribution Across Africa
+        </h1>
+        <p class="text-base md:text-lg text-slate-300 max-w-2xl mx-auto mb-10 font-normal leading-relaxed" data-i18n="hero_sub">
+          Supplying major African ports with high-volume, reliable container shipments of premium international spirits and beverage brands.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a href="#catalog" class="btn-gold px-8 py-4 rounded-lg font-bold text-sm tracking-wide shadow-xl hover:shadow-2xl transition duration-300 uppercase" data-i18n="view_brands">
+            <i class="fas fa-bottle"></i> View Our Brands
+          </a>
+          <a href="#about" class="border-2 border-gold hover:bg-gold/20 text-white px-8 py-4 rounded-lg font-bold text-sm tracking-wide transition duration-300 uppercase" data-i18n="our_infrastructure">
+            <i class="fas fa-warehouse"></i> Our Infrastructure
+          </a>
         </div>
-    </header>
+      </div>
+    </div>
+  </header>
 
-    <!-- 3. ABOUT & INFRASTRUCTURE SECTION (updated to trading company text) -->
-    <section id="about" class="py-20 section-black">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center gap-2">
-                        <span class="w-8 h-0.5 bg-gold"></span>
-                        <span>Corporate Capacity</span>
-                    </h2>
-                    <h3 class="text-4xl font-black text-gold leading-tight mb-6">Shree Shyam Trading FZE</h3>
-                    <p class="text-light mb-5 leading-relaxed text-lg">
-                        Shree Shyam Trading FZE is a trusted international trading company specializing in the sourcing, procurement, and distribution of premium alcoholic beverages. We connect leading manufacturers with retailers and distributors across Africa.
-                    </p>
-                    <p class="text-light leading-relaxed text-lg mb-8">
-                        As trading specialists (not container shippers), we focus on procurement, supplier relationships, product quality, compliance guidance and coordination of logistics to ensure goods reach your destination on time and in perfect condition.
-                    </p>
+  <!-- 3. ABOUT & INFRASTRUCTURE SECTION -->
+  <section id="about" class="py-20 section-black">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center gap-2">
+            <span class="w-8 h-0.5 bg-gold"></span>
+            <span data-i18n="corporate_capacity">Corporate Capacity</span>
+          </h2>
+          <h3 class="text-4xl font-black text-gold leading-tight mb-6" data-i18n="about_title">Shree Shyam Trading FZE</h3>
+          <p class="text-light mb-5 leading-relaxed text-lg" data-i18n="about_para_1">
+            Shree Shyam Trading FZE is a trusted international trading company specializing in the sourcing, procurement, and distribution of premium alcoholic beverages. We connect leading manufacturers with distributors, wholesalers, and retailers across Africa, the Middle East, and Asia through reliable supply chain solutions and market expertise.
+          </p>
+          <p class="text-light leading-relaxed text-lg mb-8" data-i18n="about_para_2">
+            As trading specialists (not container shippers), we focus on procurement, supplier relationships, product quality, compliance guidance and coordination of logistics to ensure goods reach their destinations safely and compliantly.
+          </p>
 
-                    <!-- Feature list (tailored to trading operations) -->
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <span class="text-light font-medium">Sourcing & procurement from trusted manufacturers</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <span class="text-light font-medium">Quality control & third-party inspections</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <span class="text-light font-medium">Certified customs & compliance guidance</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="rounded-2xl overflow-hidden shadow-2xl h-80 md:h-96 border-2 border-gold">
-                    <img src="images/Containers.jpg" alt="Warehouse Operations" class="w-full h-full object-cover hover:scale-110 transition duration-500" />
-                </div>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
+                <i class="fas fa-check"></i>
+              </div>
+              <span class="text-light font-medium" data-i18n="feature_1">Sourcing & procurement from trusted manufacturers</span>
             </div>
+            <div class="flex items-center gap-3">
+              <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
+                <i class="fas fa-check"></i>
+              </div>
+              <span class="text-light font-medium" data-i18n="feature_2">Quality control & third-party inspections</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
+                <i class="fas fa-check"></i>
+              </div>
+              <span class="text-light font-medium" data-i18n="feature_3">Certified customs & compliance guidance</span>
+            </div>
+          </div>
         </div>
-    </section>
 
-    <!-- 4. PRODUCT CATALOG - CATEGORIZED PORTFOLIO -->
-    <section id="catalog" class="section-dark py-20">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
-                    <span class="w-8 h-0.5 bg-gold"></span>
-                    <span>Our Product Portfolio</span>
-                    <span class="w-8 h-0.5 bg-gold"></span>
-                </h2>
-                <h3 class="text-4xl font-black text-gold mb-4">We trade a wide range of quality alcoholic beverages</h3>
-                <p class="text-light text-lg">
-                    We trade a wide range of quality alcoholic beverages, including Whisky, Rum, Vodka, Brandy, Gin and Wine. We work with established brands and private label manufacturers to meet diverse market needs.
-                </p>
-            </div>
-
-            <!-- Category Accordion -->
-            <div class="card-hover bg-slate-900 rounded-2xl shadow-lg border-2 border-gold overflow-hidden p-6">
-                <div class="space-y-4">
-                    <!-- Whisky -->
-                    <div class="border border-gold rounded-lg overflow-hidden">
-                        <div class="flex items-center justify-between">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
-                                <span class="flex items-center gap-3">
-                                    <i class="fas fa-wine-bottle text-gold"></i>
-                                    Whisky
-                                </span>
-                                <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
-                            </button>
-                        </div>
-                        <div class="accordion-content bg-slate-900">
-                            <div class="p-4 border-t border-gold">
-                                <p class="text-light mb-3">Products in this category:</p>
-                                <ul class="list-disc list-inside text-light">
-                                    <li>
-                                        Roulette — Whisky
-                                        <a href="brand.html?brand=roulette" class="brand-page-link ml-4" title="Open Roulette brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
-                                    </li>
-                                    <li>
-                                        Dennis — Whisky
-                                        <a href="brand.html?brand=dennis" class="brand-page-link ml-4" title="Open Dennis brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
-                                    </li>
-                                    <li>
-                                        Mont Castle — Whisky
-                                        <a href="brand.html?brand=montcastle" class="brand-page-link ml-4" title="Open Mont Castle brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
-                                    </li>
-                                    <li>
-                                        Aristocrat — Whisky & Rum
-                                        <a href="brand.html?brand=aristocrat" class="brand-page-link ml-4" title="Open Aristocrat brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Rum -->
-                    <div class="border border-gold rounded-lg overflow-hidden">
-                        <div class="flex items-center justify-between">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
-                                <span class="flex items-center gap-3">
-                                    <i class="fas fa-ship text-gold"></i>
-                                    Rum
-                                </span>
-                                <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
-                            </button>
-                        </div>
-                        <div class="accordion-content bg-slate-900">
-                            <div class="p-4 border-t border-gold">
-                                <p class="text-light mb-3">Products in this category:</p>
-                                <ul class="list-disc list-inside text-light">
-                                    <li>
-                                        Aristocrat — Rum & Whisky (dual ranges)
-                                        <a href="brand.html?brand=aristocrat" class="brand-page-link ml-4" title="Open Aristocrat brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Vodka -->
-                    <div class="border border-gold rounded-lg overflow-hidden">
-                        <div class="flex items-center justify-between">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
-                                <span class="flex items-center gap-3">
-                                    <i class="fas fa-snowflake text-gold"></i>
-                                    Vodka
-                                </span>
-                                <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
-                            </button>
-                        </div>
-                        <div class="accordion-content bg-slate-900">
-                            <div class="p-4 border-t border-gold">
-                                <p class="text-light mb-3">Products in this category:</p>
-                                <ul class="list-disc list-inside text-light">
-                                    <li>
-                                        IceX — Vodka
-                                        <a href="brand.html?brand=icex" class="brand-page-link ml-4" title="Open IceX brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Brandy -->
-                    <div class="border border-gold rounded-lg overflow-hidden">
-                        <div class="flex items-center justify-between">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
-                                <span class="flex items-center gap-3">
-                                    <i class="fas fa-glass-whiskey text-gold"></i>
-                                    Brandy
-                                </span>
-                                <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
-                            </button>
-                        </div>
-                        <div class="accordion-content bg-slate-900">
-                            <div class="p-4 border-t border-gold">
-                                <p class="text-light mb-3">We work with established producers and private label partners for brandy — contact us for current availability and bespoke labeling options.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Gin -->
-                    <div class="border border-gold rounded-lg overflow-hidden">
-                        <div class="flex items-center justify-between">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
-                                <span class="flex items-center gap-3">
-                                    <i class="fas fa-lemon text-gold"></i>
-                                    Gin
-                                </span>
-                                <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
-                            </button>
-                        </div>
-                        <div class="accordion-content bg-slate-900">
-                            <div class="p-4 border-t border-gold">
-                                <p class="text-light mb-3">Gin product ranges are available via partner producers — reach out for pricing and SKU lists.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Wine -->
-                    <div class="border border-gold rounded-lg overflow-hidden">
-                        <div class="flex items-center justify-between">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
-                                <span class="flex items-center gap-3">
-                                    <i class="fas fa-wine-glass text-gold"></i>
-                                    Wine
-                                </span>
-                                <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
-                            </button>
-                        </div>
-                        <div class="accordion-content bg-slate-900">
-                            <div class="p-4 border-t border-gold">
-                                <p class="text-light mb-3">Products in this category:</p>
-                                <ul class="list-disc list-inside text-light">
-                                    <li>
-                                        Goana's — Wine
-                                        <a href="brand.html?brand=goanas" class="brand-page-link ml-4" title="Open Goana's brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Call to Action -->
-                <div class="mt-8 pt-6 border-t border-gold">
-                    <a href="#contact" class="w-full inline-flex items-center justify-center gap-2 btn-gold px-6 py-4 rounded-lg font-bold text-sm uppercase tracking-wide transition duration-300">
-                        <i class="fas fa-envelope"></i> Request Quote for Any Brand
-                    </a>
-                </div>
-            </div>
+        <div class="rounded-2xl overflow-hidden shadow-2xl h-80 md:h-96 border-2 border-gold">
+          <img src="images/Containers.jpg" alt="Warehouse Operations" class="w-full h-full object-cover hover:scale-110 transition duration-500" />
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- 5. END-TO-END BUSINESS SOLUTIONS (replaces previous compliance) -->
-    <section id="compliance" class="section-black py-20">
-        <div class="max-w-4xl mx-auto text-center px-6">
-            <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
-                <span class="w-8 h-0.5 bg-gold"></span>
-                <span>End-to-End Business Solutions</span>
-                <span class="w-8 h-0.5 bg-gold"></span>
-            </h2>
-            <h3 class="text-4xl font-black text-gold mb-6">Complete support throughout the trading lifecycle</h3>
-            <p class="text-light leading-relaxed text-lg max-w-3xl mx-auto mb-10">
-                Whether you are launching a new brand or expanding into new markets, we ensure a smooth and reliable trading experience from factory to final destination.
-            </p>
+  <!-- 4. PRODUCT CATALOG -->
+  <section id="catalog" class="section-dark py-20">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
+          <span class="w-8 h-0.5 bg-gold"></span>
+          <span data-i18n="portfolio_label">Our Product Portfolio</span>
+          <span class="w-8 h-0.5 bg-gold"></span>
+        </h2>
+        <h3 class="text-4xl font-black text-gold mb-4" data-i18n="portfolio_title">We trade a wide range of quality alcoholic beverages</h3>
+        <p class="text-light text-lg" data-i18n="portfolio_sub">
+          We trade a wide range of quality alcoholic beverages, including Whisky, Rum, Vodka, Brandy, Gin and Wine. We work with established brands and private label manufacturers to meet diverse market requirements.
+        </p>
+      </div>
 
-            <!-- Services checklist -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 text-left">
-                <div class="p-6 bg-slate-900 rounded-xl border-2 border-gold">
-                    <h4 class="font-bold text-gold mb-3">We provide complete support</h4>
-                    <ul class="list-disc list-inside text-light">
-                        <li>Product Procurement</li>
-                        <li>Supplier Sourcing</li>
-                        <li>International Shipping & Logistics</li>
-                        <li>Customs & Documentation Assistance</li>
-                        <li>Delivery Coordination</li>
-                        <li>Distribution Support</li>
-                        <li>Brand Development & Marketing Support</li>
-                    </ul>
-                </div>
-
-                <div class="p-6 bg-slate-900 rounded-xl border-2 border-gold">
-                    <h4 class="font-bold text-gold mb-3">Why Choose Us?</h4>
-                    <ul class="list-disc list-inside text-light">
-                        <li>Global sourcing expertise</li>
-                        <li>Reliable international logistics</li>
-                        <li>Strong distribution network across West Africa</li>
-                        <li>Transparent business practices</li>
-                        <li>Dedicated customer support</li>
-                        <li>Customized solutions for importers and distributors</li>
-                    </ul>
-                </div>
+      <div class="card-hover bg-slate-900 rounded-2xl shadow-lg border-2 border-gold overflow-hidden p-6">
+        <div class="space-y-4">
+          <!-- Whisky -->
+          <div class="border border-gold rounded-lg overflow-hidden">
+            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
+              <span class="flex items-center gap-3">
+                <i class="fas fa-wine-bottle text-gold"></i>
+                Whisky
+              </span>
+              <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
+            </button>
+            <div class="accordion-content bg-slate-900">
+              <div class="p-4 border-t border-gold">
+                <p class="text-light mb-3">Products in this category:</p>
+                <ul class="list-disc list-inside text-light">
+                  <li>
+                    Roulette — Whisky
+                    <a href="brand.html?brand=roulette" class="brand-page-link ml-4" title="Open Roulette brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                  </li>
+                  <li>
+                    Dennis — Whisky
+                    <a href="brand.html?brand=dennis" class="brand-page-link ml-4" title="Open Dennis brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                  </li>
+                  <li>
+                    Mont Castle — Whisky
+                    <a href="brand.html?brand=montcastle" class="brand-page-link ml-4" title="Open Mont Castle brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                  </li>
+                  <li>
+                    Aristocrat — Whisky & Rum
+                    <a href="brand.html?brand=aristocrat" class="brand-page-link ml-4" title="Open Aristocrat brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                  </li>
+                </ul>
+              </div>
             </div>
+          </div>
+
+          <!-- Rum -->
+          <div class="border border-gold rounded-lg overflow-hidden">
+            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
+              <span class="flex items-center gap-3">
+                <i class="fas fa-ship text-gold"></i>
+                Rum
+              </span>
+              <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
+            </button>
+            <div class="accordion-content bg-slate-900">
+              <div class="p-4 border-t border-gold">
+                <p class="text-light mb-3">Products in this category:</p>
+                <ul class="list-disc list-inside text-light">
+                  <li>
+                    Aristocrat — Rum & Whisky (dual ranges)
+                    <a href="brand.html?brand=aristocrat" class="brand-page-link ml-4" title="Open Aristocrat brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vodka -->
+          <div class="border border-gold rounded-lg overflow-hidden">
+            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
+              <span class="flex items-center gap-3">
+                <i class="fas fa-snowflake text-gold"></i>
+                Vodka
+              </span>
+              <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
+            </button>
+            <div class="accordion-content bg-slate-900">
+              <div class="p-4 border-t border-gold">
+                <p class="text-light mb-3">Products in this category:</p>
+                <ul class="list-disc list-inside text-light">
+                  <li>
+                    IceX — Vodka
+                    <a href="brand.html?brand=icex" class="brand-page-link ml-4" title="Open IceX brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Brandy -->
+          <div class="border border-gold rounded-lg overflow-hidden">
+            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
+              <span class="flex items-center gap-3">
+                <i class="fas fa-glass-whiskey text-gold"></i>
+                Brandy
+              </span>
+              <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
+            </button>
+            <div class="accordion-content bg-slate-900">
+              <div class="p-4 border-t border-gold">
+                <p class="text-light mb-3">We work with established producers and private label partners for brandy — contact us for current availability and bespoke labeling options.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gin -->
+          <div class="border border-gold rounded-lg overflow-hidden">
+            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
+              <span class="flex items-center gap-3">
+                <i class="fas fa-lemon text-gold"></i>
+                Gin
+              </span>
+              <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
+            </button>
+            <div class="accordion-content bg-slate-900">
+              <div class="p-4 border-t border-gold">
+                <p class="text-light mb-3">Gin product ranges are available via partner producers — reach out for pricing and SKU lists.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wine -->
+          <div class="border border-gold rounded-lg overflow-hidden">
+            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
+              <span class="flex items-center gap-3">
+                <i class="fas fa-wine-glass text-gold"></i>
+                Wine
+              </span>
+              <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
+            </button>
+            <div class="accordion-content bg-slate-900">
+              <div class="p-4 border-t border-gold">
+                <p class="text-light mb-3">Products in this category:</p>
+                <ul class="list-disc list-inside text-light">
+                  <li>
+                    Goana's — Wine
+                    <a href="brand.html?brand=goanas" class="brand-page-link ml-4" title="Open Goana's brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
         </div>
-    </section>
 
-    <!-- 6. CONTACT SECTION (unchanged) -->
-    <section id="contact" class="section-dark py-20">
-        <div class="max-w-6xl mx-auto px-6">
-            <!-- New Contact Us header -->
-            <div class="contact-section-header">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-gold" id="contact-us">Contact Us</h2>
-                <p class="text-sm text-muted hidden md:block">Reach out for sales, distribution partnerships, and logistics enquiries.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-                <!-- LEFT: Map + heading -->
-                <div>
-                    <h3 class="text-2xl font-black text-gold mb-4">Our presence</h3>
-                    <img id="distributionMap" src="images/Map.jpeg" alt="Distribution Map" class="rounded-2xl overflow-hidden mb-4 w-full h-auto object-cover" aria-label="Distribution map" />
-                </div>
-
-                <!-- RIGHT: Contact Card -->
-                <div class="bg-slate-900 backdrop-blur rounded-2xl p-10 border-2 border-gold">
-                    <div class="space-y-8 text-center md:text-left">
-                        <div>
-                            <i class="fas fa-envelope text-gold text-2xl mb-2"></i>
-                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold">
-                                Email
-                            </h3>
-                            <p class="text-light text-lg">sales@shreeshyamxm.com</p>
-                        </div>
-
-                        <div>
-                            <i class="fas fa-phone text-gold text-2xl mb-2"></i>
-                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold">
-                                Phone
-                            </h3>
-                            <p class="text-light text-lg">+228 72097250</p>
-                        </div>
-
-                        <div>
-                            <i class="fab fa-whatsapp text-gold text-2xl mb-2"></i>
-                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold">
-                                WhatsApp
-                            </h3>
-                            <p class="text-light text-lg">
-                                <a href="https://wa.me/919784928525" target="_blank" rel="noopener noreferrer" class="hover:text-white transition duration-300">+91 9784928525</a>
-                            </p>
-                        </div>
-
-                        <div>
-                            <i class="fas fa-map-marker-alt text-gold text-2xl mb-2"></i>
-                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold">
-                                Service Area
-                            </h3>
-                            <p class="text-light text-lg">Africa-wide Import & Distribution</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="mt-8 pt-6 border-t border-gold">
+          <a href="#contact" class="w-full inline-flex items-center justify-center gap-2 btn-gold px-6 py-4 rounded-lg font-bold text-sm uppercase tracking-wide transition duration-300">
+            <i class="fas fa-envelope"></i> Request Quote for Any Brand
+          </a>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- 7. CORPORATE FOOTER -->
-    <footer class="bg-black text-gold py-12">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <h4 class="text-gold font-bold mb-4">ShreeShyamXM</h4>
-                    <p class="text-muted text-sm">Premier spirits and beverage bulk distribution across Africa's major ports and trading corridors.</p>
-                </div>
-                <div>
-                    <h4 class="text-gold font-bold mb-4">Quick Links</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#about" class="text-muted hover:text-gold transition">About Us</a></li>
-                        <li><a href="#catalog" class="text-muted hover:text-gold transition">Our Brands</a></li>
-                        <li><a href="#contact" class="text-muted hover:text-gold transition">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-gold font-bold mb-4">Contact Info</h4>
-                    <p class="text-muted text-sm">
-                        <i class="fas fa-envelope mr-2"></i>sales@shreeshyamxm.com<br />
-                        <i class="fas fa-phone mr-2"></i>+228 72097250<br />
-                        <i class="fab fa-whatsapp mr-2"></i><a href="https://wa.me/919784928525" target="_blank" rel="noopener noreferrer" class="hover:text-gold transition">+91 9784928525</a>
-                    </p>
-                </div>
-            </div>
+  <!-- 5. COMPLIANCE SECTION -->
+  <section id="compliance" class="section-black py-20">
+    <div class="max-w-4xl mx-auto text-center px-6">
+      <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
+        <span class="w-8 h-0.5 bg-gold"></span>
+        <span data-i18n="regulatory_alignment">End-to-End Business Solutions</span>
+        <span class="w-8 h-0.5 bg-gold"></span>
+      </h2>
+      <h3 class="text-4xl font-black text-gold mb-6" data-i18n="compliance_title">Complete support throughout the trading lifecycle</h3>
+      <p class="text-light leading-relaxed text-lg max-w-3xl mx-auto mb-10" data-i18n="compliance_text">
+        Whether you are launching a new brand or expanding into new markets, we ensure a smooth and reliable trading experience from factory to final destination.
+      </p>
 
-            <div class="pt-8 text-center">
-                <p class="text-sm font-medium">&copy; 2026 ShreeShyamXM. All rights reserved. Premium Spirits & Beverage Distribution & Logistics Network.</p>
-                <p class="text-xs text-muted mt-2"><span>Images sourced from local assets and</span> <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" class="hover:text-gold">Unsplash</a></p>
-            </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 text-left">
+        <div class="p-6 bg-slate-900 rounded-xl border-2 border-gold">
+          <h4 class="font-bold text-gold mb-3">We provide complete support</h4>
+          <ul class="list-disc list-inside text-light">
+            <li>Product Procurement</li>
+            <li>Supplier Sourcing</li>
+            <li>International Shipping & Logistics</li>
+            <li>Customs & Documentation Assistance</li>
+            <li>Delivery Coordination</li>
+            <li>Distribution Support</li>
+            <li>Brand Development & Marketing Support</li>
+          </ul>
         </div>
-    </footer>
 
-    <!-- Google Translate Script -->
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,fr,hi,es,pt',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                gaTrack: true,
-                gaId: ''
-            }, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <div class="p-6 bg-slate-900 rounded-xl border-2 border-gold">
+          <h4 class="font-bold text-gold mb-3">Why Choose Us?</h4>
+          <ul class="list-disc list-inside text-light">
+            <li>Global sourcing expertise</li>
+            <li>Reliable international logistics</li>
+            <li>Strong distribution network across West Africa</li>
+            <li>Transparent business practices</li>
+            <li>Dedicated customer support</li>
+            <li>Customized solutions for importers and distributors</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Main scripts -->
-    <script>
-        // Global map variable (preserved from original for future use)
-        let mapInstance = null;
+  <!-- 6. CONTACT SECTION -->
+  <section id="contact" class="section-dark py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="contact-section-header">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-gold" id="contact-us">Contact Us</h2>
+        <p class="text-sm text-muted hidden md:block">Reach out for sales, distribution partnerships, and logistics enquiries.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+        <div>
+          <h3 class="text-2xl font-black text-gold mb-4" data-i18n="our_presence">Our presence</h3>
+          <img id="distributionMap" src="images/Map.jpeg" alt="Distribution Map" class="rounded-2xl overflow-hidden mb-4 w-full h-auto object-cover" aria-label="Distribution map" />
+        </div>
 
-        // AGE VERIFICATION
-        function confirmAge() {
-            localStorage.setItem('ageVerified', 'true');
-            const modal = document.getElementById('ageModal');
-            if (modal) modal.classList.add('hidden');
-            document.body.classList.remove('scroll-locked');
-        }
+        <div class="bg-slate-900 backdrop-blur rounded-2xl p-10 border-2 border-gold">
+          <div class="space-y-8 text-center md:text-left">
+            <div>
+              <i class="fas fa-envelope text-gold text-2xl mb-2"></i>
+              <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_email_label">Email</h3>
+              <p class="text-light text-lg" data-i18n="contact_email">sales@shreeshyamxm.com</p>
+            </div>
 
-        function denyAge() {
-            window.location.href = 'https://google.com';
-        }
+            <div>
+              <i class="fas fa-phone text-gold text-2xl mb-2"></i>
+              <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_phone_label">Phone</h3>
+              <p class="text-light text-lg" data-i18n="contact_phone">+228 72097250</p>
+            </div>
 
-        // DOM ready: setup accordion
-        document.addEventListener('DOMContentLoaded', function () {
-            // Show age modal if not verified
-            if (localStorage.getItem('ageVerified') !== 'true') {
-                const modal = document.getElementById('ageModal');
-                if (modal) modal.classList.remove('hidden');
-                document.body.classList.add('scroll-locked');
+            <div>
+              <i class="fab fa-whatsapp text-gold text-2xl mb-2"></i>
+              <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_whatsapp_label">WhatsApp</h3>
+              <p class="text-light text-lg">
+                <a href="https://wa.me/919784928525" target="_blank" rel="noopener noreferrer" class="hover:text-white transition duration-300" data-i18n="contact_whatsapp">+91 9784928525</a>
+              </p>
+            </div>
+
+            <div>
+              <i class="fas fa-map-marker-alt text-gold text-2xl mb-2"></i>
+              <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_service_area_label">Service Area</h3>
+              <p class="text-light text-lg" data-i18n="contact_service_area">Africa-wide Import & Distribution</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. FOOTER -->
+  <footer class="bg-black text-gold py-12">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <h4 class="text-gold font-bold mb-4">ShreeShyamXM</h4>
+          <p class="text-muted text-sm" data-i18n="footer_blurb">Premier spirits and beverage bulk distribution across Africa's major ports and trading corridors.</p>
+        </div>
+        <div>
+          <h4 class="text-gold font-bold mb-4" data-i18n="footer_quick_links">Quick Links</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#about" class="text-muted hover:text-gold transition" data-i18n="nav_about_footer">About Us</a></li>
+            <li><a href="#catalog" class="text-muted hover:text-gold transition" data-i18n="nav_catalog_footer">Our Brands</a></li>
+            <li><a href="#contact" class="text-muted hover:text-gold transition" data-i18n="nav_contact_footer">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-gold font-bold mb-4">Contact Info</h4>
+          <p class="text-muted text-sm">
+            <i class="fas fa-envelope mr-2"></i>sales@shreeshyamxm.com<br />
+            <i class="fas fa-phone mr-2"></i>+228 72097250<br />
+            <i class="fab fa-whatsapp mr-2"></i><a href="https://wa.me/919784928525" target="_blank" rel="noopener noreferrer" class="hover:text-gold transition">+91 9784928525</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="pt-8 text-center">
+        <p class="text-sm font-medium" data-i18n="footer_copyright">&copy; 2026 ShreeShyamXM. All rights reserved. Premium Spirits & Beverage Distribution & Logistics Network.</p>
+        <p class="text-xs text-muted mt-2"><span>Images sourced from local assets and</span> <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" class="hover:text-gold">Unsplash</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Main scripts -->
+  <script>
+    let mapInstance = null;
+
+    // AGE VERIFICATION
+    function confirmAge() {
+      localStorage.setItem('ageVerified', 'true');
+      document.getElementById('ageModal').classList.add('hidden');
+      document.body.classList.remove('scroll-locked');
+    }
+
+    function denyAge() {
+      window.location.href = 'https://google.com';
+    }
+
+    // Close translate list when clicking outside
+    document.addEventListener('click', function (e) {
+      const tc = document.getElementById('translateCompact');
+      if (tc && !tc.contains(e.target)) {
+        const list = document.getElementById('translateList');
+        if (list) list.classList.add('hidden');
+        const toggle = document.getElementById('translateToggle');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Initialize on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function () {
+      if (localStorage.getItem('ageVerified') !== 'true') {
+        document.getElementById('ageModal').classList.remove('hidden');
+        document.body.classList.add('scroll-locked');
+      }
+
+      // Accordion toggles
+      document.querySelectorAll('.accordion-btn').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          const container = btn.closest('.border');
+          let content = null;
+          if (container) {
+            content = container.querySelector('.accordion-content');
+          } else {
+            const parent = btn.parentElement;
+            if (parent) {
+              content = parent.nextElementSibling;
+              if (content && !content.classList.contains('accordion-content')) content = null;
             }
+          }
+          if (!content) {
+            const possible = btn.closest('div');
+            if (possible) content = possible.querySelector('.accordion-content');
+          }
+          if (!content) return;
 
-            // Accordion toggles
-            document.querySelectorAll('.accordion-btn').forEach(function (btn) {
-                btn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    // find the nearest .border container and the .accordion-content inside it
-                    let container = btn.closest('.border');
-                    // Some accordion containers may not use .border; fallback to parent structure
-                    if (!container) {
-                        container = btn.closest('div');
-                    }
-                    let content = null;
-                    if (container) {
-                        content = container.querySelector('.accordion-content');
-                    }
+          const isActive = content.classList.contains('active');
 
-                    if (content) {
-                        // Close other open accordions
-                        document.querySelectorAll('.accordion-content').forEach(function (c) {
-                            if (c !== content) {
-                                c.classList.remove('active');
-                            }
-                        });
+          if (isActive) {
+            content.classList.remove('active');
+            btn.setAttribute('aria-expanded', 'false');
+          } else {
+            content.classList.add('active');
+            btn.setAttribute('aria-expanded', 'true');
+          }
 
-                        // Toggle current accordion
-                        content.classList.toggle('active');
-
-                        // Update aria-expanded
-                        const isActive = content.classList.contains('active');
-                        btn.setAttribute('aria-expanded', isActive);
-
-                        // Rotate the chevron
-                        const chevron = btn.querySelector('.fa-chevron-down');
-                        if (chevron) {
-                            if (isActive) {
-                                chevron.style.transform = 'rotate(180deg)';
-                            } else {
-                                chevron.style.transform = 'rotate(0deg)';
-                            }
-                        }
-                    }
-                });
-            });
+          const chevron = btn.querySelector('.fa-chevron-down');
+          if (chevron) {
+            chevron.style.transform = isActive ? 'rotate(0deg)' : 'rotate(180deg)';
+          }
         });
-    </script>
+      });
+
+      // Translate dropdown
+      const translateToggle = document.getElementById('translateToggle');
+      const translateList = document.getElementById('translateList');
+      const translateSelected = document.getElementById('translateSelected');
+
+      if (translateToggle && translateList) {
+        translateToggle.addEventListener('click', function (e) {
+          e.stopPropagation();
+          const isHidden = translateList.classList.contains('hidden');
+          if (isHidden) {
+            translateList.classList.remove('hidden');
+            translateToggle.setAttribute('aria-expanded', 'true');
+          } else {
+            translateList.classList.add('hidden');
+            translateToggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        translateList.querySelectorAll('.translate-item').forEach(function (li) {
+          li.addEventListener('click', function () {
+            const lang = li.getAttribute('data-lang') || 'en';
+            translateSelected.textContent = lang.toUpperCase();
+            translateList.classList.add('hidden');
+            translateToggle.setAttribute('aria-expanded', 'false');
+            applyTranslation(lang);
+          });
+        });
+      }
+    });
+  </script>
+
+  <!-- Google Translate -->
+  <script>
+    function setCookie(name, value, days, domain) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      var path = "; path=/";
+      if (domain) {
+        document.cookie = name + "=" + (value || "") + expires + path + "; domain=" + domain + ";";
+      } else {
+        document.cookie = name + "=" + (value || "") + expires + path + ";";
+      }
+    }
+
+    function rootDomain() {
+      try {
+        var hostname = window.location.hostname.split('.');
+        if (hostname.length > 2) {
+          return '.' + hostname.slice(-2).join('.');
+        }
+        return window.location.hostname;
+      } catch(e) {
+        return window.location.hostname;
+      }
+    }
+
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+
+    (function loadGTScript() {
+      if (document.querySelector('script[src*="translate_a/element.js"]')) return;
+      var gt = document.createElement('script');
+      gt.type = 'text/javascript';
+      gt.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      gt.async = true;
+      document.head.appendChild(gt);
+    })();
+
+    function applyTranslation(lang) {
+      const sel = document.querySelector('select.goog-te-combo') || document.querySelector('#google_translate_element select');
+      if (sel) {
+        sel.value = lang;
+        sel.dispatchEvent(new Event('change'));
+        const label = document.getElementById('translateSelected');
+        if (label) label.textContent = lang.toUpperCase();
+      } else {
+        var cookieVal = '/en/' + lang;
+        try {
+          setCookie('googtrans', cookieVal, 7);
+          setCookie('googtrans', cookieVal, 7, rootDomain());
+        } catch(e) {
+          setCookie('googtrans', cookieVal, 7);
+        }
+        setTimeout(function(){ window.location.reload(); }, 200);
+      }
+    }
+  </script>
+
 </body>
 </html>
