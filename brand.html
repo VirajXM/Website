@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Brand Details - ShreeShyamXM</title>
+
+  <!-- Tailwind + Font Awesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    body { background:#0a0a0a; color:#d4af37; margin:0; font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial; }
+    .btn-gold { background: linear-gradient(135deg,#d4af37 0%,#c9a227 100%); color:#000; padding:.6rem 1rem; border-radius:8px; font-weight:700; display:inline-flex; gap:.5rem; align-items:center; }
+    .container { max-width:1100px; margin:0 auto; padding:2rem; }
+    a { color:inherit; text-decoration:none; }
+    .brand-img { width:100%; max-height:420px; object-fit:contain; background:#fff; border-radius:10px; padding:12px; }
+    .back-link { color:#d4af37; display:inline-flex; gap:.4rem; align-items:center; font-weight:700; padding:.4rem .6rem; border-radius:8px; border:1px solid rgba(212,175,55,0.08); }
+    .card { background:#0f0f0f; padding:1.5rem; border-radius:12px; border:2px solid rgba(212,175,55,0.08); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="flex items-center justify-between mb-8">
+      <div class="flex items-center gap-4">
+        <img src="images/LogoXM.png" alt="logo" style="height:72px; object-fit:contain;" />
+        <div>
+          <h1 class="text-2xl md:text-3xl font-extrabold">ShreeShyamXM</h1>
+          <p class="text-sm text-gray-300">Premium Spirits & Beverage Distribution</p>
+        </div>
+      </div>
+      <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Catalog</a>
+    </header>
+
+    <main id="brandMain" class="grid md:grid-cols-2 gap-8 items-start">
+      <!-- left: image, right: details -->
+      <div id="brandImageWrap" class="card">
+        <img id="brandImage" class="brand-img" src="images/Drinks.png" alt="Brand image" />
+      </div>
+
+      <div id="brandInfo" class="card">
+        <h2 id="brandName" class="text-3xl font-black mb-2">Brand</h2>
+        <p id="brandCategory" class="text-sm mb-4 text-gray-300"></p>
+
+        <div id="brandDescription" class="text-light leading-relaxed mb-6"></div>
+
+        <div class="mb-4">
+          <strong class="text-gold">Sizes available:</strong>
+          <span id="brandSizes" class="ml-2 text-light"></span>
+        </div>
+
+        <div class="space-y-3">
+          <a id="contactSales" href="#contact" class="btn-gold"><i class="fas fa-envelope"></i> Contact Sales</a>
+          <a id="requestQuote" href="mailto:sales@shreeshyamxm.com?subject=Request%20Quote" class="btn-gold"><i class="fas fa-file-invoice"></i> Request Quote</a>
+        </div>
+      </div>
+    </main>
+
+    <section id="moreInfo" class="mt-12 text-gray-300">
+      <div class="card">
+        <h3 class="text-xl font-bold mb-2">Product & Logistics Info</h3>
+        <p id="logisticsText" class="mb-0 text-light"></p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // brand data map - expand as you like
+    const brands = {
+      roulette: {
+        key: 'roulette',
+        name: "Roulette",
+        image: "images/Roulette.jpg",
+        category: "Whiskey",
+        description: "ROULETTE Premium Whisky is a blended Indian whisky crafted in Goa using carefully selected grain spirit and maturation techniques to ensure a smooth, premium drinking experience. Ideal for bulk wholesale allocations and container shipments.",
+        sizes: "60ml, 180ml, 200ml, 750ml",
+        logistics: "Available for container shipments. Temperature stable. OEM packaging and palletization options available for large orders."
+      },
+      dennis: {
+        key: 'dennis',
+        name: "Dennis",
+        image: "images/Dennis.jpg",
+        category: "Whiskey",
+        description: "Dennis Special Whisky is a smooth blended whisky crafted for exceptional balance and everyday enjoyment. Suited for hospitality, trade and bulk wholesale channels.",
+        sizes: "750ml",
+        logistics: "Standard container shipping. Customs documentation supported for major African ports."
+      },
+      goanas: {
+        key: 'goanas',
+        name: "Goana's",
+        image: "images/Goanas.jpg",
+        category: "Wine",
+        description: "Goana's Wine is a premium fortified wine crafted to deliver a rich, smooth, and satisfying drinking experience. Perfect for retail and hospitality markets.",
+        sizes: "750ml",
+        logistics: "Temperature-aware shipping recommended. We provide reefer options where necessary."
+      },
+      montcastle: {
+        key: 'montcastle',
+        name: "Mont Castle",
+        image: "images/MontCastle.jpg",
+        category: "Whiskey",
+        description: "Mont Castle Whisky is a premium blended whisky crafted for a smooth, well balanced drinking experience. Designed for consistency in wholesale batches.",
+        sizes: "180ml, 375ml, 750ml",
+        logistics: "Container friendly, palletized with protective packaging. Customs & compliance handled by our team."
+      },
+      aristocrat: {
+        key: 'aristocrat',
+        name: "Aristocrat",
+        image: "images/Aristocrat.jpg",
+        category: "Whiskey & Rum",
+        description: "Aristocrat Premium Whiskies are expertly crafted blends, designed for consistent quality and value in wholesale channels. Includes premium rum lines where specified.",
+        sizes: "180ml, 375ml, 750ml, 1L",
+        logistics: "Bulk container orders available with customized packaging and inspection on request."
+      },
+      icex: {
+        key: 'icex',
+        name: "IceX",
+        image: "images/IceX.jpg",
+        category: "Vodka",
+        description: "IceX Vodka is a premium vodka crafted from 100% pure grain spirit and triple distilled to deliver exceptional smoothness and purity.",
+        sizes: "180ml, 375ml, 750ml",
+        logistics: "Standard container shipping, packaged for bulk distribution."
+      }
+    };
+
+    function getQueryParam(param) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(param);
+    }
+
+    function renderBrand(brandKey) {
+      const data = brands[brandKey];
+      const brandNameEl = document.getElementById('brandName');
+      const brandImage = document.getElementById('brandImage');
+      const brandCategory = document.getElementById('brandCategory');
+      const brandDescription = document.getElementById('brandDescription');
+      const brandSizes = document.getElementById('brandSizes');
+      const logisticsText = document.getElementById('logisticsText');
+
+      if (!data) {
+        brandNameEl.textContent = "Brand Not Found";
+        brandImage.src = "images/Drinks.png";
+        brandCategory.textContent = "";
+        brandDescription.textContent = "We couldn't find the brand you requested. Please return to the catalog and pick a valid brand.";
+        brandSizes.textContent = "";
+        logisticsText.textContent = "";
+        return;
+      }
+
+      brandNameEl.textContent = data.name;
+      brandImage.src = data.image;
+      brandImage.alt = data.name + " image";
+      brandCategory.innerHTML = "<strong class='text-gold'>Category:</strong> " + data.category;
+      brandDescription.textContent = data.description;
+      brandSizes.textContent = data.sizes;
+      logisticsText.textContent = data.logistics;
+    }
+
+    // init
+    document.addEventListener('DOMContentLoaded', function() {
+      const brandKey = (getQueryParam('brand') || '').toLowerCase();
+      renderBrand(brandKey);
+    });
+  </script>
+</body>
+</html>
