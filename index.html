@@ -476,6 +476,592 @@
           .translate-compact { padding: 6px; font-size: 13px; }
           .translate-list { min-width: 120px; }
         }
+        /* style the view-page link in product headers */
+        .brand-page-link {
+            background: transparent;
+            color: #d4af37;
+            font-weight: 700;
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(212,175,55,0.12);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .brand-page-link:hover {
+            background: rgba(212,175,55,0.08);
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body class="bg-black text-gold antialiased selection:bg-gold selection:text-black">
+
+    <!-- AGE VERIFICATION MODAL -->
+    <div id="ageModal" class="age-modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="ageTitle">
+        <div class="age-modal-content">
+            <div class="mb-6">
+                <i class="fas fa-exclamation-triangle text-yellow-400 text-5xl mb-4"></i>
+                <h2 id="ageTitle" class="text-2xl font-black mb-2" data-i18n="age_title">Age Verification</h2>
+                <p class="mb-4" data-i18n="age_text">You must be 21 years or older to access this site. This site contains content related to alcohol products.</p>
+            </div>
+
+            <div class="space-y-3">
+                <button onclick="confirmAge()" class="w-full gradient-accent text-black font-bold py-3 rounded-lg transition duration-300" data-i18n="age_confirm">
+                    I am 21 or Older
+                </button>
+                <button onclick="denyAge()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-lg transition duration-300" data-i18n="age_deny">
+                    I am Under 21
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. NAVIGATION BAR -->
+    <nav class="sticky top-0 z-50 flex justify-between items-center px-6 md:px-12 py-4 bg-white font-sans">
+    <div class="flex items-center gap-2">
+        <img src="images/LogoXM.png" alt="ShreeShyamXM Logo" class="logo-img" />
+    </div>
+
+    <!-- show links on all screen sizes (removed the 'hidden' so mobile also shows them) -->
+    <div class="flex space-x-8 font-semibold text-sm">
+        <a href="#about" class="text-black hover:text-gold transition duration-300" data-i18n="nav_about">About Us</a>
+        <a href="#catalog" class="text-black hover:text-gold transition duration-300" data-i18n="nav_catalog">Bulk Catalog</a>
+        <a href="#compliance" class="text-black hover:text-gold transition duration-300" data-i18n="nav_compliance">Compliance</a>
+    </div>
+
+    <div class="flex items-center gap-3">
+        <!-- Compact custom language selector (replaces previous google widget block) -->
+        <div class="translate-compact" id="translateCompact">
+          <button id="translateToggle" class="translate-btn" aria-haspopup="listbox" aria-expanded="false" type="button">
+            <i class="fas fa-globe translate-icon" aria-hidden="true"></i>
+            <span class="translate-text">Language</span>
+            <span id="translateSelected" class="translate-selected">EN</span>
+            <i class="fas fa-caret-down ml-2" aria-hidden="true"></i>
+          </button>
+
+          <ul id="translateList" class="translate-list hidden" role="listbox" aria-label="Select language">
+            <li class="translate-item" data-lang="en">🇬🇧 English</li>
+            <li class="translate-item" data-lang="fr">🇫🇷 Français</li>
+            <li class="translate-item" data-lang="hi">🇮🇳 हिंदी</li>
+            <li class="translate-item" data-lang="es">🇪🇸 Español</li>
+            <li class="translate-item" data-lang="pt">🇵🇹 Português</li>
+          </ul>
+
+          <!-- kept for the Google engine to inject into (we hide it with CSS) -->
+          <div id="google_translate_element" style="display:none;"></div>
+        </div>
+    </div>
+
+    <div>
+        <a href="#contact"
+           class="btn-gold font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-lg transition shadow-lg hover:shadow-xl hover:scale-105 duration-300"
+           data-i18n="contact_sales">
+            Contact Sales
+        </a>
+    </div>
+</nav>
+
+    <!-- 2. HERO BANNER -->
+    <header class="hero-section text-white py-16 md:py-24 overflow-hidden relative bg-[#0a0a0a]">
+        <div class="hero-inner relative max-w-5xl mx-auto px-6 z-20">
+            <div class="mb-12 text-center">
+                <span class="inline-block bg-gold/20 text-gold text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-gold/50 backdrop-blur-sm hero-badge">
+                    <i class="fas fa-check-circle mr-2"></i>Flexible Order Quantities
+                </span>
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6 text-white drop-shadow-lg" data-i18n="hero_title">
+                    Premium Spirits & Liquor Distribution Across Africa
+                </h1>
+                <p class="text-base md:text-lg text-slate-300 max-w-2xl mx-auto mb-10 font-normal leading-relaxed" data-i18n="hero_sub">
+                    Supplying major African ports with high-volume, reliable container shipments of premium international spirits and beverage brands.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#catalog" class="btn-gold px-8 py-4 rounded-lg font-bold text-sm tracking-wide shadow-xl hover:shadow-2xl transition duration-300 uppercase" data-i18n="view_brands">
+                        <i class="fas fa-bottle"></i> View Our Brands
+                    </a>
+                    <a href="#about" class="border-2 border-gold hover:bg-gold/20 text-white px-8 py-4 rounded-lg font-bold text-sm tracking-wide transition duration-300 uppercase" data-i18n="our_infrastructure">
+                        <i class="fas fa-warehouse"></i> Our Infrastructure
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. ABOUT & INFRASTRUCTURE SECTION (updated to trading company text) -->
+    <section id="about" class="py-20 section-black">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <span class="w-8 h-0.5 bg-gold"></span>
+                        <span data-i18n="corporate_capacity">Corporate Capacity</span>
+                    </h2>
+                    <h3 class="text-4xl font-black text-gold leading-tight mb-6" data-i18n="about_title">Shree Shyam Trading FZE</h3>
+                    <p class="text-light mb-5 leading-relaxed text-lg" data-i18n="about_para_1">
+                        Shree Shyam Trading FZE is a trusted international trading company specializing in the sourcing, procurement, and distribution of premium alcoholic beverages. We connect leading manufacturers with distributors, wholesalers, and retailers across Africa, the Middle East, and Asia through reliable supply chain solutions and market expertise.
+                    </p>
+                    <p class="text-light leading-relaxed text-lg mb-8" data-i18n="about_para_2">
+                        As trading specialists (not container shippers), we focus on procurement, supplier relationships, product quality, compliance guidance and coordination of logistics to ensure goods reach their destinations safely and compliantly.
+                    </p>
+
+                    <!-- Feature list (tailored to trading operations) -->
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span class="text-light font-medium" data-i18n="feature_1">Sourcing & procurement from trusted manufacturers</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span class="text-light font-medium" data-i18n="feature_2">Quality control & third-party inspections</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span class="text-light font-medium" data-i18n="feature_3">Certified customs & compliance guidance</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl overflow-hidden shadow-2xl h-80 md:h-96 border-2 border-gold">
+                    <img src="images/Containers.jpg" alt="Warehouse Operations" class="w-full h-full object-cover hover:scale-110 transition duration-500" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. PRODUCT CATALOG - CATEGORIZED PORTFOLIO -->
+    <section id="catalog" class="section-dark py-20">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
+                    <span class="w-8 h-0.5 bg-gold"></span>
+                    <span data-i18n="portfolio_label">Our Product Portfolio</span>
+                    <span class="w-8 h-0.5 bg-gold"></span>
+                </h2>
+                <h3 class="text-4xl font-black text-gold mb-4" data-i18n="portfolio_title">We trade a wide range of quality alcoholic beverages</h3>
+                <p class="text-light text-lg" data-i18n="portfolio_sub">
+                    We trade a wide range of quality alcoholic beverages, including Whisky, Rum, Vodka, Brandy, Gin and Wine. We work with established brands and private label manufacturers to meet diverse market requirements.
+                </p>
+            </div>
+
+            <!-- Category Accordion -->
+            <div class="card-hover bg-slate-900 rounded-2xl shadow-lg border-2 border-gold overflow-hidden p-6">
+                <div class="space-y-4">
+                    <!-- Whisky -->
+                    <div class="border border-gold rounded-lg overflow-hidden">
+                        <div class="flex items-center justify-between">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
+                                <span class="flex items-center gap-3">
+                                    <i class="fas fa-wine-bottle text-gold"></i>
+                                    Whisky
+                                </span>
+                                <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
+                            </button>
+                        </div>
+                        <div class="accordion-content bg-slate-900">
+                            <div class="p-4 border-t border-gold">
+                                <p class="text-light mb-3">Products in this category:</p>
+                                <ul class="list-disc list-inside text-light">
+                                    <li>
+                                        Roulette — Whisky
+                                        <a href="brand.html?brand=roulette" class="brand-page-link ml-4" title="Open Roulette brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                                    </li>
+                                    <li>
+                                        Dennis — Whisky
+                                        <a href="brand.html?brand=dennis" class="brand-page-link ml-4" title="Open Dennis brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                                    </li>
+                                    <li>
+                                        Mont Castle — Whisky
+                                        <a href="brand.html?brand=montcastle" class="brand-page-link ml-4" title="Open Mont Castle brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                                    </li>
+                                    <li>
+                                        Aristocrat — Whisky & Rum
+                                        <a href="brand.html?brand=aristocrat" class="brand-page-link ml-4" title="Open Aristocrat brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rum -->
+                    <div class="border border-gold rounded-lg overflow-hidden">
+                        <div class="flex items-center justify-between">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
+                                <span class="flex items-center gap-3">
+                                    <i class="fas fa-ship text-gold"></i>
+                                    Rum
+                                </span>
+                                <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
+                            </button>
+                        </div>
+                        <div class="accordion-content bg-slate-900">
+                            <div class="p-4 border-t border-gold">
+                                <p class="text-light mb-3">Products in this category:</p>
+                                <ul class="list-disc list-inside text-light">
+                                    <li>
+                                        Aristocrat — Rum & Whisky (dual ranges)
+                                        <a href="brand.html?brand=aristocrat" class="brand-page-link ml-4" title="Open Aristocrat brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vodka -->
+                    <div class="border border-gold rounded-lg overflow-hidden">
+                        <div class="flex items-center justify-between">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
+                                <span class="flex items-center gap-3">
+                                    <i class="fas fa-snowflake text-gold"></i>
+                                    Vodka
+                                </span>
+                                <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
+                            </button>
+                        </div>
+                        <div class="accordion-content bg-slate-900">
+                            <div class="p-4 border-t border-gold">
+                                <p class="text-light mb-3">Products in this category:</p>
+                                <ul class="list-disc list-inside text-light">
+                                    <li>
+                                        IceX — Vodka
+                                        <a href="brand.html?brand=icex" class="brand-page-link ml-4" title="Open IceX brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Brandy -->
+                    <div class="border border-gold rounded-lg overflow-hidden">
+                        <div class="flex items-center justify-between">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
+                                <span class="flex items-center gap-3">
+                                    <i class="fas fa-glass-whiskey text-gold"></i>
+                                    Brandy
+                                </span>
+                                <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
+                            </button>
+                        </div>
+                        <div class="accordion-content bg-slate-900">
+                            <div class="p-4 border-t border-gold">
+                                <p class="text-light mb-3">We work with established producers and private label partners for brandy — contact us for current availability and bespoke labeling options.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gin -->
+                    <div class="border border-gold rounded-lg overflow-hidden">
+                        <div class="flex items-center justify-between">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
+                                <span class="flex items-center gap-3">
+                                    <i class="fas fa-lemon text-gold"></i>
+                                    Gin
+                                </span>
+                                <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
+                            </button>
+                        </div>
+                        <div class="accordion-content bg-slate-900">
+                            <div class="p-4 border-t border-gold">
+                                <p class="text-light mb-3">Gin product ranges are available via partner producers — reach out for pricing and SKU lists.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wine -->
+                    <div class="border border-gold rounded-lg overflow-hidden">
+                        <div class="flex items-center justify-between">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
+                                <span class="flex items-center gap-3">
+                                    <i class="fas fa-wine-glass text-gold"></i>
+                                    Wine
+                                </span>
+                                <i class="fas fa-chevron-down text-gold transition-transform duration-300"></i>
+                            </button>
+                        </div>
+                        <div class="accordion-content bg-slate-900">
+                            <div class="p-4 border-t border-gold">
+                                <p class="text-light mb-3">Products in this category:</p>
+                                <ul class="list-disc list-inside text-light">
+                                    <li>
+                                        Goana's — Wine
+                                        <a href="brand.html?brand=goanas" class="brand-page-link ml-4" title="Open Goana's brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Call to Action -->
+                <div class="mt-8 pt-6 border-t border-gold">
+                    <a href="#contact" class="w-full inline-flex items-center justify-center gap-2 btn-gold px-6 py-4 rounded-lg font-bold text-sm uppercase tracking-wide transition duration-300">
+                        <i class="fas fa-envelope"></i> Request Quote for Any Brand
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. END-TO-END BUSINESS SOLUTIONS (replaces previous compliance) -->
+    <section id="compliance" class="section-black py-20">
+        <div class="max-w-4xl mx-auto text-center px-6">
+            <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
+                <span class="w-8 h-0.5 bg-gold"></span>
+                <span data-i18n="regulatory_alignment">End-to-End Business Solutions</span>
+                <span class="w-8 h-0.5 bg-gold"></span>
+            </h2>
+            <h3 class="text-4xl font-black text-gold mb-6" data-i18n="compliance_title">Complete support throughout the trading lifecycle</h3>
+            <p class="text-light leading-relaxed text-lg max-w-3xl mx-auto mb-10" data-i18n="compliance_text">
+                Whether you are launching a new brand or expanding into new markets, we ensure a smooth and reliable trading experience from factory to final destination.
+            </p>
+
+            <!-- Services checklist -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 text-left">
+                <div class="p-6 bg-slate-900 rounded-xl border-2 border-gold">
+                    <h4 class="font-bold text-gold mb-3">We provide complete support</h4>
+                    <ul class="list-disc list-inside text-light">
+                        <li>Product Procurement</li>
+                        <li>Supplier Sourcing</li>
+                        <li>International Shipping & Logistics</li>
+                        <li>Customs & Documentation Assistance</li>
+                        <li>Delivery Coordination</li>
+                        <li>Distribution Support</li>
+                        <li>Brand Development & Marketing Support</li>
+                    </ul>
+                </div>
+
+                <div class="p-6 bg-slate-900 rounded-xl border-2 border-gold">
+                    <h4 class="font-bold text-gold mb-3">Why Choose Us?</h4>
+                    <ul class="list-disc list-inside text-light">
+                        <li>Global sourcing expertise</li>
+                        <li>Reliable international logistics</li>
+                        <li>Strong distribution network across West Africa</li>
+                        <li>Transparent business practices</li>
+                        <li>Dedicated customer support</li>
+                        <li>Customized solutions for importers and distributors</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. CONTACT SECTION (unchanged) -->
+    <section id="contact" class="section-dark py-20">
+        <div class="max-w-6xl mx-auto px-6">
+            <!-- New Contact Us header -->
+            <div class="contact-section-header">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gold" id="contact-us">Contact Us</h2>
+                <p class="text-sm text-muted hidden md:block">Reach out for sales, distribution partnerships, and logistics enquiries.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+                <!-- LEFT: Map + heading -->
+                <div>
+                    <h3 class="text-2xl font-black text-gold mb-4" data-i18n="our_presence">Our presence</h3>
+                    <img id="distributionMap" src="images/Map.jpeg" alt="Distribution Map" class="rounded-2xl overflow-hidden mb-4 w-full h-auto object-cover" aria-label="Distribution map" />
+                </div>
+
+                <!-- RIGHT: Contact Card -->
+                <div class="bg-slate-900 backdrop-blur rounded-2xl p-10 border-2 border-gold">
+                    <div class="space-y-8 text-center md:text-left">
+                        <div>
+                            <i class="fas fa-envelope text-gold text-2xl mb-2"></i>
+                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_email_label">
+                                Email
+                            </h3>
+                            <p class="text-light text-lg" data-i18n="contact_email">sales@shreeshyamxm.com</p>
+                        </div>
+
+                        <div>
+                            <i class="fas fa-phone text-gold text-2xl mb-2"></i>
+                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_phone_label">
+                                Phone
+                            </h3>
+                            <p class="text-light text-lg" data-i18n="contact_phone">+228 72097250</p>
+                        </div>
+
+                        <div>
+                            <i class="fab fa-whatsapp text-gold text-2xl mb-2"></i>
+                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_whatsapp_label">
+                                WhatsApp
+                            </h3>
+                            <p class="text-light text-lg">
+                                <a href="https://wa.me/919784928525" target="_blank" rel="noopener noreferrer" class="hover:text-white transition duration-300" data-i18n="contact_whatsapp">+91 9784928525</a>
+                            </p>
+                        </div>
+
+                        <div>
+                            <i class="fas fa-map-marker-alt text-gold text-2xl mb-2"></i>
+                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_service_area_label">
+                                Service Area
+                            </h3>
+                            <p class="text-light text-lg" data-i18n="contact_service_area">Africa-wide Import & Distribution</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. CORPORATE FOOTER -->
+    <footer class="bg-black text-gold py-12">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h4 class="text-gold font-bold mb-4">ShreeShyamXM</h4>
+                    <p class="text-muted text-sm" data-i18n="footer_blurb">Premier spirits and beverage bulk distribution across Africa's major ports and trading corridors.</p>
+                </div>
+                <div>
+                    <h4 class="text-gold font-bold mb-4" data-i18n="footer_quick_links">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#about" class="text-muted hover:text-gold transition" data-i18n="nav_about_footer">About Us</a></li>
+                        <li><a href="#catalog" class="text-muted hover:text-gold transition" data-i18n="nav_catalog_footer">Our Brands</a></li>
+                        <li><a href="#contact" class="text-muted hover:text-gold transition" data-i18n="nav_contact_footer">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-gold font-bold mb-4">Contact Info</h4>
+                    <p class="text-muted text-sm">
+                        <i class="fas fa-envelope mr-2"></i>sales@shreeshyamxm.com<br />
+                        <i class="fas fa-phone mr-2"></i>+228 72097250<br />
+                        <i class="fab fa-whatsapp mr-2"></i><a href="https://wa.me/919784928525" target="_blank" rel="noopener noreferrer" class="hover:text-gold transition">+91 9784928525</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="pt-8 text-center">
+                <p class="text-sm font-medium" data-i18n="footer_copyright">&copy; 2026 ShreeShyamXM. All rights reserved. Premium Spirits & Beverage Distribution & Logistics Network.</p>
+                <p class="text-xs text-muted mt-2"><span>Images sourced from local assets and</span> <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" class="hover:text-gold">Unsplash</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Main scripts -->
+    <script>
+        // Global map variable (preserved from original for future use)
+        let mapInstance = null;
+
+        // AGE VERIFICATION
+        function confirmAge() {
+            localStorage.setItem('ageVerified', 'true');
+            document.getElementById('ageModal').classList.add('hidden');
+            document.body.classList.remove('scroll-locked');
+        }
+
+        function denyAge() {
+            window.location.href = 'https://google.com';
+        }
+
+        // Utility: close any open translate list
+        function closeTranslateList() {
+            const list = document.getElementById('translateList');
+            if (list) list.classList.add('hidden');
+            const toggle = document.getElementById('translateToggle');
+            if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        document.addEventListener('click', function (e) {
+            // Close translate list when clicking outside
+            const tc = document.getElementById('translateCompact');
+            if (tc && !tc.contains(e.target)) {
+                closeTranslateList();
+            }
+        });
+
+        // Show age modal if not verified, hook up UI for accordion and translate
+        document.addEventListener('DOMContentLoaded', function () {
+            if (localStorage.getItem('ageVerified') !== 'true') {
+                document.getElementById('ageModal').classList.remove('hidden');
+                document.body.classList.add('scroll-locked');
+            }
+
+            // Accordion toggles (works for category accordion)
+            document.querySelectorAll('.accordion-btn').forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    // find the nearest .border container and the .accordion-content inside it
+                    const container = btn.closest('.border');
+                    // if .border wrapper isn't present (some items are top-level), search parent nodes
+                    let content = null;
+                    if (container) {
+                        content = container.querySelector('.accordion-content');
+                    } else {
+                        // fallback: try the next sibling commonly used
+                        const parent = btn.parentElement;
+                        if (parent) {
+                            content = parent.nextElementSibling;
+                            if (content && !content.classList.contains('accordion-content')) content = null;
+                        }
+                    }
+                    if (!content) {
+                        // try to find content inside the same block
+                        const possible = btn.closest('div');
+                        if (possible) content = possible.querySelector('.accordion-content');
+                    }
+                    if (!content) return;
+
+                    const isActive = content.classList.contains('active');
+
+                    // toggle this one
+                    if (isActive) {
+                        content.classList.remove('active');
+                        btn.setAttribute('aria-expanded', 'false');
+                    } else {
+                        content.classList.add('active');
+                        btn.setAttribute('aria-expanded', 'true');
+                    }
+
+                    // rotate chevron inside
+                    const chevron = btn.querySelector('.fa-chevron-down');
+                    if (chevron) {
+                        if (isActive) {
+                            chevron.style.transform = 'rotate(0deg)';
+                        } else {
+                            chevron.style.transform = 'rotate(180deg)';
+                        }
+                    }
+                });
+            });
+
+            // Translate toggle behavior
+            const translateToggle = document.getElementById('translateToggle');
+            const translateList = document.getElementById('translateList');
+            const translateSelected = document.getElementById('translateSelected');
+
+            if (translateToggle && translateList) {
+                translateToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const isHidden = translateList.classList.contains('hidden');
+                    if (isHidden) {
+                        translateList.classList.remove('hidden');
+                        translateToggle.setAttribute('aria-expanded', 'true');
+                    } else {
+                        translateList.classList.add('hidden');
+                        translateToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                translateList.querySelectorAll('.translate-item').forEach(function (li) {
+                    li.addEventListener('click', function () {
+                        const lang = li.getAttribute('data-lang') || 'en';
+                        // update UI; for full translation you'd call the Google widget or your translation logic
+                        translateSelected.textContent = lang.toUpperCase();
+                        translateList.classList.add('hidden');
+                        translateToggle.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
     </style>
 </head>
 <body class="bg-black text-gold antialiased selection:bg-gold selection:text-black">
