@@ -297,7 +297,7 @@
             border-top: 2px solid rgba(212, 175, 55, 0.08);
         }
 
-                /* Google Translate Compact Styling */
+        /* Google Translate Compact Styling */
         .translate-compact {
             display: inline-flex;
             align-items: center;
@@ -334,62 +334,56 @@
             appearance: none !important;
         }
 
-        /* Hide the small Google label and icon to keep the control compact 
-        .goog-logo-link {
-            display: none !important;
-        }
-        .goog-te-gadget-icon {
-            display: none !important;
-        }
         .goog-te-combo option {
             background: #0a0a0a !important;
             color: #d4af37 !important;
-        }*/
+        }
+
         /* Language widget layout fixes */
-.translate-compact {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    position: relative;     /* keep everything in the same stacking context */
-}
+        .translate-compact {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            position: relative;
+        }
 
-.translate-widget {
-    z-index: 410;
-    display: inline-block;
-}
+        .translate-widget {
+            z-index: 410;
+            display: inline-block;
+        }
 
-/* Label shown beside the select — ensure it's above the injected elements */
-.translate-text {
-    z-index: 420;           /* higher than the injected widget */
-    color: #d4af37;
-    font-size: 13px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-left: 6px;
-}
+        /* Label shown beside the select — ensure it's above the injected elements */
+        .translate-text {
+            z-index: 420;
+            color: #d4af37;
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-left: 6px;
+        }
 
-/* Ensure the injected Google markup is inline and vertically aligned */
-.goog-te-gadget-simple {
-    display: inline-block !important;
-    vertical-align: middle !important;
-}
+        /* Ensure the injected Google markup is inline and vertically aligned */
+        .goog-te-gadget-simple {
+            display: inline-block !important;
+            vertical-align: middle !important;
+        }
 
-/* Make the select compact and themed */
-.goog-te-combo {
-    width: 90px !important;
-    padding: 6px 8px !important;
-    background: #0a0a0a !important;
-    color: #d4af37 !important;
-    border-radius: 6px !important;
-    border: 1px solid rgba(212,175,55,0.14) !important;
-}
+        /* Make the select compact and themed */
+        .goog-te-combo {
+            width: 90px !important;
+            padding: 6px 8px !important;
+            background: #0a0a0a !important;
+            color: #d4af37 !important;
+            border-radius: 6px !important;
+            border: 1px solid rgba(212,175,55,0.14) !important;
+        }
 
-/* Keep label hidden on small screens to save space (optional) */
-@media (max-width: 768px) {
-    .translate-text { display: none !important; }
-    .translate-compact { max-width: 110px; }
-}
+        /* Keep label hidden on small screens to save space (optional) */
+        @media (max-width: 768px) {
+            .translate-text { display: none !important; }
+            .translate-compact { max-width: 110px; }
+        }
 
         /* Contact section tweaks */
         .contact-section-header {
@@ -401,81 +395,15 @@
         }
         .contact-section-header h2 {
             margin: 0;
-
         }
 
-     /*   .goog-te-banner-frame {
+        /* Hide Google Translate banner */
+        .goog-te-banner-frame.skiptranslate {
             display: none !important;
-        } */
-
-        /* ----- Custom compact selector CSS (prevents the big Google white box) ----- */
-        /* Compact custom selector inserted for a cleaner nav language UI */
-        .translate-compact {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 6px 8px;
-          border-radius: 8px;
-          background: #ffffff; /* matches white nav */
-          border: 1px solid rgba(0,0,0,0.06);
-          color: #0a0a0a;
-          position: relative;
-          font-size: 14px;
-        }
-
-        .translate-btn {
-          display: inline-flex;
-          gap: 8px;
-          align-items: center;
-          background: transparent;
-          border: none;
-          padding: 0;
-          color: inherit;
-          cursor: pointer;
-          font-weight: 600;
-        }
-
-        .translate-selected {
-          font-weight: 800;
-          margin-left: 4px;
-        }
-
-        .translate-list {
-          position: absolute;
-          right: 0;
-          top: calc(100% + 8px);
-          background: #ffffff;
-          border: 1px solid rgba(0,0,0,0.08);
-          border-radius: 8px;
-          box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-          list-style: none;
-          padding: 6px;
-          margin: 0;
-          min-width: 150px;
-          z-index: 600;
         }
 
         .hidden { display: none !important; }
-
-        .translate-item {
-          padding: 8px 10px;
-          cursor: pointer;
-          border-radius: 6px;
-          font-weight: 600;
-          color: #0a0a0a;
-        }
-        .translate-item:hover { background: rgba(212,175,55,0.08); color: #000; }
-
-        /* Hide the injected Google UI entirely (prevents the big white box) */
-        .goog-te-gadget, .goog-te-gadget-simple, #google_translate_element > * { display: none !important; }
-
-        /* Ensure no banner appears */
-        .goog-te-banner-frame.skiptranslate { display: none !important; }
-
-        @media (max-width: 640px) {
-          .translate-compact { padding: 6px; font-size: 13px; }
-          .translate-list { min-width: 120px; }
-        }
+        
         /* style the view-page link in product headers */
         .brand-page-link {
             background: transparent;
@@ -494,8 +422,6 @@
             color: #fff;
             text-decoration: none;
         }
-
-        .hidden { display: none !important; }
     </style>
 </head>
 <body class="bg-black text-gold antialiased selection:bg-gold selection:text-black">
@@ -505,15 +431,15 @@
         <div class="age-modal-content">
             <div class="mb-6">
                 <i class="fas fa-exclamation-triangle text-yellow-400 text-5xl mb-4"></i>
-                <h2 id="ageTitle" class="text-2xl font-black mb-2" data-i18n="age_title">Age Verification</h2>
-                <p class="mb-4" data-i18n="age_text">You must be 21 years or older to access this site. This site contains content related to alcohol products.</p>
+                <h2 id="ageTitle" class="text-2xl font-black mb-2">Age Verification</h2>
+                <p class="mb-4">You must be 21 years or older to access this site. This site contains content related to alcohol products.</p>
             </div>
 
             <div class="space-y-3">
-                <button onclick="confirmAge()" class="w-full gradient-accent text-black font-bold py-3 rounded-lg transition duration-300" data-i18n="age_confirm">
+                <button onclick="confirmAge()" class="w-full gradient-accent text-black font-bold py-3 rounded-lg transition duration-300">
                     I am 21 or Older
                 </button>
-                <button onclick="denyAge()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-lg transition duration-300" data-i18n="age_deny">
+                <button onclick="denyAge()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-lg transition duration-300">
                     I am Under 21
                 </button>
             </div>
@@ -528,38 +454,19 @@
 
     <!-- show links on all screen sizes (removed the 'hidden' so mobile also shows them) -->
     <div class="flex space-x-8 font-semibold text-sm">
-        <a href="#about" class="text-black hover:text-gold transition duration-300" data-i18n="nav_about">About Us</a>
-        <a href="#catalog" class="text-black hover:text-gold transition duration-300" data-i18n="nav_catalog">Bulk Catalog</a>
-        <a href="#compliance" class="text-black hover:text-gold transition duration-300" data-i18n="nav_compliance">Compliance</a>
+        <a href="#about" class="text-black hover:text-gold transition duration-300">About Us</a>
+        <a href="#catalog" class="text-black hover:text-gold transition duration-300">Bulk Catalog</a>
+        <a href="#compliance" class="text-black hover:text-gold transition duration-300">Compliance</a>
     </div>
 
     <div class="flex items-center gap-3">
-        <!-- Compact custom language selector (replaces previous google widget block) -->
-        <div class="translate-compact" id="translateCompact">
-          <button id="translateToggle" class="translate-btn" aria-haspopup="listbox" aria-expanded="false" type="button">
-            <i class="fas fa-globe translate-icon" aria-hidden="true"></i>
-            <span class="translate-text">Language</span>
-            <span id="translateSelected" class="translate-selected">EN</span>
-            <i class="fas fa-caret-down ml-2" aria-hidden="true"></i>
-          </button>
-
-          <ul id="translateList" class="translate-list hidden" role="listbox" aria-label="Select language">
-            <li class="translate-item" data-lang="en">🇬🇧 English</li>
-            <li class="translate-item" data-lang="fr">🇫🇷 Français</li>
-            <li class="translate-item" data-lang="hi">🇮🇳 हिंदी</li>
-            <li class="translate-item" data-lang="es">🇪🇸 Español</li>
-            <li class="translate-item" data-lang="pt">🇵🇹 Português</li>
-          </ul>
-
-          <!-- kept for the Google engine to inject into (we hide it with CSS) -->
-          <div id="google_translate_element" style="display:none;"></div>
-        </div>
+        <!-- Google Translate Widget Container -->
+        <div class="translate-compact" id="google_translate_element"></div>
     </div>
 
     <div>
         <a href="#contact"
-           class="btn-gold font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-lg transition shadow-lg hover:shadow-xl hover:scale-105 duration-300"
-           data-i18n="contact_sales">
+           class="btn-gold font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-lg transition shadow-lg hover:shadow-xl hover:scale-105 duration-300">
             Contact Sales
         </a>
     </div>
@@ -572,17 +479,17 @@
                 <span class="inline-block bg-gold/20 text-gold text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-gold/50 backdrop-blur-sm hero-badge">
                     <i class="fas fa-check-circle mr-2"></i>Flexible Order Quantities
                 </span>
-                <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6 text-white drop-shadow-lg" data-i18n="hero_title">
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6 text-white drop-shadow-lg">
                     Premium Spirits & Liquor Distribution Across Africa
                 </h1>
-                <p class="text-base md:text-lg text-slate-300 max-w-2xl mx-auto mb-10 font-normal leading-relaxed" data-i18n="hero_sub">
+                <p class="text-base md:text-lg text-slate-300 max-w-2xl mx-auto mb-10 font-normal leading-relaxed">
                     Supplying major African ports with high-volume, reliable container shipments of premium international spirits and beverage brands.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="#catalog" class="btn-gold px-8 py-4 rounded-lg font-bold text-sm tracking-wide shadow-xl hover:shadow-2xl transition duration-300 uppercase" data-i18n="view_brands">
+                    <a href="#catalog" class="btn-gold px-8 py-4 rounded-lg font-bold text-sm tracking-wide shadow-xl hover:shadow-2xl transition duration-300 uppercase">
                         <i class="fas fa-bottle"></i> View Our Brands
                     </a>
-                    <a href="#about" class="border-2 border-gold hover:bg-gold/20 text-white px-8 py-4 rounded-lg font-bold text-sm tracking-wide transition duration-300 uppercase" data-i18n="our_infra">
+                    <a href="#about" class="border-2 border-gold hover:bg-gold/20 text-white px-8 py-4 rounded-lg font-bold text-sm tracking-wide transition duration-300 uppercase">
                         <i class="fas fa-warehouse"></i> Our Infrastructure
                     </a>
                 </div>
@@ -597,14 +504,14 @@
                 <div>
                     <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center gap-2">
                         <span class="w-8 h-0.5 bg-gold"></span>
-                        <span data-i18n="corporate_capacity">Corporate Capacity</span>
+                        <span>Corporate Capacity</span>
                     </h2>
-                    <h3 class="text-4xl font-black text-gold leading-tight mb-6" data-i18n="about_title">Shree Shyam Trading FZE</h3>
-                    <p class="text-light mb-5 leading-relaxed text-lg" data-i18n="about_para_1">
-                        Shree Shyam Trading FZE is a trusted international trading company specializing in the sourcing, procurement, and distribution of premium alcoholic beverages. We connect leading manufacturers with importers and distributors across Africa.
+                    <h3 class="text-4xl font-black text-gold leading-tight mb-6">Shree Shyam Trading FZE</h3>
+                    <p class="text-light mb-5 leading-relaxed text-lg">
+                        Shree Shyam Trading FZE is a trusted international trading company specializing in the sourcing, procurement, and distribution of premium alcoholic beverages. We connect leading manufacturers with retailers and distributors across Africa.
                     </p>
-                    <p class="text-light leading-relaxed text-lg mb-8" data-i18n="about_para_2">
-                        As trading specialists (not container shippers), we focus on procurement, supplier relationships, product quality, compliance guidance and coordination of logistics to ensure goods arrive on time and meet regulatory requirements.
+                    <p class="text-light leading-relaxed text-lg mb-8">
+                        As trading specialists (not container shippers), we focus on procurement, supplier relationships, product quality, compliance guidance and coordination of logistics to ensure goods reach your destination on time and in perfect condition.
                     </p>
 
                     <!-- Feature list (tailored to trading operations) -->
@@ -613,19 +520,19 @@
                             <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
                                 <i class="fas fa-check"></i>
                             </div>
-                            <span class="text-light font-medium" data-i18n="feature_1">Sourcing & procurement from trusted manufacturers</span>
+                            <span class="text-light font-medium">Sourcing & procurement from trusted manufacturers</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
                                 <i class="fas fa-check"></i>
                             </div>
-                            <span class="text-light font-medium" data-i18n="feature_2">Quality control & third-party inspections</span>
+                            <span class="text-light font-medium">Quality control & third-party inspections</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="w-5 h-5 rounded-full metric-gold-circle flex items-center justify-center text-black text-xs">
                                 <i class="fas fa-check"></i>
                             </div>
-                            <span class="text-light font-medium" data-i18n="feature_3">Certified customs & compliance guidance</span>
+                            <span class="text-light font-medium">Certified customs & compliance guidance</span>
                         </div>
                     </div>
                 </div>
@@ -643,11 +550,11 @@
             <div class="text-center max-w-2xl mx-auto mb-16">
                 <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
                     <span class="w-8 h-0.5 bg-gold"></span>
-                    <span data-i18n="portfolio_label">Our Product Portfolio</span>
+                    <span>Our Product Portfolio</span>
                     <span class="w-8 h-0.5 bg-gold"></span>
                 </h2>
-                <h3 class="text-4xl font-black text-gold mb-4" data-i18n="portfolio_title">We trade a wide range of quality alcoholic beverages</h3>
-                <p class="text-light text-lg" data-i18n="portfolio_sub">
+                <h3 class="text-4xl font-black text-gold mb-4">We trade a wide range of quality alcoholic beverages</h3>
+                <p class="text-light text-lg">
                     We trade a wide range of quality alcoholic beverages, including Whisky, Rum, Vodka, Brandy, Gin and Wine. We work with established brands and private label manufacturers to meet diverse market needs.
                 </p>
             </div>
@@ -658,7 +565,7 @@
                     <!-- Whisky -->
                     <div class="border border-gold rounded-lg overflow-hidden">
                         <div class="flex items-center justify-between">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false" type="button">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
                                 <span class="flex items-center gap-3">
                                     <i class="fas fa-wine-bottle text-gold"></i>
                                     Whisky
@@ -694,7 +601,7 @@
                     <!-- Rum -->
                     <div class="border border-gold rounded-lg overflow-hidden">
                         <div class="flex items-center justify-between">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false" type="button">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
                                 <span class="flex items-center gap-3">
                                     <i class="fas fa-ship text-gold"></i>
                                     Rum
@@ -718,7 +625,7 @@
                     <!-- Vodka -->
                     <div class="border border-gold rounded-lg overflow-hidden">
                         <div class="flex items-center justify-between">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false" type="button">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
                                 <span class="flex items-center gap-3">
                                     <i class="fas fa-snowflake text-gold"></i>
                                     Vodka
@@ -742,7 +649,7 @@
                     <!-- Brandy -->
                     <div class="border border-gold rounded-lg overflow-hidden">
                         <div class="flex items-center justify-between">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false" type="button">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
                                 <span class="flex items-center gap-3">
                                     <i class="fas fa-glass-whiskey text-gold"></i>
                                     Brandy
@@ -760,7 +667,7 @@
                     <!-- Gin -->
                     <div class="border border-gold rounded-lg overflow-hidden">
                         <div class="flex items-center justify-between">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false" type="button">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
                                 <span class="flex items-center gap-3">
                                     <i class="fas fa-lemon text-gold"></i>
                                     Gin
@@ -778,7 +685,7 @@
                     <!-- Wine -->
                     <div class="border border-gold rounded-lg overflow-hidden">
                         <div class="flex items-center justify-between">
-                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false" type="button">
+                            <button class="accordion-btn w-full p-4 bg-slate-800 hover:bg-slate-700 flex items-center justify-between text-left font-semibold text-gold transition" aria-expanded="false">
                                 <span class="flex items-center gap-3">
                                     <i class="fas fa-wine-glass text-gold"></i>
                                     Wine
@@ -816,11 +723,11 @@
         <div class="max-w-4xl mx-auto text-center px-6">
             <h2 class="text-xs font-bold text-gold uppercase tracking-widest mb-3 flex items-center justify-center gap-2">
                 <span class="w-8 h-0.5 bg-gold"></span>
-                <span data-i18n="regulatory_alignment">End-to-End Business Solutions</span>
+                <span>End-to-End Business Solutions</span>
                 <span class="w-8 h-0.5 bg-gold"></span>
             </h2>
-            <h3 class="text-4xl font-black text-gold mb-6" data-i18n="compliance_title">Complete support throughout the trading lifecycle</h3>
-            <p class="text-light leading-relaxed text-lg max-w-3xl mx-auto mb-10" data-i18n="compliance_text">
+            <h3 class="text-4xl font-black text-gold mb-6">Complete support throughout the trading lifecycle</h3>
+            <p class="text-light leading-relaxed text-lg max-w-3xl mx-auto mb-10">
                 Whether you are launching a new brand or expanding into new markets, we ensure a smooth and reliable trading experience from factory to final destination.
             </p>
 
@@ -865,7 +772,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
                 <!-- LEFT: Map + heading -->
                 <div>
-                    <h3 class="text-2xl font-black text-gold mb-4" data-i18n="our_presence">Our presence</h3>
+                    <h3 class="text-2xl font-black text-gold mb-4">Our presence</h3>
                     <img id="distributionMap" src="images/Map.jpeg" alt="Distribution Map" class="rounded-2xl overflow-hidden mb-4 w-full h-auto object-cover" aria-label="Distribution map" />
                 </div>
 
@@ -874,36 +781,36 @@
                     <div class="space-y-8 text-center md:text-left">
                         <div>
                             <i class="fas fa-envelope text-gold text-2xl mb-2"></i>
-                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_email_label">
+                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold">
                                 Email
                             </h3>
-                            <p class="text-light text-lg" data-i18n="contact_email">sales@shreeshyamxm.com</p>
+                            <p class="text-light text-lg">sales@shreeshyamxm.com</p>
                         </div>
 
                         <div>
                             <i class="fas fa-phone text-gold text-2xl mb-2"></i>
-                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_phone_label">
+                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold">
                                 Phone
                             </h3>
-                            <p class="text-light text-lg" data-i18n="contact_phone">+228 72097250</p>
+                            <p class="text-light text-lg">+228 72097250</p>
                         </div>
 
                         <div>
                             <i class="fab fa-whatsapp text-gold text-2xl mb-2"></i>
-                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_whatsapp_label">
+                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold">
                                 WhatsApp
                             </h3>
                             <p class="text-light text-lg">
-                                <a href="https://wa.me/919784928525" target="_blank" rel="noopener noreferrer" class="hover:text-white transition duration-300" data-i18n="contact_whatsapp">+91 9784928525</a>
+                                <a href="https://wa.me/919784928525" target="_blank" rel="noopener noreferrer" class="hover:text-white transition duration-300">+91 9784928525</a>
                             </p>
                         </div>
 
                         <div>
                             <i class="fas fa-map-marker-alt text-gold text-2xl mb-2"></i>
-                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_service_area_label">
+                            <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold">
                                 Service Area
                             </h3>
-                            <p class="text-light text-lg" data-i18n="contact_service_area">Africa-wide Import & Distribution</p>
+                            <p class="text-light text-lg">Africa-wide Import & Distribution</p>
                         </div>
                     </div>
                 </div>
@@ -917,14 +824,14 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                 <div>
                     <h4 class="text-gold font-bold mb-4">ShreeShyamXM</h4>
-                    <p class="text-muted text-sm" data-i18n="footer_blurb">Premier spirits and beverage bulk distribution across Africa's major ports and trading corridors.</p>
+                    <p class="text-muted text-sm">Premier spirits and beverage bulk distribution across Africa's major ports and trading corridors.</p>
                 </div>
                 <div>
-                    <h4 class="text-gold font-bold mb-4" data-i18n="footer_quick_links">Quick Links</h4>
+                    <h4 class="text-gold font-bold mb-4">Quick Links</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#about" class="text-muted hover:text-gold transition" data-i18n="nav_about_footer">About Us</a></li>
-                        <li><a href="#catalog" class="text-muted hover:text-gold transition" data-i18n="nav_catalog_footer">Our Brands</a></li>
-                        <li><a href="#contact" class="text-muted hover:text-gold transition" data-i18n="nav_contact_footer">Contact</a></li>
+                        <li><a href="#about" class="text-muted hover:text-gold transition">About Us</a></li>
+                        <li><a href="#catalog" class="text-muted hover:text-gold transition">Our Brands</a></li>
+                        <li><a href="#contact" class="text-muted hover:text-gold transition">Contact</a></li>
                     </ul>
                 </div>
                 <div>
@@ -938,11 +845,25 @@
             </div>
 
             <div class="pt-8 text-center">
-                <p class="text-sm font-medium" data-i18n="footer_copyright">&copy; 2026 ShreeShyamXM. All rights reserved. Premium Spirits & Beverage Distribution & Logistics Network.</p>
+                <p class="text-sm font-medium">&copy; 2026 ShreeShyamXM. All rights reserved. Premium Spirits & Beverage Distribution & Logistics Network.</p>
                 <p class="text-xs text-muted mt-2"><span>Images sourced from local assets and</span> <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" class="hover:text-gold">Unsplash</a></p>
             </div>
         </div>
     </footer>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,fr,hi,es,pt',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                gaTrack: true,
+                gaId: ''
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <!-- Main scripts -->
     <script>
@@ -961,23 +882,7 @@
             window.location.href = 'https://google.com';
         }
 
-        // Utility: close any open translate list
-        function closeTranslateList() {
-            const list = document.getElementById('translateList');
-            if (list) list.classList.add('hidden');
-            const toggle = document.getElementById('translateToggle');
-            if (toggle) toggle.setAttribute('aria-expanded', 'false');
-        }
-
-        // Close translate list when clicking outside
-        document.addEventListener('click', function (e) {
-            const tc = document.getElementById('translateCompact');
-            if (tc && !tc.contains(e.target)) {
-                closeTranslateList();
-            }
-        });
-
-        // DOM ready: setup accordion and translate handlers
+        // DOM ready: setup accordion
         document.addEventListener('DOMContentLoaded', function () {
             // Show age modal if not verified
             if (localStorage.getItem('ageVerified') !== 'true') {
@@ -1000,49 +905,35 @@
                     if (container) {
                         content = container.querySelector('.accordion-content');
                     }
-                    // fallback: try next sibling if not found
-                    if (!content) {
-                        let possible = btn.parentElement ? btn.parentElement.nextElementSibling : null;
-                        if (possible && possible.classList && possible.classList.contains('accordion-content')) {
-                            content = possible;
-                        }
-                    }
-                    if (!content) return;
-                    const isActive = content.classList.toggle('active');
-                    btn.setAttribute('aria-expanded', isActive ? 'true' : 'false');
 
-                    // rotate the chevron icon if present
-                    const chevron = btn.querySelector('.fa-chevron-down');
-                    if (chevron) {
-                        chevron.style.transform = isActive ? 'rotate(180deg)' : 'rotate(0deg)';
+                    if (content) {
+                        // Close other open accordions
+                        document.querySelectorAll('.accordion-content').forEach(function (c) {
+                            if (c !== content) {
+                                c.classList.remove('active');
+                            }
+                        });
+
+                        // Toggle current accordion
+                        content.classList.toggle('active');
+
+                        // Update aria-expanded
+                        const isActive = content.classList.contains('active');
+                        btn.setAttribute('aria-expanded', isActive);
+
+                        // Rotate the chevron
+                        const chevron = btn.querySelector('.fa-chevron-down');
+                        if (chevron) {
+                            if (isActive) {
+                                chevron.style.transform = 'rotate(180deg)';
+                            } else {
+                                chevron.style.transform = 'rotate(0deg)';
+                            }
+                        }
                     }
                 });
             });
-
-            // Translate dropdown toggle
-            const translateToggle = document.getElementById('translateToggle');
-            const translateList = document.getElementById('translateList');
-            if (translateToggle && translateList) {
-                translateToggle.addEventListener('click', function (e) {
-                    e.stopPropagation();
-                    const wasHidden = translateList.classList.contains('hidden');
-                    translateList.classList.toggle('hidden', !wasHidden ? true : false);
-                    translateToggle.setAttribute('aria-expanded', wasHidden ? 'true' : 'false');
-                });
-
-                document.querySelectorAll('.translate-item').forEach(function (item) {
-                    item.addEventListener('click', function (e) {
-                        e.stopPropagation();
-                        const lang = this.dataset.lang || 'en';
-                        const selected = document.getElementById('translateSelected');
-                        if (selected) selected.textContent = (lang || 'EN').toUpperCase();
-                        translateList.classList.add('hidden');
-                        translateToggle.setAttribute('aria-expanded', 'false');
-                        // If you integrate a translation engine, trigger it here.
-                    });
-                });
-            }
         });
     </script>
 </body>
-</html>F
+</html>
