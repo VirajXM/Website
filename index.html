@@ -380,6 +380,71 @@
       color: #fff;
       text-decoration: none;
     }
+
+    /* --- New: full-row product links and mobile-friendly tweaks --- */
+    .product-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: inherit;
+      transition: background-color 0.18s ease, transform 0.12s ease;
+    }
+
+    .product-link:hover,
+    .product-link:focus {
+      background: rgba(212,175,55,0.04);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .brand-page-pill {
+      background: transparent;
+      color: #d4af37;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(212,175,55,0.12);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    /* Hide redundant small pill on small screens for cleaner UX */
+    @media (max-width: 640px) {
+      .brand-page-pill {
+        display: none;
+      }
+
+      .product-link {
+        padding: 14px;
+        font-size: 16px;
+      }
+
+      .accordion-btn {
+        padding: 14px;
+        font-size: 16px;
+      }
+    }
+
+    /* Improve spacing inside accordion content */
+    .accordion-content ul {
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .accordion-content li {
+      list-style: none;
+      margin-bottom: 6px;
+    }
+    /* --- end new --- */
+
   </style>
 </head>
 <body class="bg-black text-gold antialiased selection:bg-gold selection:text-black">
@@ -551,22 +616,30 @@ At Shree Shyam Trading FZE, we believe in building long-term partnerships throug
             <div class="accordion-content bg-slate-900">
               <div class="p-4 border-t border-gold">
                 <p class="text-light mb-3">Products in this category:</p>
-                <ul class="list-disc list-inside text-light">
+                <ul class="list-inside text-light">
                   <li>
-                    Roulette — Whisky
-                    <a href="brand.html?brand=roulette" class="brand-page-link ml-4" title="Open Roulette brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                    <a href="brand.html?brand=roulette" class="product-link" title="Open Roulette brand page" role="link">
+                      <span class="text-light font-medium">Roulette — Whisky</span>
+                      <span class="brand-page-pill" aria-hidden="true">View Page <i class="fas fa-external-link-alt text-xs"></i></span>
+                    </a>
                   </li>
                   <li>
-                    Dennis — Whisky
-                    <a href="brand.html?brand=dennis" class="brand-page-link ml-4" title="Open Dennis brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                    <a href="brand.html?brand=dennis" class="product-link" title="Open Dennis brand page" role="link">
+                      <span class="text-light font-medium">Dennis — Whisky</span>
+                      <span class="brand-page-pill" aria-hidden="true">View Page <i class="fas fa-external-link-alt text-xs"></i></span>
+                    </a>
                   </li>
                   <li>
-                    Mont Castle — Whisky
-                    <a href="brand.html?brand=montcastle" class="brand-page-link ml-4" title="Open Mont Castle brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                    <a href="brand.html?brand=montcastle" class="product-link" title="Open Mont Castle brand page" role="link">
+                      <span class="text-light font-medium">Mont Castle — Whisky</span>
+                      <span class="brand-page-pill" aria-hidden="true">View Page <i class="fas fa-external-link-alt text-xs"></i></span>
+                    </a>
                   </li>
                   <li>
-                    Aristocrat — Whisky & Rum
-                    <a href="brand.html?brand=aristocrat" class="brand-page-link ml-4" title="Open Aristocrat brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                    <a href="brand.html?brand=aristocrat" class="product-link" title="Open Aristocrat brand page" role="link">
+                      <span class="text-light font-medium">Aristocrat — Whisky & Rum</span>
+                      <span class="brand-page-pill" aria-hidden="true">View Page <i class="fas fa-external-link-alt text-xs"></i></span>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -585,10 +658,12 @@ At Shree Shyam Trading FZE, we believe in building long-term partnerships throug
             <div class="accordion-content bg-slate-900">
               <div class="p-4 border-t border-gold">
                 <p class="text-light mb-3">Products in this category:</p>
-                <ul class="list-disc list-inside text-light">
+                <ul class="list-inside text-light">
                   <li>
-                    Aristocrat — Rum & Whisky (dual ranges)
-                    <a href="brand.html?brand=aristocrat" class="brand-page-link ml-4" title="Open Aristocrat brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                    <a href="brand.html?brand=aristocrat" class="product-link" title="Open Aristocrat brand page" role="link">
+                      <span class="text-light font-medium">Aristocrat — Rum & Whisky (dual ranges)</span>
+                      <span class="brand-page-pill" aria-hidden="true">View Page <i class="fas fa-external-link-alt text-xs"></i></span>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -607,10 +682,12 @@ At Shree Shyam Trading FZE, we believe in building long-term partnerships throug
             <div class="accordion-content bg-slate-900">
               <div class="p-4 border-t border-gold">
                 <p class="text-light mb-3">Products in this category:</p>
-                <ul class="list-disc list-inside text-light">
+                <ul class="list-inside text-light">
                   <li>
-                    IceX — Vodka
-                    <a href="brand.html?brand=icex" class="brand-page-link ml-4" title="Open IceX brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                    <a href="brand.html?brand=icex" class="product-link" title="Open IceX brand page" role="link">
+                      <span class="text-light font-medium">IceX — Vodka</span>
+                      <span class="brand-page-pill" aria-hidden="true">View Page <i class="fas fa-external-link-alt text-xs"></i></span>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -661,10 +738,12 @@ At Shree Shyam Trading FZE, we believe in building long-term partnerships throug
             <div class="accordion-content bg-slate-900">
               <div class="p-4 border-t border-gold">
                 <p class="text-light mb-3">Products in this category:</p>
-                <ul class="list-disc list-inside text-light">
+                <ul class="list-inside text-light">
                   <li>
-                    Goana's — Wine
-                    <a href="brand.html?brand=goanas" class="brand-page-link ml-4" title="Open Goana's brand page">View Page <i class="fas fa-external-link-alt text-xs"></i></a>
+                    <a href="brand.html?brand=goanas" class="product-link" title="Open Goana's brand page" role="link">
+                      <span class="text-light font-medium">Goana's — Wine</span>
+                      <span class="brand-page-pill" aria-hidden="true">View Page <i class="fas fa-external-link-alt text-xs"></i></span>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -758,13 +837,10 @@ At Shree Shyam Trading FZE, we believe in building long-term partnerships throug
                 <a href="https://wa.me/919784928525" target="_blank" rel="noopener noreferrer" class="hover:text-white transition duration-300" data-i18n="contact_whatsapp">+91 9784928525</a>
               </p>
             </div>
-
-            <div>
+             <div>
               <i class="fas fa-building text-gold text-2xl mb-2"></i>
               <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_office_label">Head Office</h3>
               <p class="text-light text-lg" data-i18n="contact_office">C1-1F-SF7605, Ajman Free Zone C1 Building, Ajman Free Zone, Makani No. 4442612247</p>
-            </div>
-
             <div>
               <i class="fas fa-map-marker-alt text-gold text-2xl mb-2"></i>
               <h3 class="font-bold uppercase tracking-wider text-sm mb-1 text-gold" data-i18n="contact_service_area_label">Service Area</h3>
