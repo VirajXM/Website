@@ -202,7 +202,32 @@
         ],
         category: "Whiskey & Brandy",
         description: `<strong>Mont Castle Whisky & Brandy</strong><br/>
-        Premium blended ranges crafted for consistent quality. Matured in selected oak casks. Flavour profile: balanced malt, vanilla, caramel and mild oak. Suitable for wholesale packaging and palletized container shipments.`,
+        Premium blended ranges crafted for consistent quality. Matured in selected oak casks. Flavour profile: balanced malt, vanilla, caramel and mild oak. Suitable for wholesale packaging and pallet.`,
+        sizes: "180 ml, 375 ml, 750 ml"
+      },
+
+      // Separate pages per alcohol type for Mont Castle
+      "montcastle-whiskey": {
+        key: 'montcastle-whiskey',
+        name: "Mont Castle - Whiskey",
+        images: [
+          "Whiskey/Mont_Castle_Black.png",
+          "Whiskey/Mont_Castle_Red.png"
+        ],
+        category: "Whiskey",
+        description: `<strong>Mont Castle Whisky</strong><br/>
+        Premium blended whisky ranges crafted for consistent quality. Matured in selected oak casks. Flavour profile: balanced malt, vanilla, caramel and mild oak.`,
+        sizes: "180 ml, 375 ml, 750 ml"
+      },
+      "montcastle-brandy": {
+        key: 'montcastle-brandy',
+        name: "Mont Castle - Brandy",
+        images: [
+          "Brandy/Mont_Castle_Brandy.png"
+        ],
+        category: "Brandy",
+        description: `<strong>Mont Castle Brandy</strong><br/>
+        Premium brandy matured in selected oak casks with a smooth, warming finish.`,
         sizes: "180 ml, 375 ml, 750 ml"
       },
 
@@ -232,8 +257,45 @@
         sizes: "180 ml, 375 ml, 750 ml, 1 L"
       },
 
+      // Separate pages per alcohol type for Aristocrat
+      "aristocrat-whiskey": {
+        key: 'aristocrat-whiskey',
+        name: "Aristocrat - Whiskey",
+        images: [
+          "Whiskey/AC_Black.jpeg",
+          "Whiskey/AC_Neat_Whiskey.jpeg",
+          "Whiskey/AC_Premium_Whiskey.jpeg"
+        ],
+        category: "Whiskey",
+        description: `<strong>Aristocrat Whiskies</strong><br/>
+        Blended whisky range: mellow grain, caramel, vanilla and subtle oak notes. Suitable for retail and hospitality.`,
+        sizes: "180 ml, 375 ml, 750 ml, 1 L"
+      },
+      "aristocrat-brandy": {
+        key: 'aristocrat-brandy',
+        name: "Aristocrat - Brandy",
+        images: [
+          "Brandy/AC_Brandy.jpeg"
+        ],
+        category: "Brandy",
+        description: `<strong>Aristocrat Brandy</strong><br/>
+        Rich amber brandy with dried fruit and oak notes, smooth finish.`,
+        sizes: "180 ml, 375 ml, 750 ml"
+      },
+      "aristocrat-rum": {
+        key: 'aristocrat-rum',
+        name: "Aristocrat - Rum",
+        images: [
+          "Rum/AC_Rum.jpeg"
+        ],
+        category: "Rum",
+        description: `<strong>Aristocrat Rum</strong><br/>
+        Smooth rum expression suitable for cocktails and neat serving.`,
+        sizes: "180 ml, 375 ml, 750 ml"
+      },
+
       icex: {
-        key: 'icex',
+        key: 'ice',
         name: "Ice",
         images: [
           "Vodka/Ice_vodka.png"
@@ -269,6 +331,41 @@
         Finish: Warm, smooth and lingering ginger spice.<br/>
         Sizes: 1000 ml, 750 ml, 500 ml, 250 ml, 180 ml, 90 ml.`,
         sizes: "1000 ml, 750 ml, 500 ml, 250 ml, 180 ml, 90 ml"
+      },
+
+      // Separate pages per alcohol type for Kamanda
+      "kamanda-whiskey": {
+        key: 'kamanda-whiskey',
+        name: "Kamanda - Whiskey",
+        images: [
+          "Whiskey/Kamanda_Whiskey.png"
+        ],
+        category: "Whiskey",
+        description: `<strong>Kamanda Whiskey</strong><br/>
+        Premium whisky expressions from Kamanda with balanced flavours and rich profile.`,
+        sizes: "1000 ml, 750 ml, 500 ml, 250 ml, 180 ml, 90 ml"
+      },
+      "kamanda-rum": {
+        key: 'kamanda-rum',
+        name: "Kamanda - Rum",
+        images: [
+          "Rum/Kamanda_Cafe_Rum.png"
+        ],
+        category: "Rum",
+        description: `<strong>Kamanda Café Rhum</strong><br/>
+        Coffee-flavoured rum profile with roasted coffee and chocolate notes.`,
+        sizes: "750 ml, 500 ml, 250 ml"
+      },
+      "kamanda-gin": {
+        key: 'kamanda-gin',
+        name: "Kamanda - Gin",
+        images: [
+          "Gin/Kamanda_Gin.png"
+        ],
+        category: "Gin",
+        description: `<strong>Kamanda Gin</strong><br/>
+        Premium gin with botanical notes, crafted for mixers and neat serving.`,
+        sizes: "750 ml, 375 ml"
       }
     };
 
@@ -280,6 +377,14 @@
       } catch(e) {
         return null;
       }
+    }
+
+    // Normalize image paths so they point to the images/ folder (unless already absolute or root)
+    function normalizeImagePath(path) {
+      if (!path) return path;
+      // leave absolute URLs, data URIs, or root-anchored paths alone
+      if (/^(https?:|data:|\/)/i.test(path)) return path;
+      return path.startsWith('images/') ? path : 'images/' + path;
     }
 
     // Render brand
@@ -303,7 +408,7 @@
         brandCategory.textContent = "";
         brandDescription.textContent = "We couldn't find the brand you requested. Please return to the catalog and pick a valid brand.";
         brandSizes.textContent = "";
-        logisticsText.textContent = "";
+        if (logisticsText) logisticsText.textContent = "";
         return;
       }
 
@@ -313,10 +418,11 @@
       brandDescription.innerHTML = data.description;
       brandSizes.textContent = data.sizes || "";
 
-      logisticsText.textContent = data.logistics || "";
+      if (logisticsText) logisticsText.textContent = data.logistics || "";
 
-      // Determine main image and thumbnails
-      const images = Array.isArray(data.images) && data.images.length ? data.images : ["images/Drinks.png"];
+      // Determine main image and thumbnails, normalizing paths so images load correctly
+      const rawImages = Array.isArray(data.images) && data.images.length ? data.images : ["images/Drinks.png"];
+      const images = rawImages.map(normalizeImagePath);
       // set first image as main
       brandImage.src = images[0];
       brandImage.alt = data.name + " image";
@@ -339,8 +445,18 @@
 
     // Initialize on DOMContentLoaded
     document.addEventListener('DOMContentLoaded', function() {
-      const brandKey = (getQueryParam('brand') || '').toLowerCase();
-      renderBrand(brandKey);
+      const brandParam = (getQueryParam('brand') || '').toLowerCase();
+      const typeParam = (getQueryParam('type') || '').toLowerCase();
+
+      // If both brand and type provided, try combined key like "aristocrat-whiskey"
+      let finalKey = brandParam;
+      if (brandParam && typeParam) {
+        const combined = `${brandParam}-${typeParam}`;
+        if (brands[combined]) finalKey = combined;
+      }
+
+      // If no type param or combined not found, finalKey stays as brandParam (which may map to a multi-type overview)
+      renderBrand(finalKey);
     });
   </script>
 </body>
